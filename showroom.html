@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet the Bots | DarrylBots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #2563EB;
+      --accent: #F97316;
+      --dark: #0F172A;
+      --gray: #64748B;
+      --light: #F8FAFC;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--white); line-height: 1.6; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    
+    nav {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 16px 24px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .logo-text span { color: var(--accent); }
+    
+    .hero {
+      padding: 140px 24px 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent), #EC4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: #94A3B8;
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .showroom-image {
+      padding: 40px 24px;
+    }
+    .showroom-image img {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(59, 130, 246, 0.3);
+    }
+    
+    .robots-grid {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .robots-grid h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 48px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 32px;
+    }
+    .robot-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .robot-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+    .robot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .robot-name {
+      font-size: 1.4rem;
+    }
+    .robot-maker {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    .robot-price {
+      background: var(--accent);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .robot-desc {
+      color: #94A3B8;
+      margin-bottom: 20px;
+    }
+    .robot-specs {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .spec {
+      background: rgba(255,255,255,0.05);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .spec-label {
+      color: var(--gray);
+      font-size: 0.75rem;
+      display: block;
+    }
+    .robot-status {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-available { background: rgba(34, 197, 94, 0.2); color: #22C55E; }
+    .status-preorder { background: rgba(59, 130, 246, 0.2); color: #3B82F6; }
+    .status-coming { background: rgba(168, 85, 247, 0.2); color: #A855F7; }
+    
+    .cta-section {
+      padding: 80px 24px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--dark) 0%, rgba(59, 130, 246, 0.1) 100%);
+    }
+    .cta-section h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      color: #94A3B8;
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+    
+    footer {
+      background: rgba(0,0,0,0.3);
+      color: #64748B;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🤖</div>
+        <div class="logo-text">Darryl<span>Bots</span></div>
+      </a>
+      <ul style="display: flex; gap: 2rem; list-style: none; align-items: center;">
+        <li><a href="index.html" style="color: white; text-decoration: none; opacity: 0.8;">Home</a></li>
+        <li><a href="showroom.html" style="color: white; text-decoration: none; font-weight: 600;">Showroom</a></li>
+        <li><a href="robot-specs.html" style="color: white; text-decoration: none; opacity: 0.8;">Robot Specs</a></li>
+        <li><a href="about.html" style="color: white; text-decoration: none; opacity: 0.8;">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>🤖 Meet Your Match</h1>
+    <p>The robots of tomorrow are here today. Explore the humanoid helpers we support — from household companions to professional assistants.</p>
+  </section>
+
+  <div class="showroom-image">
+    <img src="darrylbots-showroom.png" alt="DarrylBots showroom with humanoid robots">
+  </div>
+
+  <section class="robots-grid">
+    <h2>Robots We Support</h2>
+    <div class="grid">
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">Tesla Optimus Gen 3</h3>
+            <div class="robot-maker">Tesla</div>
+          </div>
+          <div class="robot-price">~$30K</div>
+        </div>
+        <p class="robot-desc">Tesla's general-purpose humanoid robot. Designed for dangerous, repetitive, or boring tasks. Full autonomous operation with Dojo AI.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>5'8"</div>
+          <div class="spec"><span class="spec-label">Weight</span>125 lbs</div>
+          <div class="spec"><span class="spec-label">Payload</span>45 lbs</div>
+          <div class="spec"><span class="spec-label">Battery</span>~16 hrs</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-coming">Late 2027</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">Consumer launch</span>
+        </div>
+      </div>
+
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">Figure 03</h3>
+            <div class="robot-maker">Figure AI</div>
+          </div>
+          <div class="robot-price">~$130K</div>
+        </div>
+        <p class="robot-desc">The most capable humanoid robot on the market. 48+ degrees of freedom, palm-camera manipulation, advanced Helix AI platform.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>5'6"</div>
+          <div class="spec"><span class="spec-label">Weight</span>132 lbs</div>
+          <div class="spec"><span class="spec-label">Payload</span>44 lbs</div>
+          <div class="spec"><span class="spec-label">DoF</span>48+</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-available">Available</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">Commercial orders</span>
+        </div>
+      </div>
+
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">1X NEO Gamma</h3>
+            <div class="robot-maker">1X Technologies</div>
+          </div>
+          <div class="robot-price">$20K</div>
+        </div>
+        <p class="robot-desc">Purpose-built for the home. Quiet as a refrigerator, safe around children and pets. Natural conversation and autonomous learning.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>5'6"</div>
+          <div class="spec"><span class="spec-label">Weight</span>66 lbs</div>
+          <div class="spec"><span class="spec-label">Noise</span>~40 dB</div>
+          <div class="spec"><span class="spec-label">Focus</span>Home</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-preorder">Pre-order</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">$499/mo option</span>
+        </div>
+      </div>
+
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">Unitree G1</h3>
+            <div class="robot-maker">Unitree Robotics</div>
+          </div>
+          <div class="robot-price">$16K</div>
+        </div>
+        <p class="robot-desc">The affordable entry point to humanoid robots. Compact, capable, and backed by Unitree's proven robotics platform.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>4'3"</div>
+          <div class="spec"><span class="spec-label">Weight</span>77 lbs</div>
+          <div class="spec"><span class="spec-label">Speed</span>4.4 mph</div>
+          <div class="spec"><span class="spec-label">DoF</span>43</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-available">Available</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">Ships now</span>
+        </div>
+      </div>
+
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">Apptronik Apollo</h3>
+            <div class="robot-maker">Apptronik</div>
+          </div>
+          <div class="robot-price">Contact</div>
+        </div>
+        <p class="robot-desc">Built for industrial applications. Modular design, easy battery swaps, designed for logistics and manufacturing environments.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>5'8"</div>
+          <div class="spec"><span class="spec-label">Weight</span>160 lbs</div>
+          <div class="spec"><span class="spec-label">Payload</span>55 lbs</div>
+          <div class="spec"><span class="spec-label">Battery</span>4 hrs</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-preorder">Pilots</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">Enterprise only</span>
+        </div>
+      </div>
+
+      <div class="robot-card">
+        <div class="robot-header">
+          <div>
+            <h3 class="robot-name">Boston Dynamics Atlas</h3>
+            <div class="robot-maker">Boston Dynamics</div>
+          </div>
+          <div class="robot-price">N/A</div>
+        </div>
+        <p class="robot-desc">The original. Electric Atlas (2024) brings decades of research to commercial applications. The gold standard in mobility.</p>
+        <div class="robot-specs">
+          <div class="spec"><span class="spec-label">Height</span>4'11"</div>
+          <div class="spec"><span class="spec-label">Weight</span>196 lbs</div>
+          <div class="spec"><span class="spec-label">Design</span>Electric</div>
+          <div class="spec"><span class="spec-label">Focus</span>R&D</div>
+        </div>
+        <div class="robot-status">
+          <span class="status-badge status-coming">Limited</span>
+          <span style="color: var(--gray); font-size: 0.9rem;">Hyundai/partners</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Want More Technical Details?</h2>
+    <p>Check out our comprehensive robot specifications comparing 22 of the best humanoid robots available in 2026.</p>
+    <a href="robot-specs.html" class="cta-btn">View Complete Robot Specs →</a>
+    <div style="margin-top: 1rem;">
+      <a href="/#newsletter" style="color: #94A3B8; text-decoration: none; font-size: 0.9rem;">Or join our waitlist for updates →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 DarrylBots. All robots property of their respective manufacturers. <a href="/">Back to Home</a></p>
+  </footer>
+</body>
+</html>

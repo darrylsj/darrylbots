@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robot Specifications | DarrylBots - Humanoid Robot Specialists</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      border-radius: 15px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #64748b;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2563eb;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: white;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .content {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .intro {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .intro h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #475569;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    tr:hover {
+      background: #f0f9ff;
+    }
+
+    .rank {
+      font-weight: 700;
+      color: #2563eb;
+      text-align: center;
+      width: 40px;
+    }
+
+    .robot-name {
+      font-weight: 600;
+      color: #1e293b;
+      min-width: 150px;
+    }
+
+    .price {
+      color: #059669;
+      font-weight: 600;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .status.available { background: #dcfce7; color: #166534; }
+    .status.pilot { background: #fef3c7; color: #92400e; }
+    .status.enterprise { background: #dbeafe; color: #1e40af; }
+    .status.internal { background: #f3e8ff; color: #7c3aed; }
+    .status.preorder { background: #fed7d7; color: #c53030; }
+    .status.rd { background: #f1f5f9; color: #64748b; }
+
+    .winners {
+      background: #f8fafc;
+      border-left: 4px solid #2563eb;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 8px;
+    }
+
+    .winners h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .winners p {
+      line-height: 1.8;
+    }
+
+    .source {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .content { padding: 1.5rem; }
+      .nav-links { display: none; }
+      
+      table {
+        font-size: 0.8rem;
+      }
+      
+      th, td {
+        padding: 8px 6px;
+      }
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🤖 DarrylBots</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="showroom.html">Showroom</a></li>
+        <li><a href="robot-specs.html" class="active">Robot Specs</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Humanoid Robot Specifications</h1>
+      <p>Complete comparison of the best humanoid robots available in 2026</p>
+    </div>
+
+    <div class="content">
+      <a href="showroom.html" class="back-button">← Back to Showroom</a>
+      
+      <div class="intro">
+        <h2>22 Best Humanoid Robots of 2026 - Complete Specs</h2>
+        <p>This comprehensive comparison covers every major humanoid robot available or in active deployment as of January 2026. Data includes verified specifications, real pricing, availability status, and optimal use cases for each model.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="rank">#</th>
+              <th class="robot-name">Robot</th>
+              <th>Height</th>
+              <th>Weight</th>
+              <th class="price">Price</th>
+              <th>Best For</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rank">1</td>
+              <td class="robot-name">Figure 03</td>
+              <td>168 cm</td>
+              <td>70 kg</td>
+              <td class="price">~$130K</td>
+              <td>Manufacturing, Logistics</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">2</td>
+              <td class="robot-name">Tesla Optimus</td>
+              <td>173 cm</td>
+              <td>62 kg</td>
+              <td class="price">~$30K</td>
+              <td>Factory, Future Home</td>
+              <td class="status internal">Internal</td>
+            </tr>
+            <tr>
+              <td class="rank">3</td>
+              <td class="robot-name">Digit</td>
+              <td>175 cm</td>
+              <td>64 kg</td>
+              <td class="price">~$250K</td>
+              <td>Warehousing, Logistics</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">4</td>
+              <td class="robot-name">Atlas (Electric)</td>
+              <td>152 cm</td>
+              <td>86 kg</td>
+              <td class="price">~$500K</td>
+              <td>Auto Mfg, R&D</td>
+              <td class="status enterprise">Enterprise</td>
+            </tr>
+            <tr>
+              <td class="rank">5</td>
+              <td class="robot-name">Unitree G1</td>
+              <td>127 cm</td>
+              <td>35 kg</td>
+              <td class="price">$16K–$22K</td>
+              <td>Research, Education</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">6</td>
+              <td class="robot-name">Phoenix Gen 8</td>
+              <td>170 cm</td>
+              <td>70 kg</td>
+              <td class="price">~$40K</td>
+              <td>General-Purpose Labor</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">7</td>
+              <td class="robot-name">Apollo</td>
+              <td>173 cm</td>
+              <td>73 kg</td>
+              <td class="price">$150K–$250K</td>
+              <td>Heavy Lifting, Mfg</td>
+              <td class="status enterprise">Enterprise</td>
+            </tr>
+            <tr>
+              <td class="rank">8</td>
+              <td class="robot-name">NEO</td>
+              <td>167 cm</td>
+              <td>30 kg</td>
+              <td class="price">$20K</td>
+              <td>Home, Elder Care</td>
+              <td class="status preorder">Preorder</td>
+            </tr>
+            <tr>
+              <td class="rank">9</td>
+              <td class="robot-name">Unitree H1-2</td>
+              <td>178 cm</td>
+              <td>70 kg</td>
+              <td class="price">~$90K</td>
+              <td>Research, Assembly</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">10</td>
+              <td class="robot-name">Fourier GR-2</td>
+              <td>175 cm</td>
+              <td>63 kg</td>
+              <td class="price">~$150K</td>
+              <td>Healthcare, Rehab</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">11</td>
+              <td class="robot-name">Walker S</td>
+              <td>165 cm</td>
+              <td>59 kg</td>
+              <td class="price">Enterprise</td>
+              <td>Quality Inspection</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">12</td>
+              <td class="robot-name">RobotEra L7</td>
+              <td>171 cm</td>
+              <td>65 kg</td>
+              <td class="price">~$96K</td>
+              <td>Logistics, Service</td>
+              <td class="status preorder">Orders Open</td>
+            </tr>
+            <tr>
+              <td class="rank">13</td>
+              <td class="robot-name">Astribot S1</td>
+              <td>170 cm</td>
+              <td>~60 kg</td>
+              <td class="price">~$80K (est.)</td>
+              <td>Dexterous Tasks</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">14</td>
+              <td class="robot-name">AgiBot A2</td>
+              <td>175 cm</td>
+              <td>55 kg</td>
+              <td class="price">Contact Mfr.</td>
+              <td>Customer Service</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">15</td>
+              <td class="robot-name">Kepler Forerunner</td>
+              <td>178 cm</td>
+              <td>85 kg</td>
+              <td class="price">~$30K (est.)</td>
+              <td>Industrial, Service</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">16</td>
+              <td class="robot-name">CyberOne</td>
+              <td>177 cm</td>
+              <td>52 kg</td>
+              <td class="price">~$105K (est.)</td>
+              <td>R&D, Companion</td>
+              <td class="status rd">R&D</td>
+            </tr>
+            <tr>
+              <td class="rank">17</td>
+              <td class="robot-name">Ameca</td>
+              <td>170 cm</td>
+              <td>54 kg</td>
+              <td class="price">$120K–$200K</td>
+              <td>HRI, Exhibitions</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">18</td>
+              <td class="robot-name">Next-Gen IRON</td>
+              <td>178 cm</td>
+              <td>70 kg</td>
+              <td class="price">TBD</td>
+              <td>Guided Tours, Inspection</td>
+              <td class="status pilot">Pilot</td>
+            </tr>
+            <tr>
+              <td class="rank">19</td>
+              <td class="robot-name">EVE</td>
+              <td>186 cm</td>
+              <td>86 kg</td>
+              <td class="price">Enterprise</td>
+              <td>Security, Logistics</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">20</td>
+              <td class="robot-name">Pepper</td>
+              <td>121 cm</td>
+              <td>28 kg</td>
+              <td class="price">~$1.8K/mo</td>
+              <td>Greeting, Retail</td>
+              <td class="status preorder">Special Order</td>
+            </tr>
+            <tr>
+              <td class="rank">21</td>
+              <td class="robot-name">NAO</td>
+              <td>58 cm</td>
+              <td>5.4 kg</td>
+              <td class="price">~$9K</td>
+              <td>Education, Therapy</td>
+              <td class="status available">Available</td>
+            </tr>
+            <tr>
+              <td class="rank">22</td>
+              <td class="robot-name">Promobot V.4</td>
+              <td>150 cm</td>
+              <td>60 kg</td>
+              <td class="price">~$25K–$50K</td>
+              <td>Concierge, Healthcare</td>
+              <td class="status available">Available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="winners">
+        <h3>🏆 Category Winners</h3>
+        <p><strong>Best Overall:</strong> Figure 03 | <strong>Best Value:</strong> Unitree G1 | <strong>Best for Warehouses:</strong> Digit | <strong>Best for Healthcare:</strong> Fourier GR-2 | <strong>Best for Home:</strong> NEO | <strong>Most Agile:</strong> Atlas (Electric) | <strong>Best Interaction:</strong> Ameca | <strong>Best Payload:</strong> Apollo & Fourier GR-2 | <strong>Most Affordable Full-Size:</strong> Kepler Forerunner</p>
+      </div>
+
+      <div class="source">
+        <p><strong>Source:</strong> Data compiled from <a href="https://blog.robozaps.com/b/best-humanoid-robots" target="_blank" rel="noopener">Robozaps Best Humanoid Robots 2026</a> • Last updated: January 29, 2026</p>
+        <p><strong>Note:</strong> Specifications and pricing are subject to change. Contact manufacturers directly for the most current information and availability.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
