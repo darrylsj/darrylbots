@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robot Life Gallery | DarrylBots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --accent: #F97316;
+      --dark: #0F172A;
+      --gray: #64748B;
+      --light: #F8FAFC;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    
+    nav {
+      background: var(--white);
+      padding: 16px 24px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .logo-text span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      opacity: 0.8;
+    }
+    .nav-links a:hover { opacity: 1; }
+    
+    .hero {
+      padding: 140px 24px 60px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--white) 0%, var(--light) 100%);
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .gallery {
+      padding: 60px 24px 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    .gallery-item {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+    }
+    .gallery-item-info {
+      padding: 20px;
+    }
+    .gallery-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .gallery-item p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    .gallery-item .date {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 12px;
+      opacity: 0.7;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--gray);
+    }
+    .empty-state .icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+    
+    footer {
+      background: var(--dark);
+      color: #94A3B8;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">🤖</div>
+        <div class="logo-text">Darryl<span>Bots</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../showroom.html">Showroom</a></li>
+        <li><a href="../robot-specs.html">Robot Specs</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="index.html" style="font-weight: 600;">Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>🖼️ Robot Life Gallery</h1>
+    <p>AI-generated visions of humanoid robots helping with everyday tasks. New images added regularly!</p>
+  </section>
+
+  <section class="gallery">
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Images will be loaded here by JavaScript -->
+    </div>
+    <div class="empty-state" id="empty-state" style="display: none;">
+      <div class="icon">🤖</div>
+      <h3>Gallery Coming Soon</h3>
+      <p>Check back soon for AI-generated images of robots in action!</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 DarrylBots. Images generated with AI. <a href="../index.html">Back to Home</a></p>
+  </footer>
+
+  <script>
+    // Load gallery data
+    fetch('gallery-data.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('gallery-grid');
+        const empty = document.getElementById('empty-state');
+        
+        if (!data.images || data.images.length === 0) {
+          grid.style.display = 'none';
+          empty.style.display = 'block';
+          return;
+        }
+        
+        grid.innerHTML = data.images.map(img => `
+          <div class="gallery-item">
+            <img src="${img.filename}" alt="${img.title}" loading="lazy">
+            <div class="gallery-item-info">
+              <h3>${img.title}</h3>
+              <p>${img.description}</p>
+              <div class="date">Added ${img.date}</div>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {
+        document.getElementById('gallery-grid').style.display = 'none';
+        document.getElementById('empty-state').style.display = 'block';
+      });
+  </script>
+</body>
+</html>
