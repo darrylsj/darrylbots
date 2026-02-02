@@ -180,8 +180,8 @@
       <div class="stat-label">Active</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">2</div>
-      <div class="stat-label">Pending Setup</div>
+      <div class="stat-number">3</div>
+      <div class="stat-label">Skipped/Issues</div>
     </div>
     <div class="stat-card">
       <div class="stat-number">9</div>
@@ -446,27 +446,7 @@
       <span class="cron-badge">⏰ Monday 7AM PT</span>
     </div>
 
-    <div class="integration-card">
-      <div class="integration-header">
-        <div class="integration-icon">👑</div>
-        <div>
-          <div class="integration-name">Monarch Money</div>
-          <div class="integration-provider">Budget Management</div>
-        </div>
-        <span class="integration-status status-pending">Needs MFA</span>
-      </div>
-      <div class="integration-details">
-        <div class="detail-row">
-          <span class="detail-label">Status</span>
-          <span class="detail-value">Awaiting YubiKey</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Features</span>
-          <span class="detail-value">Transactions, budgets</span>
-        </div>
-      </div>
     </div>
-  </div>
 
   <!-- COMMUNICATION -->
   <h2 class="section-title">📧 Communication</h2>
@@ -693,21 +673,38 @@
   </div>
 
   <!-- PENDING -->
-  <h2 class="section-title">⚠️ Pending Setup</h2>
+  <h2 class="section-title">⏸️ Skipped / Issues</h2>
   <div class="integration-grid">
-    <div class="integration-card">
+    <div class="integration-card" style="opacity: 0.6;">
       <div class="integration-header">
         <div class="integration-icon">📍</div>
         <div>
           <div class="integration-name">iCloud Find My</div>
           <div class="integration-provider">Family Device Tracking</div>
         </div>
-        <span class="integration-status status-pending">Needs Auth</span>
+        <span class="integration-status status-pending">Skipped</span>
       </div>
       <div class="integration-details">
         <div class="detail-row">
-          <span class="detail-label">Blocker</span>
-          <span class="detail-value">Apple ID authentication</span>
+          <span class="detail-label">Reason</span>
+          <span class="detail-value">User preference</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card" style="opacity: 0.6;">
+      <div class="integration-header">
+        <div class="integration-icon">👑</div>
+        <div>
+          <div class="integration-name">Monarch Money</div>
+          <div class="integration-provider">Budget Management</div>
+        </div>
+        <span class="integration-status status-pending">Skipped</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Reason</span>
+          <span class="detail-value">User preference</span>
         </div>
       </div>
     </div>
