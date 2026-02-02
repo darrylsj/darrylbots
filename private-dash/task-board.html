@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <title>JAMES Task Board | Darryl Sladden</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 24px;
+      color: #e0e0e0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #00d4ff;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #888;
+      font-size: 1.1rem;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 16px 32px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #00d4ff;
+    }
+    .stat-label {
+      color: #888;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat.highlight .stat-number { color: #00ff88; }
+    .stat.cost .stat-number { color: #ffd700; }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+    .column {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .column-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+    .column-icon { font-size: 1.5rem; }
+    .column-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
+    .column-count {
+      margin-left: auto;
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .task {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-left: 4px solid #00d4ff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .task:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+    }
+    .task.done { border-left-color: #00ff88; opacity: 0.9; }
+    .task.pending { border-left-color: #ffaa00; }
+    .task.blocked { border-left-color: #ff4466; }
+    .task.future { border-left-color: #aa88ff; }
+    .task.new { border-left-color: #00ffaa; animation: glow 2s ease-in-out; }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 170, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(0, 255, 170, 0.6); }
+    }
+    .task-title { font-weight: 600; margin-bottom: 6px; color: #fff; }
+    .task-desc { font-size: 0.9rem; color: #999; line-height: 1.4; }
+    .task-meta { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(0, 212, 255, 0.2);
+      color: #00d4ff;
+    }
+    .tag.date { background: rgba(255, 170, 0, 0.2); color: #ffaa00; }
+    .tag.tool { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+    .tag.new { background: rgba(0, 255, 170, 0.3); color: #00ffaa; }
+    .section-divider {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 20px 0;
+      color: #666;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 16px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #666;
+    }
+    footer a { color: #00d4ff; text-decoration: none; }
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      header h1 { font-size: 1.8rem; }
+      .stats { gap: 16px; }
+      .stat { padding: 12px 20px; }
+      .stat-number { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ JAMES Task Board</h1>
+    <p>Darryl Sladden • Since January 30, 2026 • Updated February 1, 5:40 PM</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat highlight">
+      <div class="stat-number">62</div>
+      <div class="stat-label">Tasks Completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">In Progress</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Planned</div>
+    </div>
+    <div class="stat cost">
+      <div class="stat-number">~$125</div>
+      <div class="stat-label">3-Day API Cost</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Days Active</div>
+    </div>
+  </div>
+
+  <div class="board">
+    <!-- DARRYLBOTS WEBSITE -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">🤖</span>
+        <span class="column-title">DarrylBots Website</span>
+        <span class="column-count">8</span>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Website Built (4 Pages)</div>
+        <div class="task-desc">Homepage, About, Showroom, Robot Specs — mobile responsive</div>
+        <div class="task-meta">
+          <span class="tag date">Jan 31</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">AI-Generated Images (4)</div>
+        <div class="task-desc">Hero, showroom, repair workshop, mascot</div>
+        <div class="task-meta">
+          <span class="tag tool">Nano Banana</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Robot Comparison Cards</div>
+        <div class="task-desc">Optimus, Figure 03, NEO, Unitree G1, Apollo, Atlas</div>
+        <div class="task-meta">
+          <span class="tag">showroom.html</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Founder Profile Page</div>
+        <div class="task-desc">Credentials, timeline, book, patents</div>
+        <div class="task-meta">
+          <span class="tag">about.html</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">GitHub Pages + Domain</div>
+        <div class="task-desc">CNAME configured, DNS pointing to GitHub</div>
+        <div class="task-meta">
+          <span class="tag tool">GitHub</span>
+        </div>
+      </div>
+      
+      <div class="task done new">
+        <div class="task-title">Private Dashboard Area</div>
+        <div class="task-desc">API + Task dashboards at /private-dash/ with noindex</div>
+        <div class="task-meta">
+          <span class="tag new">NEW</span>
+          <span class="tag date">Feb 1</span>
+        </div>
+      </div>
+      
+      <div class="task pending">
+        <div class="task-title">Enable Custom Domain SSL</div>
+        <div class="task-desc">Add darrylbots.com in GitHub Pages settings</div>
+        <div class="task-meta">
+          <span class="tag">Manual</span>
+        </div>
+      </div>
+      
+      <div class="task done new">
+        <div class="task-title">Dashboard Auto-Update Cron</div>
+        <div class="task-desc">Every 2 days — refresh API costs + tasks</div>
+        <div class="task-meta">
+          <span class="tag new">NEW</span>
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBOTICS BUSINESS -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">🏢</span>
+        <span class="column-title">Robotics Business Prep</span>
+        <span class="column-count">6</span>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">LLC Formation Research</div>
+        <div class="task-desc">CA vs DE vs WY — recommend CA, ~$1,500-3,200 first year</div>
+        <div class="task-meta">
+          <span class="tag">robotics-business-plan.md</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Business Name Research</div>
+        <div class="task-desc">Avoid "Optimus" — Sladden Robotics or Bay Area Bot Works</div>
+        <div class="task-meta">
+          <span class="tag">Sub-agent</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Insurance Requirements</div>
+        <div class="task-desc">Product liability critical — $8-20K/yr</div>
+        <div class="task-meta">
+          <span class="tag">Research</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Personal Profile Content</div>
+        <div class="task-desc">Patents, book, speaking, career timeline</div>
+        <div class="task-meta">
+          <span class="tag">darryl-profile-content.md</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Robotics News Monitoring</div>
+        <div class="task-desc">Mon/Wed/Fri 8am — Tesla, Figure, Boston Dynamics</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">API Expenses as R&D</div>
+        <div class="task-desc">~$1,300/mo documented for tax deduction</div>
+        <div class="task-meta">
+          <span class="tag">api-expenses.md</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTOMATIONS -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">⚙️</span>
+        <span class="column-title">Active Automations</span>
+        <span class="column-count">12</span>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Daily Morning Digest</div>
+        <div class="task-desc">7:00 AM — News, email, calendar via WhatsApp</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Daily Elon Summary</div>
+        <div class="task-desc">7:30 AM — X posts + news mentions</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Stock Monitor</div>
+        <div class="task-desc">Hourly 7am-1pm M-F — GOOG, CVX, TSLA, ARKK</div>
+        <div class="task-meta">
+          <span class="tag tool">Finnhub</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Covered Call Scanner</div>
+        <div class="task-desc">Monday 7am — TSLA weeklies 10-15% OTM</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">X DM Monitor</div>
+        <div class="task-desc">Hourly 8am-10pm — spam filtering</div>
+        <div class="task-meta">
+          <span class="tag tool">X API</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">LinkedIn Monitor</div>
+        <div class="task-desc">9am/12pm/3pm/6pm Mon-Fri</div>
+        <div class="task-meta">
+          <span class="tag tool">Browser</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Lunch Ordering</div>
+        <div class="task-desc">Tue/Wed/Thu — waiter.com auto-order</div>
+        <div class="task-meta">
+          <span class="tag tool">Browser</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Self-Improvement</div>
+        <div class="task-desc">Every 6 hours — skill discovery</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Auto-Update System</div>
+        <div class="task-desc">Daily 3 AM — OpenClaw + skills updates</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Moltbook Heartbeat</div>
+        <div class="task-desc">Every 4 hours — AI social network</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Gmail Receipt Filter</div>
+        <div class="task-desc">Auto-labels receipts, invoices</div>
+        <div class="task-meta">
+          <span class="tag">Gmail</span>
+        </div>
+      </div>
+      
+      <div class="task done new">
+        <div class="task-title">Dashboard Update Cron</div>
+        <div class="task-desc">Every 2 days — API costs + task board</div>
+        <div class="task-meta">
+          <span class="tag new">NEW</span>
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME AUTOMATION -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">🏠</span>
+        <span class="column-title">Home & Smart Devices</span>
+        <span class="column-count">7</span>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Tesla "Blu" Connected</div>
+        <div class="task-desc">2025 Model Y via Tessie API</div>
+        <div class="task-meta">
+          <span class="tag tool">Tessie</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Philips Hue Lights</div>
+        <div class="task-desc">Front door, Dining room — color control</div>
+        <div class="task-meta">
+          <span class="tag tool">OpenHue</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Sonos Speakers</div>
+        <div class="task-desc">Family Room, Living Room, Patio</div>
+        <div class="task-meta">
+          <span class="tag tool">sonos CLI</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Hot Tub Control</div>
+        <div class="task-desc">iAqualink — on/off/status/temp</div>
+        <div class="task-meta">
+          <span class="tag tool">hottub CLI</span>
+        </div>
+      </div>
+      
+      <div class="task pending">
+        <div class="task-title">iCloud FindMy Setup</div>
+        <div class="task-desc">Skill installed — needs Apple ID auth</div>
+        <div class="task-meta">
+          <span class="tag">Pending</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">WhatsApp Connected</div>
+        <div class="task-desc">Self-chat mode for mobile messaging</div>
+        <div class="task-meta">
+          <span class="tag date">Jan 30</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">TTS Voice (Charlotte)</div>
+        <div class="task-desc">ElevenLabs British female voice</div>
+        <div class="task-meta">
+          <span class="tag tool">ElevenLabs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE & CALENDAR -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">📅</span>
+        <span class="column-title">Google & Calendar</span>
+        <span class="column-count">6</span>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Gmail OAuth Setup</div>
+        <div class="task-desc">Read + modify access via gog CLI</div>
+        <div class="task-meta">
+          <span class="tag tool">gog</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Calendar Connected</div>
+        <div class="task-desc">Full access for scheduling</div>
+        <div class="task-meta">
+          <span class="tag tool">gog</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Physical Therapy Event</div>
+        <div class="task-desc">Mon Feb 3, 4 PM — recurring</div>
+        <div class="task-meta">
+          <span class="tag date">Upcoming</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Gmail Receipt Filter</div>
+        <div class="task-desc">Auto-labels receipts, invoices</div>
+        <div class="task-meta">
+          <span class="tag">Automation</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Receipts Spreadsheet</div>
+        <div class="task-desc">28 receipts organized for tax prep</div>
+        <div class="task-meta">
+          <span class="tag">Tax Prep</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Birthday Reminders</div>
+        <div class="task-desc">Family birthdays — 3 days before</div>
+        <div class="task-meta">
+          <span class="tag tool">Cron</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">🚀 Future Goals — Humanoid Robotics (2027-2028)</div>
+
+    <!-- FUTURE -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">🔮</span>
+        <span class="column-title">Future / Planned</span>
+        <span class="column-count">5</span>
+      </div>
+      
+      <div class="task future">
+        <div class="task-title">Form Robotics LLC</div>
+        <div class="task-desc">California — late 2026 or early 2027</div>
+        <div class="task-meta">
+          <span class="tag">Planned</span>
+        </div>
+      </div>
+      
+      <div class="task future">
+        <div class="task-title">Launch sladdenrobotics.com</div>
+        <div class="task-desc">Astro + Cloudflare Pages</div>
+        <div class="task-meta">
+          <span class="tag">Planned</span>
+        </div>
+      </div>
+      
+      <div class="task future">
+        <div class="task-title">Get Anthropic Admin API Key</div>
+        <div class="task-desc">For real billing data access</div>
+        <div class="task-meta">
+          <span class="tag">To Do</span>
+        </div>
+      </div>
+      
+      <div class="task future">
+        <div class="task-title">Fix ElevenLabs API Key</div>
+        <div class="task-desc">Regenerate with user_read permission</div>
+        <div class="task-meta">
+          <span class="tag">To Do</span>
+        </div>
+      </div>
+      
+      <div class="task future">
+        <div class="task-title">Monarch Money Setup</div>
+        <div class="task-desc">Needs YubiKey for MFA login</div>
+        <div class="task-meta">
+          <span class="tag">Blocked</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Built by JAMES ⚡ | <a href="api-dashboard.html">API Dashboard</a> | <a href="../">DarrylBots.com</a></p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">Auto-updates every 2 days • Next update: Feb 3, 2026</p>
+  </footer>
+</body>
+</html>

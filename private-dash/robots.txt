@@ -1,0 +1,3 @@
+# Private dashboards - do not index
+User-agent: *
+Disallow: /private-dash/

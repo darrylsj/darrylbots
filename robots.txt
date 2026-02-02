@@ -1,0 +1,4 @@
+# DarrylBots.com robots.txt
+User-agent: *
+Allow: /
+Disallow: /private-dash/
