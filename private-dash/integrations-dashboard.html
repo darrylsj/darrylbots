@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <title>Integrations | JAMES</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+      min-height: 100vh;
+      padding: 24px;
+      color: #e0e0e0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      color: #ffd700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #888;
+      font-size: 1rem;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px 32px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      min-width: 140px;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffd700;
+    }
+    .stat-label {
+      color: #888;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      color: #fff;
+      margin: 32px auto 16px auto;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 1400px;
+    }
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .integration-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .integration-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    .integration-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .integration-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+    .integration-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .integration-provider {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .integration-status {
+      margin-left: auto;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-active { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+    .status-pending { background: rgba(255, 170, 0, 0.2); color: #ffaa00; }
+    .status-scheduled { background: rgba(100, 149, 237, 0.2); color: #6495ed; }
+    .status-new { background: rgba(255, 100, 255, 0.2); color: #ff88ff; }
+    .integration-details {
+      font-size: 0.85rem;
+      color: #aaa;
+      line-height: 1.5;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label { color: #666; }
+    .detail-value { color: #ddd; font-family: 'SF Mono', Monaco, monospace; font-size: 0.8rem; }
+    .cron-badge {
+      display: inline-block;
+      background: rgba(100, 149, 237, 0.15);
+      color: #6495ed;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      margin-top: 8px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #666;
+    }
+    footer a { color: #ffd700; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      header h1 { font-size: 1.6rem; }
+      .integration-grid { grid-template-columns: 1fr; }
+      .stats-row { gap: 12px; }
+      .stat-card { padding: 16px 24px; min-width: 100px; }
+      .stat-number { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔗 Integrations</h1>
+    <p>JAMES Connected Services • Last Updated: <span id="update-time">February 1, 2026 10:45 PM PST</span></p>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number">18</div>
+      <div class="stat-label">Total Integrations</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">15</div>
+      <div class="stat-label">Active</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Pending Setup</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">9</div>
+      <div class="stat-label">Scheduled Jobs</div>
+    </div>
+  </div>
+
+  <!-- SMART HOME -->
+  <h2 class="section-title">🏠 Smart Home</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">💡</div>
+        <div>
+          <div class="integration-name">Kasa Smart Plugs</div>
+          <div class="integration-provider">TP-Link • python-kasa CLI</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Model</span>
+          <span class="detail-value">KP115 (energy monitor)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Devices</span>
+          <span class="detail-value">4 plugs</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Controls</span>
+          <span class="detail-value">Family Room, Foot, Outdoor, Stairs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🌈</div>
+        <div>
+          <div class="integration-name">Philips Hue</div>
+          <div class="integration-provider">openhue skill</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">openhue</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Lights, scenes, rooms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🌊</div>
+        <div>
+          <div class="integration-name">iAqualink</div>
+          <div class="integration-provider">Pool & Spa Control</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">System</span>
+          <span class="detail-value">Edinburgh (QB42YYJGX223)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">hottub</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Controls</span>
+          <span class="detail-value">Spa, Pool, Heater, Lights</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🔊</div>
+        <div>
+          <div class="integration-name">Sonos</div>
+          <div class="integration-provider">sonoscli skill</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">sonos</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Play, volume, groups</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VEHICLE -->
+  <h2 class="section-title">🚗 Vehicle</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🚗</div>
+        <div>
+          <div class="integration-name">Tessie (Tesla API)</div>
+          <div class="integration-provider">"Blu" • Model Y</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Vehicle</span>
+          <span class="detail-value">2025 Model Y</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">VIN</span>
+          <span class="detail-value">7SAYGDED3TF454222</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">tesla-status</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Cost</span>
+          <span class="detail-value">$4.99/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCE -->
+  <h2 class="section-title">💰 Finance</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">₿</div>
+        <div>
+          <div class="integration-name">Coinbase</div>
+          <div class="integration-provider">Crypto Portfolio</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">API</span>
+          <span class="detail-value">CDP (JWT auth)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Holdings</span>
+          <span class="detail-value">BTC, ETH, ALGO, ADA, NEAR, USDC</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📈</div>
+        <div>
+          <div class="integration-name">Finnhub</div>
+          <div class="integration-provider">Stock Quotes</div>
+        </div>
+        <span class="integration-status status-scheduled">Scheduled</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">stock SYMBOL</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Watching</span>
+          <span class="detail-value">GOOG, CVX, TSLA, ARKK</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Alerts</span>
+          <span class="detail-value">>1% change from open</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ Hourly 7AM-1PM Mon-Fri</span>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📊</div>
+        <div>
+          <div class="integration-name">Covered Call Scanner</div>
+          <div class="integration-provider">TSLA Options</div>
+        </div>
+        <span class="integration-status status-scheduled">Scheduled</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Target</span>
+          <span class="detail-value">TSLA weeklies 10-15% OTM</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Strategy</span>
+          <span class="detail-value">Theta decay, min assignment</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ Monday 7AM PT</span>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">👑</div>
+        <div>
+          <div class="integration-name">Monarch Money</div>
+          <div class="integration-provider">Budget Management</div>
+        </div>
+        <span class="integration-status status-pending">Needs MFA</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">Awaiting YubiKey</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Transactions, budgets</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMUNICATION -->
+  <h2 class="section-title">📧 Communication</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📧</div>
+        <div>
+          <div class="integration-name">Google Workspace</div>
+          <div class="integration-provider">gog CLI</div>
+        </div>
+        <span class="integration-status status-active">OAuth</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Account</span>
+          <span class="detail-value">darrylsj@gmail.com</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Services</span>
+          <span class="detail-value">Gmail, Calendar, Sheets, Drive</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Read, label, organize</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">💬</div>
+        <div>
+          <div class="integration-name">WhatsApp</div>
+          <div class="integration-provider">Primary Channel</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Mode</span>
+          <span class="detail-value">Self-chat connected</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Phone</span>
+          <span class="detail-value">+1 408-219-8485</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">𝕏</div>
+        <div>
+          <div class="integration-name">X (Twitter)</div>
+          <div class="integration-provider">@darrylsj</div>
+        </div>
+        <span class="integration-status status-scheduled">Scheduled</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">API</span>
+          <span class="detail-value">OAuth 2.0 PKCE</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Scopes</span>
+          <span class="detail-value">DM read/write, tweets, users</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">x-dm [count]</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ Hourly 8AM-10PM PT</span>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">💼</div>
+        <div>
+          <div class="integration-name">LinkedIn Monitor</div>
+          <div class="integration-provider">Browser Automation</div>
+        </div>
+        <span class="integration-status status-scheduled">Scheduled</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Method</span>
+          <span class="detail-value">Chrome relay</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Alerts</span>
+          <span class="detail-value">Real humans only</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ 9am/12pm/3pm/6pm Mon-Fri</span>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🔊</div>
+        <div>
+          <div class="integration-name">ElevenLabs TTS</div>
+          <div class="integration-provider">Voice: Charlotte (British)</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Plan</span>
+          <span class="detail-value">Creator ($22/mo)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Limit</span>
+          <span class="detail-value">100K chars/month</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <h2 class="section-title">🍽️ Services</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🍱</div>
+        <div>
+          <div class="integration-name">waiter.com</div>
+          <div class="integration-provider">Box.com Lunch Ordering</div>
+        </div>
+        <span class="integration-status status-scheduled">Scheduled</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Days</span>
+          <span class="detail-value">Tue, Wed, Thu</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Delivery</span>
+          <span class="detail-value">11:45 AM - 12:15 PM</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Budget</span>
+          <span class="detail-value">Under $18 ($13.19 subsidy)</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ 7AM reminder + 7:45AM auto-order</span>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🛒</div>
+        <div>
+          <div class="integration-name">Amazon Fresh</div>
+          <div class="integration-provider">Browser Automation</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Method</span>
+          <span class="detail-value">Chrome relay</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Mode</span>
+          <span class="detail-value">Add to cart only</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Checkout</span>
+          <span class="detail-value">Requires approval</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEB / DEPLOYMENT -->
+  <h2 class="section-title">🌐 Web & Deployment</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">☁️</div>
+        <div>
+          <div class="integration-name">Cloudflare Workers</div>
+          <div class="integration-provider">Static Site Hosting</div>
+        </div>
+        <span class="integration-status status-new">New</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Sites</span>
+          <span class="detail-value">fatronauts.com, darrylbots.com</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Account</span>
+          <span class="detail-value">cfac6fde...96e</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Deploy</span>
+          <span class="detail-value">GitHub Actions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🐙</div>
+        <div>
+          <div class="integration-name">GitHub</div>
+          <div class="integration-provider">darrylsj account</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Repos</span>
+          <span class="detail-value">darrylbots, fatronauts</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">gh</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENDING -->
+  <h2 class="section-title">⚠️ Pending Setup</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📍</div>
+        <div>
+          <div class="integration-name">iCloud Find My</div>
+          <div class="integration-provider">Family Device Tracking</div>
+        </div>
+        <span class="integration-status status-pending">Needs Auth</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Blocker</span>
+          <span class="detail-value">Apple ID authentication</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📚</div>
+        <div>
+          <div class="integration-name">Moltbook</div>
+          <div class="integration-provider">AI Social Network</div>
+        </div>
+        <span class="integration-status status-pending">Auth Issues</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">Writes broken</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Built by JAMES ⚡ | <a href="api-dashboard.html">API Dashboard</a> | <a href="task-board.html">Task Board</a> | <a href="../">DarrylBots.com</a></p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">Auto-updates when integrations change</p>
+  </footer>
+</body>
+</html>
