@@ -345,6 +345,36 @@
       border-radius: 24px;
     }
     
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.05);
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .founder-card img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+    }
+    
+    .founder-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+    
+    .founder-info span {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
     /* News */
     .news {
       padding: 100px 24px;
@@ -645,7 +675,7 @@
         </div>
       </div>
       <div class="hero-image">
-        <img src="../darrylbots-hero-1.png" alt="Friendly robot helping a family">
+        <img src="darrylbots-hero-1.png" alt="Friendly robot helping a family">
         <div class="hero-badge">Est. 2027 🚀</div>
       </div>
     </div>
@@ -697,6 +727,13 @@
   <section class="why-us" id="about">
     <div class="why-us-inner">
       <div class="why-us-content">
+        <div class="founder-card">
+          <img src="darryl-headshot.jpg" alt="Darryl Sladden - Founder">
+          <div class="founder-info">
+            <h3>Darryl Sladden</h3>
+            <span>Founder & Chief Robot Whisperer</span>
+          </div>
+        </div>
         <h2>Why DarrylBots?</h2>
         <p>Founded by a 25-year tech veteran who's been building the future of human-machine interaction since before robots could walk.</p>
         <ul class="features-list">
@@ -719,7 +756,7 @@
         </ul>
       </div>
       <div class="why-us-image">
-        <img src="../darrylbots-repair.png" alt="Robot repair workshop">
+        <img src="darrylbots-repair.png" alt="Robot repair workshop">
       </div>
     </div>
   </section>
