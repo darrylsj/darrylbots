@@ -2,5 +2,13 @@
   "title": "Robot Life Gallery",
   "description": "AI-generated images of humanoid robots helping with everyday tasks",
   "lastUpdated": "2026-02-01",
-  "images": []
+  "images": [
+    {
+      "filename": "robot-folding-laundry.png",
+      "title": "Laundry Day Helper",
+      "description": "A friendly robot carefully folding clothes in a cozy kitchen, bringing warmth and efficiency to household chores.",
+      "date": "February 1, 2026",
+      "task": "Folding laundry"
+    }
+  ]
 }
