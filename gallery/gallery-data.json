@@ -1,14 +1,24 @@
 {
   "title": "Robot Life Gallery",
-  "description": "AI-generated images of humanoid robots helping with everyday tasks",
-  "lastUpdated": "2026-02-01",
+  "description": "AI-generated images and videos of humanoid robots helping with everyday tasks",
+  "lastUpdated": "2026-02-02",
   "images": [
+    {
+      "filename": "robot-garage-cleanup.mp4",
+      "title": "Garage Organization Assistant",
+      "description": "A helpful humanoid robot organizing tools on a pegboard in a residential garage, bringing order to the workshop with smooth, deliberate movements.",
+      "date": "February 2, 2026",
+      "task": "Organizing garage tools",
+      "type": "video",
+      "generator": "xAI Grok Imagine"
+    },
     {
       "filename": "robot-folding-laundry.png",
       "title": "Laundry Day Helper",
       "description": "A friendly robot carefully folding clothes in a cozy kitchen, bringing warmth and efficiency to household chores.",
       "date": "February 1, 2026",
-      "task": "Folding laundry"
+      "task": "Folding laundry",
+      "type": "image"
     }
   ]
 }
