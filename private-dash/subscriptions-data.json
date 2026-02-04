@@ -1,0 +1,135 @@
+{
+  "lastUpdated": "2026-02-04T08:15:00Z",
+  "summary": {
+    "monthlyTotal": 487,
+    "annualProjection": 5844,
+    "activeCount": 12,
+    "needsAttention": 1
+  },
+  "subscriptions": [
+    {
+      "id": "anthropic",
+      "name": "Anthropic API",
+      "description": "Claude AI - JAMES primary model",
+      "category": "tech",
+      "amount": 300,
+      "frequency": "variable",
+      "lastCharge": "2026-02-03",
+      "status": "active",
+      "notes": "Pay-as-you-go API usage"
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "description": "Text-to-speech - Charlotte voice",
+      "category": "tech",
+      "amount": 22,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-30",
+      "status": "active"
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "description": "AI image/video generation",
+      "category": "tech",
+      "amount": 15,
+      "frequency": "variable",
+      "lastCharge": "2026-02-02",
+      "status": "active"
+    },
+    {
+      "id": "x-dev",
+      "name": "X Developer Platform",
+      "description": "Twitter/X API access",
+      "category": "tech",
+      "amount": 100,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-31",
+      "status": "active"
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "description": "Domain hosting & CDN",
+      "category": "tech",
+      "amount": 5,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-02",
+      "status": "active"
+    },
+    {
+      "id": "1password",
+      "name": "1Password",
+      "description": "Password manager",
+      "category": "tech",
+      "amount": 36,
+      "frequency": "annual",
+      "lastCharge": "2026-01-31",
+      "status": "active"
+    },
+    {
+      "id": "patreon-1",
+      "name": "Patreon (Artist 1)",
+      "description": "Olivia's artist subscription",
+      "category": "entertainment",
+      "amount": 18,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-03",
+      "status": "olivia",
+      "notes": "For Olivia - keep"
+    },
+    {
+      "id": "patreon-2",
+      "name": "Patreon (Artist 2)",
+      "description": "Olivia's artist subscription",
+      "category": "entertainment",
+      "amount": 10,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-26",
+      "status": "olivia",
+      "notes": "For Olivia - keep"
+    },
+    {
+      "id": "nytimes",
+      "name": "NY Times",
+      "description": "News subscription",
+      "category": "entertainment",
+      "amount": 4,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-31",
+      "status": "active"
+    },
+    {
+      "id": "google-home",
+      "name": "Google Home Premium",
+      "description": "Nest Aware - Edinburgh cameras",
+      "category": "home",
+      "amount": 15,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-25",
+      "status": "active"
+    },
+    {
+      "id": "rocket-dollar",
+      "name": "Rocket Dollar",
+      "description": "Self-directed IRA custodian",
+      "category": "financial",
+      "amount": 15,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-03",
+      "status": "active"
+    },
+    {
+      "id": "roli-learn",
+      "name": "ROLI Learn",
+      "description": "Music learning platform - payment failing",
+      "category": "attention",
+      "amount": 79,
+      "frequency": "annual",
+      "lastCharge": "2026-01-30",
+      "status": "failed",
+      "notes": "Payment declined - decide to fix or cancel"
+    }
+  ]
+}

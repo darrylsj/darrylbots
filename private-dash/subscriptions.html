@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriptions Tracker | Darryl's Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1rem;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .summary-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .summary-card .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        
+        .summary-card .label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .summary-card.warning .amount {
+            color: #ff6b6b;
+        }
+        
+        .category {
+            margin-bottom: 2rem;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .category-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .category-total {
+            margin-left: auto;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        .subscription-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .subscription-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .subscription-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .sub-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .sub-info .description {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .sub-amount {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .sub-frequency {
+            font-size: 0.8rem;
+            color: #888;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+        }
+        
+        .sub-date {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: right;
+        }
+        
+        .sub-date .label {
+            font-size: 0.7rem;
+            color: #555;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-active {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+        }
+        
+        .status-review {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        
+        .status-failed {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+        
+        .status-olivia {
+            background: rgba(255, 105, 180, 0.2);
+            color: #ff69b4;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #555;
+            font-size: 0.85rem;
+        }
+        
+        .update-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 768px) {
+            .subscription-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .sub-date {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💳 Subscriptions</h1>
+            <p class="subtitle">Monthly recurring charges tracked from Gmail receipts</p>
+        </header>
+        
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="amount" id="total-monthly">$487</div>
+                <div class="label">Monthly Total</div>
+            </div>
+            <div class="summary-card">
+                <div class="amount" id="total-annual">$5,844</div>
+                <div class="label">Annual Projection</div>
+            </div>
+            <div class="summary-card">
+                <div class="amount" id="sub-count">12</div>
+                <div class="label">Active Subscriptions</div>
+            </div>
+            <div class="summary-card warning">
+                <div class="amount" id="needs-review">1</div>
+                <div class="label">Needs Attention</div>
+            </div>
+        </div>
+        
+        <!-- Tech & API -->
+        <div class="category">
+            <div class="category-header">
+                <span>💻</span>
+                <h2>Tech & API</h2>
+                <span class="category-total">~$350/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Anthropic API</h3>
+                        <div class="description">Claude AI - JAMES primary model</div>
+                    </div>
+                    <div class="sub-amount">~$300</div>
+                    <div class="sub-frequency">Variable</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 3, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>ElevenLabs</h3>
+                        <div class="description">Text-to-speech - Charlotte voice</div>
+                    </div>
+                    <div class="sub-amount">$22</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 30, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Replicate</h3>
+                        <div class="description">AI image/video generation</div>
+                    </div>
+                    <div class="sub-amount">~$15</div>
+                    <div class="sub-frequency">Variable</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 2, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>X Developer Platform</h3>
+                        <div class="description">Twitter/X API access</div>
+                    </div>
+                    <div class="sub-amount">$100</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 31, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Cloudflare</h3>
+                        <div class="description">Domain hosting & CDN</div>
+                    </div>
+                    <div class="sub-amount">$5</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 2, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>1Password</h3>
+                        <div class="description">Password manager</div>
+                    </div>
+                    <div class="sub-amount">$36</div>
+                    <div class="sub-frequency">Annual</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 31, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Entertainment & Content -->
+        <div class="category">
+            <div class="category-header">
+                <span>🎬</span>
+                <h2>Entertainment & Content</h2>
+                <span class="category-total">$32/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Patreon (Artist 1)</h3>
+                        <div class="description">Olivia's artist subscription</div>
+                    </div>
+                    <div class="sub-amount">$18</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 3, 2026</div>
+                        <span class="status-badge status-olivia">Olivia</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Patreon (Artist 2)</h3>
+                        <div class="description">Olivia's artist subscription</div>
+                    </div>
+                    <div class="sub-amount">$10</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 26, 2026</div>
+                        <span class="status-badge status-olivia">Olivia</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>NY Times</h3>
+                        <div class="description">News subscription</div>
+                    </div>
+                    <div class="sub-amount">$4</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 31, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Home & Utilities -->
+        <div class="category">
+            <div class="category-header">
+                <span>🏠</span>
+                <h2>Home & Utilities</h2>
+                <span class="category-total">$15/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Google Home Premium</h3>
+                        <div class="description">Nest Aware - Edinburgh cameras</div>
+                    </div>
+                    <div class="sub-amount">$15</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Jan 25, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Financial -->
+        <div class="category">
+            <div class="category-header">
+                <span>💰</span>
+                <h2>Financial Services</h2>
+                <span class="category-total">$15/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Rocket Dollar</h3>
+                        <div class="description">Self-directed IRA custodian</div>
+                    </div>
+                    <div class="sub-amount">$15</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 3, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Needs Attention -->
+        <div class="category">
+            <div class="category-header">
+                <span>⚠️</span>
+                <h2>Needs Attention</h2>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card" style="border-color: rgba(255, 107, 107, 0.3);">
+                    <div class="sub-info">
+                        <h3>ROLI Learn</h3>
+                        <div class="description">Music learning platform - payment failing</div>
+                    </div>
+                    <div class="sub-amount">$79</div>
+                    <div class="sub-frequency">Annual</div>
+                    <div class="sub-date">
+                        <div class="label">Failed</div>
+                        <div>Jan 30, 2026</div>
+                        <span class="status-badge status-failed">Payment Failed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Tracked automatically by JAMES from Gmail receipts</p>
+            <div class="update-info">
+                <span class="pulse"></span>
+                <span>Last updated: <span id="last-update">Feb 4, 2026 12:15 AM</span></span>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Update timestamp
+        document.getElementById('last-update').textContent = new Date().toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    </script>
+</body>
+</html>
