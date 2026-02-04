@@ -1,8 +1,17 @@
 {
   "title": "Robot Life Gallery",
   "description": "AI-generated images and videos of humanoid robots helping with everyday tasks",
-  "lastUpdated": "2026-02-02",
+  "lastUpdated": "2026-02-04",
   "images": [
+    {
+      "filename": "robot-groceries-20260204.png",
+      "title": "Grocery Run Assistant",
+      "description": "A helpful humanoid robot carrying grocery bags, ready to assist with the weekly shopping trip.",
+      "date": "February 4, 2026",
+      "task": "Carrying groceries",
+      "type": "image",
+      "generator": "xAI Grok Imagine"
+    },
     {
       "filename": "robot-garage-cleanup.mp4",
       "title": "Garage Organization Assistant",
