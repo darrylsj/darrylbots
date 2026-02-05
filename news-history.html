@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Archive | DarrylBots</title>
+  <meta name="description" content="Archive of robotics and AI news curated by DarrylBots.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #2563EB;
+      --accent: #F97316;
+      --dark: #0F172A;
+      --gray: #64748B;
+      --light: #F8FAFC;
+      --white: #FFFFFF;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+    
+    /* Nav */
+    nav {
+      background: var(--white);
+      padding: 16px 24px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    
+    .logo-text span { color: var(--accent); }
+    
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .nav-links a:hover { color: var(--primary); }
+    
+    .nav-cta {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    
+    .nav-cta:hover { background: var(--primary-dark); }
+    
+    /* Main Content */
+    main {
+      padding: 120px 24px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .page-header {
+      margin-bottom: 48px;
+    }
+    
+    .page-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    
+    .page-header p {
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    
+    .back-link:hover { text-decoration: underline; }
+    
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    
+    .news-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    
+    .news-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .news-card-content { padding: 20px; }
+    
+    .news-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .news-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    
+    .news-card p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .news-date {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+    
+    /* Month Divider */
+    .month-divider {
+      font-size: 1.3rem;
+      color: var(--dark);
+      margin: 40px 0 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #94A3B8;
+      padding: 40px 24px;
+      text-align: center;
+      margin-top: 60px;
+    }
+    
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    
+    @media (max-width: 768px) {
+      .news-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .page-header h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <div class="logo-icon">🤖</div>
+        <div class="logo-text">Darryl<span>Bots</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="showroom.html">Meet the Bots</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="gallery/">Gallery</a></li>
+      </ul>
+      <a href="index.html#newsletter" class="nav-cta">Get Updates</a>
+    </div>
+  </nav>
+
+  <main>
+    <a href="index.html#news" class="back-link">← Back to Latest News</a>
+    
+    <div class="page-header">
+      <h1>📰 News Archive</h1>
+      <p>Past robotics and AI news curated by JAMES, our AI assistant</p>
+    </div>
+
+    <!-- February 2026 -->
+    <h2 class="month-divider">📅 February 2026</h2>
+    <div class="news-grid">
+      <a href="https://blog.robozaps.com/b/best-humanoid-robots" class="news-card" target="_blank">
+        <img src="https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?w=800&h=400&fit=crop" alt="Humanoid robots comparison">
+        <div class="news-card-content">
+          <span class="news-tag">Comparison</span>
+          <h3>22 Best Humanoid Robots Ranked & Compared [2026]</h3>
+          <p>Complete breakdown: Figure 03, Optimus, NEO, Atlas and 18 more. Specs, prices, availability.</p>
+          <div class="news-date">Added: Feb 1, 2026</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- January 2026 -->
+    <h2 class="month-divider">📅 January 2026</h2>
+    <div class="news-grid">
+      <a href="https://www.foxbusiness.com/economy/elon-musk-says-tesla-likely-sell-humanoid-robots-end-next-year" class="news-card" target="_blank">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=400&fit=crop" alt="Tesla Optimus">
+        <div class="news-card-content">
+          <span class="news-tag">Breaking</span>
+          <h3>Elon Musk: Tesla Optimus for Public Sale by End of 2027</h3>
+          <p>Production begins end of 2026, consumer availability expected within 18 months.</p>
+          <div class="news-date">Added: Jan 28, 2026</div>
+        </div>
+      </a>
+      <a href="https://www.cnet.com/tech/considering-buying-a-20k-home-robot-theres-something-you-need-to-know-first/" class="news-card" target="_blank">
+        <img src="https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&h=400&fit=crop" alt="1X NEO Robot">
+        <div class="news-card-content">
+          <span class="news-tag">Buying Guide</span>
+          <h3>1X NEO: What to Know Before Buying a $20K Home Robot</h3>
+          <p>CNET's deep dive into the first consumer humanoid — capabilities, limitations, and value.</p>
+          <div class="news-date">Added: Jan 25, 2026</div>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 DarrylBots | <a href="index.html">Home</a> | <a href="index.html#news">Latest News</a></p>
+    <p style="margin-top: 8px; font-size: 0.85rem;">News curated daily by JAMES using DeepSeek R1</p>
+  </footer>
+</body>
+</html>
