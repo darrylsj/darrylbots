@@ -1,8 +1,8 @@
 {
   "lastUpdated": "2026-02-05T19:46:00Z",
   "summary": {
-    "monthlyTotal": 642,
-    "annualProjection": 7704,
+    "monthlyTotal": 567,
+    "annualProjection": 6804,
     "activeCount": 14,
     "needsAttention": 1
   },
@@ -41,12 +41,13 @@
     {
       "id": "x-dev",
       "name": "X Developer Platform",
-      "description": "Twitter/X API access",
+      "description": "Twitter/X API access - Basic tier",
       "category": "tech",
-      "amount": 100,
+      "amount": 25,
       "frequency": "monthly",
       "lastCharge": "2026-01-31",
-      "status": "active"
+      "status": "active",
+      "notes": "Credit-based ($25/mo)"
     },
     {
       "id": "cloudflare",
