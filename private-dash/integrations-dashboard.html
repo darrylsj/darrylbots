@@ -167,24 +167,24 @@
 <body>
   <header>
     <h1>🔗 Integrations</h1>
-    <p>JAMES Connected Services • Last Updated: <span id="update-time">February 3, 2026 5:52 PM PST</span></p>
+    <p>JAMES Connected Services • Last Updated: <span id="update-time">February 5, 2026 8:50 AM PST</span></p>
   </header>
 
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-number">22</div>
+      <div class="stat-number">24</div>
       <div class="stat-label">Total Integrations</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">19</div>
+      <div class="stat-number">22</div>
       <div class="stat-label">Active</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">3</div>
-      <div class="stat-label">Skipped/Issues</div>
+      <div class="stat-number">2</div>
+      <div class="stat-label">Skipped</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">9</div>
+      <div class="stat-number">11</div>
       <div class="stat-label">Scheduled Jobs</div>
     </div>
   </div>
@@ -510,9 +510,9 @@
         <div class="integration-icon">💬</div>
         <div>
           <div class="integration-name">WhatsApp</div>
-          <div class="integration-provider">Primary Channel</div>
+          <div class="integration-provider">Primary Channel + Monitor</div>
         </div>
-        <span class="integration-status status-active">Active</span>
+        <span class="integration-status status-scheduled">Monitored</span>
       </div>
       <div class="integration-details">
         <div class="detail-row">
@@ -523,7 +523,16 @@
           <span class="detail-label">Phone</span>
           <span class="detail-value">+1 408-219-8485</span>
         </div>
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">wacli</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Send, sync history, alerts</span>
+        </div>
       </div>
+      <span class="cron-badge">⏰ 9 AM & 6 PM daily</span>
     </div>
 
     <div class="integration-card">
@@ -533,7 +542,7 @@
           <div class="integration-name">X (Twitter)</div>
           <div class="integration-provider">@darrylsj</div>
         </div>
-        <span class="integration-status status-scheduled">Scheduled</span>
+        <span class="integration-status status-active">Active</span>
       </div>
       <div class="integration-details">
         <div class="detail-row">
@@ -542,14 +551,18 @@
         </div>
         <div class="detail-row">
           <span class="detail-label">Scopes</span>
-          <span class="detail-value">DM read/write, tweets, users</span>
+          <span class="detail-value">DM read/write, tweet.write, users</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Post tweets, Read/Send DMs</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">CLI</span>
-          <span class="detail-value">x-dm [count]</span>
+          <span class="detail-value">x-dm, x-post</span>
         </div>
       </div>
-      <span class="cron-badge">⏰ Hourly 8AM-10PM PT</span>
+      <span class="cron-badge">⏰ DM Monitor: Hourly 8AM-10PM PT</span>
     </div>
 
     <div class="integration-card">
@@ -730,8 +743,34 @@
     </div>
   </div>
 
+  <!-- SOCIAL -->
+  <h2 class="section-title">🌐 AI Social</h2>
+  <div class="integration-grid">
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📚</div>
+        <div>
+          <div class="integration-name">Moltbook</div>
+          <div class="integration-provider">AI Social Network</div>
+        </div>
+        <span class="integration-status status-active">Fixed</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">All operations working</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Post, comment, upvote</span>
+        </div>
+      </div>
+      <span class="cron-badge">⏰ Every 4 hours heartbeat</span>
+    </div>
+  </div>
+
   <!-- PENDING -->
-  <h2 class="section-title">⏸️ Skipped / Issues</h2>
+  <h2 class="section-title">⏸️ Skipped</h2>
   <div class="integration-grid">
     <div class="integration-card" style="opacity: 0.6;">
       <div class="integration-header">
@@ -763,23 +802,6 @@
         <div class="detail-row">
           <span class="detail-label">Reason</span>
           <span class="detail-value">User preference</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="integration-card">
-      <div class="integration-header">
-        <div class="integration-icon">📚</div>
-        <div>
-          <div class="integration-name">Moltbook</div>
-          <div class="integration-provider">AI Social Network</div>
-        </div>
-        <span class="integration-status status-pending">Auth Issues</span>
-      </div>
-      <div class="integration-details">
-        <div class="detail-row">
-          <span class="detail-label">Status</span>
-          <span class="detail-value">Writes broken</span>
         </div>
       </div>
     </div>
