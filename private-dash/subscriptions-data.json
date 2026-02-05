@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-02-04T08:15:00Z",
+  "lastUpdated": "2026-02-05T19:46:00Z",
   "summary": {
-    "monthlyTotal": 487,
-    "annualProjection": 5844,
-    "activeCount": 12,
+    "monthlyTotal": 642,
+    "annualProjection": 7704,
+    "activeCount": 14,
     "needsAttention": 1
   },
   "subscriptions": [
@@ -14,9 +14,9 @@
       "category": "tech",
       "amount": 300,
       "frequency": "variable",
-      "lastCharge": "2026-02-03",
+      "lastCharge": "2026-02-02",
       "status": "active",
-      "notes": "Pay-as-you-go API usage"
+      "notes": "Pay-as-you-go API usage, multiple charges daily"
     },
     {
       "id": "elevenlabs",
@@ -53,10 +53,11 @@
       "name": "Cloudflare",
       "description": "Domain hosting & CDN",
       "category": "tech",
-      "amount": 5,
+      "amount": 10,
       "frequency": "monthly",
       "lastCharge": "2026-02-02",
-      "status": "active"
+      "status": "active",
+      "notes": "Multiple domains"
     },
     {
       "id": "1password",
@@ -107,7 +108,7 @@
       "category": "home",
       "amount": 15,
       "frequency": "monthly",
-      "lastCharge": "2026-01-25",
+      "lastCharge": "2026-02-01",
       "status": "active"
     },
     {
@@ -121,15 +122,69 @@
       "status": "active"
     },
     {
+      "id": "tesla-insurance",
+      "name": "Tesla Insurance",
+      "description": "Auto insurance - Model Y (Blu)",
+      "category": "home",
+      "amount": 95,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-05",
+      "status": "active"
+    },
+    {
+      "id": "luna-pt",
+      "name": "Luna Physical Therapy",
+      "description": "PT sessions - femur recovery",
+      "category": "health",
+      "amount": 50,
+      "frequency": "variable",
+      "lastCharge": "2026-02-02",
+      "status": "active",
+      "notes": "Monday sessions"
+    },
+    {
+      "id": "sppworld",
+      "name": "Sigma Pi Phi (SPPWorld)",
+      "description": "Epsilon Beta - Boulé membership",
+      "category": "membership",
+      "amount": 0,
+      "frequency": "annual",
+      "lastCharge": "2026-02-05",
+      "status": "active",
+      "notes": "Renewal invoice received - check amount"
+    },
+    {
       "id": "roli-learn",
       "name": "ROLI Learn",
-      "description": "Music learning platform - payment failing",
+      "description": "Music learning platform",
       "category": "attention",
       "amount": 79,
       "frequency": "annual",
       "lastCharge": "2026-01-30",
-      "status": "failed",
-      "notes": "Payment declined - decide to fix or cancel"
+      "status": "cancelling",
+      "notes": "Cancellation request sent 2026-02-05"
+    },
+    {
+      "id": "manus",
+      "name": "Manus AI",
+      "description": "AI agent platform",
+      "category": "tech",
+      "amount": 39,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-02",
+      "status": "expired",
+      "notes": "Subscription expired 2026-02-02 - not renewed"
+    },
+    {
+      "id": "squarespace",
+      "name": "Squarespace",
+      "description": "Website builder",
+      "category": "tech",
+      "amount": 16,
+      "frequency": "monthly",
+      "lastCharge": "2026-01-01",
+      "status": "cancelled",
+      "notes": "Won't renew - cancelled"
     }
   ]
 }
