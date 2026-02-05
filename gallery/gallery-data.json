@@ -6,11 +6,11 @@
     {
       "filename": "robot-groceries-20260204.png",
       "title": "Grocery Run Assistant",
-      "description": "A helpful humanoid robot carrying grocery bags, ready to assist with the weekly shopping trip.",
+      "description": "A friendly humanoid robot carrying grocery bags up the driveway toward a suburban home on a sunny afternoon.",
       "date": "February 4, 2026",
       "task": "Carrying groceries",
       "type": "image",
-      "generator": "xAI Grok Imagine"
+      "generator": "OpenAI DALL-E 3"
     },
     {
       "filename": "robot-garage-cleanup.mp4",
