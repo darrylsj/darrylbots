@@ -215,7 +215,7 @@
 <body>
   <header>
     <h1>🔑 API Dashboard</h1>
-    <p>JAMES API Integrations • Last Updated: <span id="update-time">February 5, 2026 8:50 AM PST</span></p>
+    <p>JAMES API Integrations • Last Updated: <span id="update-time">February 5, 2026 10:10 AM PST</span></p>
   </header>
 
   <!-- VERIFIED COSTS BANNER -->
@@ -278,7 +278,7 @@
     </div>
   </div>
 
-  <h2 class="section-title">🧠 AI / LLM APIs</h2>
+  <h2 class="section-title">🧠 AI / LLM APIs (6 Providers)</h2>
   
   <div class="api-grid">
     <!-- Anthropic -->
@@ -289,7 +289,7 @@
           <div class="api-name">Anthropic Claude</div>
           <div class="api-provider">Primary LLM • Claude Opus 4.5</div>
         </div>
-        <span class="api-status status-active">Active</span>
+        <span class="api-status status-active">Primary</span>
       </div>
       <div class="api-details">
         <div class="detail-item">
@@ -310,72 +310,42 @@
         </div>
       </div>
       <div class="detail-item" style="margin-top: 12px;">
-        <div class="detail-label">Feb 1-3 Cost</div>
-        <div class="detail-value" style="color: #ffd700; font-size: 1.3rem;">$344.74</div>
+        <div class="detail-label">Jobs Using</div>
+        <div class="detail-value">Main session, Lunch orders, Weekly editor</div>
       </div>
     </div>
 
-    <!-- OpenAI -->
-    <div class="api-card">
+    <!-- DeepSeek (NEW) -->
+    <div class="api-card" style="border: 1px solid rgba(0, 255, 136, 0.3);">
       <div class="api-header">
-        <div class="api-icon">🤖</div>
+        <div class="api-icon">🌊</div>
         <div>
-          <div class="api-name">OpenAI</div>
-          <div class="api-provider">DALL-E 3 • Whisper</div>
+          <div class="api-name">DeepSeek</div>
+          <div class="api-provider">V3 Chat • R1 Reasoner</div>
         </div>
-        <span class="api-status status-active">Active</span>
+        <span class="api-status" style="background: rgba(0, 255, 136, 0.2); color: #00ff88;">NEW</span>
       </div>
       <div class="api-details">
         <div class="detail-item">
-          <div class="detail-label">Image Gen</div>
-          <div class="detail-value">DALL-E 3</div>
+          <div class="detail-label">V3 Chat</div>
+          <div class="detail-value">$0.14 / $0.28</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Transcription</div>
-          <div class="detail-value">Whisper</div>
+          <div class="detail-label">R1 Reasoner</div>
+          <div class="detail-value">$0.55 / $2.19</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Image Price</div>
-          <div class="detail-value">$0.04-0.12/img</div>
+          <div class="detail-label">Context</div>
+          <div class="detail-value">64K tokens</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Whisper Price</div>
-          <div class="detail-value">$0.006/min</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- xAI Grok -->
-    <div class="api-card">
-      <div class="api-header">
-        <div class="api-icon">🅧</div>
-        <div>
-          <div class="api-name">xAI Grok</div>
-          <div class="api-provider">Grok-3 Fast • Imagine API</div>
-        </div>
-        <span class="api-status status-active">Active</span>
-      </div>
-      <div class="api-details">
-        <div class="detail-item">
-          <div class="detail-label">Credits</div>
-          <div class="detail-value">$24.53 remaining</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Feb Usage</div>
-          <div class="detail-value">$0.45</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Input Price</div>
-          <div class="detail-value">$5/M tokens</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Output Price</div>
-          <div class="detail-value">$15/M tokens</div>
+          <div class="detail-label">Cache Discount</div>
+          <div class="detail-value">90% on hits</div>
         </div>
       </div>
       <div class="detail-item" style="margin-top: 12px;">
-        <div class="detail-label">Use Cases</div>
-        <div class="detail-value">Morning Digest, Image/Video Gen</div>
+        <div class="detail-label">Jobs Using</div>
+        <div class="detail-value">📚 Fat Astronauts Book Writer (R1)</div>
       </div>
     </div>
 
@@ -408,9 +378,159 @@
         </div>
       </div>
       <div class="detail-item" style="margin-top: 12px;">
-        <div class="detail-label">Use Cases</div>
-        <div class="detail-value">Sub-agents, Cron Jobs, Background Tasks</div>
+        <div class="detail-label">Jobs Using (15+)</div>
+        <div class="detail-value">Sub-agents, Most cron jobs, Morning Digest</div>
       </div>
+    </div>
+
+    <!-- Gemini -->
+    <div class="api-card">
+      <div class="api-header">
+        <div class="api-icon">💎</div>
+        <div>
+          <div class="api-name">Google Gemini</div>
+          <div class="api-provider">2.5 Flash • 2.5 Pro</div>
+        </div>
+        <span class="api-status status-active">Heartbeat</span>
+      </div>
+      <div class="api-details">
+        <div class="detail-item">
+          <div class="detail-label">2.5 Flash</div>
+          <div class="detail-value">$0.075 / $0.30</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">2.5 Pro</div>
+          <div class="detail-value">$1.25 / $10</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Context</div>
+          <div class="detail-value">1M tokens</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Capabilities</div>
+          <div class="detail-value">Text + Vision + TTS</div>
+        </div>
+      </div>
+      <div class="detail-item" style="margin-top: 12px;">
+        <div class="detail-label">Jobs Using</div>
+        <div class="detail-value">Heartbeats (every 30m)</div>
+      </div>
+    </div>
+
+    <!-- xAI Grok -->
+    <div class="api-card">
+      <div class="api-header">
+        <div class="api-icon">🅧</div>
+        <div>
+          <div class="api-name">xAI Grok</div>
+          <div class="api-provider">Grok-3 Fast • Imagine API</div>
+        </div>
+        <span class="api-status status-active">Active</span>
+      </div>
+      <div class="api-details">
+        <div class="detail-item">
+          <div class="detail-label">Credits</div>
+          <div class="detail-value">$24.53 remaining</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Feb Usage</div>
+          <div class="detail-value">$0.45</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Input Price</div>
+          <div class="detail-value">$5/M tokens</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Output Price</div>
+          <div class="detail-value">$15/M tokens</div>
+        </div>
+      </div>
+      <div class="detail-item" style="margin-top: 12px;">
+        <div class="detail-label">Jobs Using</div>
+        <div class="detail-value">Robot Gallery (Image Gen)</div>
+      </div>
+    </div>
+
+    <!-- OpenAI -->
+    <div class="api-card">
+      <div class="api-header">
+        <div class="api-icon">🤖</div>
+        <div>
+          <div class="api-name">OpenAI</div>
+          <div class="api-provider">DALL-E 3 • Whisper</div>
+        </div>
+        <span class="api-status status-active">Active</span>
+      </div>
+      <div class="api-details">
+        <div class="detail-item">
+          <div class="detail-label">Image Gen</div>
+          <div class="detail-value">DALL-E 3</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Transcription</div>
+          <div class="detail-value">Whisper</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Image Price</div>
+          <div class="detail-value">$0.04-0.12/img</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Whisper Price</div>
+          <div class="detail-value">$0.006/min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODEL DISTRIBUTION -->
+  <h2 class="section-title">📊 Cron Job Model Distribution</h2>
+  <div class="api-grid">
+    <div class="api-card" style="grid-column: span 2;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <th style="text-align: left; padding: 12px; color: #888;">Model</th>
+            <th style="text-align: center; padding: 12px; color: #888;">Jobs</th>
+            <th style="text-align: right; padding: 12px; color: #888;">Cost</th>
+            <th style="text-align: left; padding: 12px; color: #888;">Example Jobs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: rgba(0,255,136,0.05);">
+            <td style="padding: 12px;">🟢 Kimi K2.5 (NVIDIA)</td>
+            <td style="padding: 12px; text-align: center; font-weight: bold; color: #00ff88;">15</td>
+            <td style="padding: 12px; text-align: right; color: #00ff88;">FREE</td>
+            <td style="padding: 12px; color: #888;">Morning Digest, Moltbook, LinkedIn, Covered Calls</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;">🌊 DeepSeek R1</td>
+            <td style="padding: 12px; text-align: center; font-weight: bold;">2</td>
+            <td style="padding: 12px; text-align: right; color: #ffd700;">$0.55/$2.19</td>
+            <td style="padding: 12px; color: #888;">Fat Astronauts Book Writer (Nightly)</td>
+          </tr>
+          <tr style="background: rgba(255,255,255,0.02);">
+            <td style="padding: 12px;">💎 Gemini 2.5 Flash</td>
+            <td style="padding: 12px; text-align: center; font-weight: bold;">1</td>
+            <td style="padding: 12px; text-align: right; color: #ffd700;">$0.075/$0.30</td>
+            <td style="padding: 12px; color: #888;">Heartbeats (every 30m)</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;">🧠 Claude Opus 4.5</td>
+            <td style="padding: 12px; text-align: center; font-weight: bold;">3</td>
+            <td style="padding: 12px; text-align: right; color: #ff6644;">$15/$75</td>
+            <td style="padding: 12px; color: #888;">Lunch Orders, Weekly Book Editor</td>
+          </tr>
+          <tr style="background: rgba(255,255,255,0.02);">
+            <td style="padding: 12px;">🎭 Claude Sonnet 4</td>
+            <td style="padding: 12px; text-align: center; font-weight: bold;">1</td>
+            <td style="padding: 12px; text-align: right; color: #ffaa00;">$3/$15</td>
+            <td style="padding: 12px; color: #888;">Danville Family Events</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top: 16px;">
+        ✅ 15 of 22 cron jobs now use FREE Kimi K2.5 • Heartbeats use cheap Gemini Flash • Book writing uses DeepSeek R1 for reasoning
+      </p>
     </div>
   </div>
 
@@ -587,7 +707,17 @@
             <td style="padding: 12px; color: #888;">Free</td>
             <td style="padding: 12px; text-align: right; color: #00ff88;">$0</td>
           </tr>
+          <tr>
+            <td style="padding: 12px;">DeepSeek (R1 + V3)</td>
+            <td style="padding: 12px; color: #888;">Pay-per-token</td>
+            <td style="padding: 12px; text-align: right; color: #ffd700;">~$5</td>
+          </tr>
           <tr style="background: rgba(255,255,255,0.02);">
+            <td style="padding: 12px;">Google Gemini (Heartbeat)</td>
+            <td style="padding: 12px; color: #888;">Pay-per-token</td>
+            <td style="padding: 12px; text-align: right; color: #ffd700;">~$2</td>
+          </tr>
+          <tr>
             <td style="padding: 12px;">Tessie (Tesla)</td>
             <td style="padding: 12px; color: #888;">Subscription</td>
             <td style="padding: 12px; text-align: right; color: #ffd700;">$5</td>
