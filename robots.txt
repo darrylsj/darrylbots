@@ -1,4 +1,3 @@
-# DarrylBots.com robots.txt
 User-agent: *
-Allow: /
+Disallow: /writers-room/
 Disallow: /private-dash/

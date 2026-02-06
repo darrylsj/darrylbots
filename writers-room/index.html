@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Fat Astronauts - Writers Room</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121a;
+            --accent: #00d4ff;
+            --accent2: #ff6b35;
+            --text: #e0e0e0;
+            --text-dim: #888;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--accent);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+        
+        h2 {
+            color: var(--accent2);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent2);
+        }
+        
+        h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        .character-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .character-card.love-interest {
+            border-left-color: #ff69b4;
+        }
+        
+        .character-card.superpower {
+            border-left-color: var(--accent2);
+        }
+        
+        .character-card h3 {
+            margin-top: 0;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .tag.pink { background: #ff69b4; }
+        .tag.orange { background: var(--accent2); }
+        .tag.green { background: #00cc66; }
+        
+        ul {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+        }
+        
+        li {
+            margin: 0.3rem 0;
+        }
+        
+        .notes-section {
+            background: #1a1a25;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px dashed #444;
+        }
+        
+        .notes-section h2 {
+            color: #aaa;
+            border-bottom-color: #444;
+        }
+        
+        .timestamp {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        
+        .question {
+            background: #2a2a35;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 3px solid #ffcc00;
+        }
+        
+        .private-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .private-banner span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="private-banner">
+        🔒 <span>PRIVATE WRITERS ROOM</span> — Not indexed, not linked. For development only.
+    </div>
+
+    <h1>🚀 Fat Astronauts</h1>
+    <p class="subtitle">Story Development Notes • Last updated: February 6, 2026</p>
+
+    <!-- PREMISE -->
+    <h2>📖 Premise</h2>
+    <p>Fat astronauts are selected because their visceral fat protects them in space. They compete against China's elite thin athletes (who keep dying). Comedy training, romance, and heroism ensue.</p>
+
+    <!-- CHARACTERS -->
+    <h2>👥 Characters</h2>
+
+    <div class="character-card">
+        <h3><span class="tag green">LEAD</span> Rocket Man</h3>
+        <p>Second fat astronaut selected. The romantic lead — insecure about his looks but smart and funny. Falls for Sammy.</p>
+        <ul>
+            <li><strong>Arc:</strong> Learns to see himself the way Sammy sees him</li>
+            <li><strong>Conflict:</strong> Buff Saboteur tries to steal Sammy</li>
+        </ul>
+    </div>
+
+    <div class="character-card">
+        <h3><span class="tag green">LEAD</span> Sergey</h3>
+        <p>The first fat astronaut. Pioneer who proved the concept works.</p>
+    </div>
+
+    <div class="character-card love-interest">
+        <h3><span class="tag pink">LOVE INTEREST</span> Sammy — NASA Trainer</h3>
+        <p>Hot female trainer. Valedictorian at her school — always been the smartest one and extremely successful.</p>
+        <ul>
+            <li><strong>The Problem:</strong> Always been seen as "too pretty" — people assume she's beautiful but dumb</li>
+            <li><strong>Her Filter:</strong> Anyone who approached her and didn't appreciate her mind first got zero time of day</li>
+            <li><strong>Result:</strong> No major boyfriends — she's rejected everyone who led with attraction over intellect</li>
+            <li><strong>Why Rocket Man:</strong> She'll appreciate him for who he IS, not despite what he looks like. He leads with humor and smarts.</li>
+        </ul>
+        <p><strong>Arc:</strong> Initially all-business, focused on training. Gradually sees Rocket Man's intelligence, humor, heart. Falls for the person everyone else overlooks.</p>
+    </div>
+
+    <div class="character-card superpower">
+        <h3><span class="tag orange">SUPERPOWER</span> "Nimble Fingers" — Fine Motor Specialist</h3>
+        <p>Fat woman with INCREDIBLE finger dexterity. Master crocheter — her hobby reveals her superpower.</p>
+        <ul>
+            <li><strong>Superpower:</strong> Can do ultra-precise fine motor work even in bulky space gloves</li>
+            <li><strong>Why It Works:</strong> Subverts expectation that big = clumsy</li>
+            <li><strong>Comedy:</strong> Teaching astronauts to crochet as training</li>
+            <li><strong>Mission Role:</strong> Repairs delicate equipment, performs micro-work others can't</li>
+        </ul>
+    </div>
+
+    <div class="character-card superpower">
+        <h3><span class="tag orange">SUPERPOWER</span> "The Whisperer" — Vibration Sensor</h3>
+        <p>Extremely overweight mechanic/engineer. Can FEEL machinery problems through vibrations.</p>
+        <ul>
+            <li><strong>Method:</strong> Presses his belly against equipment and "listens" with his body</li>
+            <li><strong>Science:</strong> Fat tissue acts like a resonance chamber — detects micro-vibrations others miss</li>
+            <li><strong>Superpower:</strong> Diagnoses mechanical failures before they happen. "The ship is humming wrong" — and he's always right.</li>
+            <li><strong>Backstory:</strong> People mocked him for pressing against machines. "You're not a doctor, you're just weird." In space, he saves everyone.</li>
+        </ul>
+    </div>
+
+    <div class="character-card">
+        <h3><span class="tag">ANTAGONIST</span> Buff Saboteur</h3>
+        <p>Pretends to be fat to get on the mission. Tries to steal Sammy from Rocket Man. All surface, no substance — the exact type Sammy has always rejected.</p>
+    </div>
+
+    <!-- PLOT BEATS -->
+    <h2>📋 Plot Beats</h2>
+    <ol>
+        <li><strong>Selection</strong> — Fat = survival advantage discovered</li>
+        <li><strong>Comedy Training</strong> — Eating requirements, moving in suits</li>
+        <li><strong>US vs China</strong> — Rivalry setup</li>
+        <li><strong>Romance Develops</strong> — Rocket Man + Sammy</li>
+        <li><strong>Saboteur Causes Problems</strong> — Conflict escalates</li>
+        <li><strong>Mission Launch</strong></li>
+        <li><strong>Chinese Mission Fails</strong> — 3rd time</li>
+        <li><strong>Fat Americans Save Chinese</strong> — Heroism</li>
+        <li><strong>Romance Resolves</strong> — Saboteur exposed</li>
+    </ol>
+
+    <!-- OPEN QUESTIONS -->
+    <h2>❓ Open Questions</h2>
+    <div class="question">What's the specific critical task only "Nimble Fingers" can do?</div>
+    <div class="question">How do the Chinese astronauts fail? (Dramatic but not offensive)</div>
+    <div class="question">What's the Buff Saboteur's actual plan/motivation?</div>
+    <div class="question">Do we want a "team assembly" montage like Armageddon?</div>
+
+    <!-- RAW NOTES -->
+    <div class="notes-section">
+        <h2>📝 Raw Notes</h2>
+        
+        <p class="timestamp">2026-02-06 3:26 AM (Darryl):</p>
+        <ul>
+            <li>Sammy: Valedictorian, smart but seen as pretty/dumb, rejects shallow men, no major boyfriends</li>
+            <li>Nimble Fingers: Fat woman, crocheter, amazing fine motor dexterity, can work in big gloves</li>
+            <li>Need weird "fat superpowers" for space</li>
+        </ul>
+
+        <p class="timestamp">2026-02-06 3:26 AM (JAMES suggestions):</p>
+        <ul>
+            <li>The Whisperer — vibration detection via belly ✅ SELECTED</li>
+            <li>The Anchor — mass = stability in zero-G</li>
+            <li>The Insulator — fat = temperature regulation</li>
+            <li>The Cushion — impact absorption</li>
+        </ul>
+
+        <p><em>Add more notes below as we develop...</em></p>
+    </div>
+
+    <footer>
+        🚀 Fat Astronauts Writers Room — darrylbots.com/writers-room<br>
+        <em>This page is not indexed and not linked from the main site.</em>
+    </footer>
+</body>
+</html>
