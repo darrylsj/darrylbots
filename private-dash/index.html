@@ -61,6 +61,33 @@
       font-size: 2.5rem;
       margin-bottom: 8px;
     }
+    a small {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #00ff88;
+      margin-top: 4px;
+    }
+    a.live {
+      border-color: rgba(0, 255, 136, 0.3);
+      position: relative;
+    }
+    a.live::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px #00ff88; }
+      50% { opacity: 0.4; box-shadow: 0 0 12px #00ff88; }
+    }
     .note {
       margin-top: 48px;
       font-size: 0.85rem;
@@ -71,9 +98,18 @@
 <body>
   <div class="container">
     <h1>⚡ JAMES</h1>
-    <p>Private Dashboards • Updated Every 2 Days</p>
+    <p>Private Dashboards • Updated Daily</p>
     
     <div class="links">
+      <a href="https://unconjectural-myrna-deeper.ngrok-free.dev/token-dashboard" class="live">
+        <span>🎫</span>
+        Token Usage
+        <small>LIVE</small>
+      </a>
+      <a href="theta-dashboard.html">
+        <span>📉</span>
+        Theta Decay
+      </a>
       <a href="api-dashboard.html">
         <span>🔑</span>
         API Dashboard
