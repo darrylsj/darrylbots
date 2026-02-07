@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-02-07T02:25:00Z",
+  "lastUpdated": "2026-02-07T05:48:00Z",
   "summary": {
-    "monthlyTotal": 567,
-    "annualProjection": 6804,
-    "activeCount": 14,
+    "monthlyTotal": 617,
+    "annualProjection": 7404,
+    "activeCount": 15,
     "needsAttention": 1
   },
   "subscriptions": [
@@ -121,6 +121,17 @@
       "frequency": "monthly",
       "lastCharge": "2026-02-03",
       "status": "active"
+    },
+    {
+      "id": "finnhub",
+      "name": "Finnhub Basic",
+      "description": "Stock API - Real-time quotes, options, fundamentals",
+      "category": "financial",
+      "amount": 50,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-06",
+      "status": "active",
+      "notes": "Basic tier: 300 calls/min, options data, higher limits"
     },
     {
       "id": "tesla-insurance",
