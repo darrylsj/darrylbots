@@ -5,133 +5,394 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
-  <title>JAMES Private Dashboard</title>
+  <title>JAMES Command Centre</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
       min-height: 100vh;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(0, 255, 136, 0.02) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 50%, rgba(100, 100, 255, 0.02) 0%, transparent 60%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    /* ─── Header ─── */
+    header {
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .logo {
+      font-size: 1rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #ffd700;
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    h1 .accent { color: #ffd700; }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.95rem;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #00ff88;
+      border-radius: 50%;
+      margin-right: 4px;
+      animation: pulse 2s ease-in-out infinite;
+      vertical-align: middle;
+    }
+
+    /* ─── Grid ─── */
+    .dashboard-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 48px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+
+    /* Featured card spans full width */
+    .card.featured {
+      grid-column: 1 / -1;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Subtle top accent line per card */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card.featured::before { background: linear-gradient(90deg, #00ff88, #00cc6a); }
+    .card.theta::before { background: linear-gradient(90deg, #ff6b35, #ffd700); }
+    .card.api::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
+    .card.tasks::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .card.integrations::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .card.subs::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      color: #e0e0e0;
+      font-size: 1.4rem;
+      flex-shrink: 0;
     }
-    .container {
-      text-align: center;
-      max-width: 600px;
+
+    .card.featured .card-icon { background: rgba(0, 255, 136, 0.1); }
+    .card.theta .card-icon { background: rgba(255, 107, 53, 0.1); }
+    .card.api .card-icon { background: rgba(99, 102, 241, 0.1); }
+    .card.tasks .card-icon { background: rgba(59, 130, 246, 0.1); }
+    .card.integrations .card-icon { background: rgba(245, 158, 11, 0.1); }
+    .card.subs .card-icon { background: rgba(236, 72, 153, 0.1); }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
     }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      color: #ffd700;
-      text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-    }
-    p {
+
+    .card-desc {
+      font-size: 0.85rem;
       color: #888;
-      font-size: 1.1rem;
-      margin-bottom: 48px;
+      line-height: 1.5;
     }
-    .links {
+
+    /* Live badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    .badge.live {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .badge.static {
+      background: rgba(255, 255, 255, 0.05);
+      color: #666;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .badge .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* Featured card special layout */
+    .card.featured {
+      flex-direction: row;
+      align-items: center;
+      padding: 32px;
+      border-color: rgba(0, 255, 136, 0.08);
+    }
+
+    .card.featured .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card.featured .card-icon {
+      width: 56px;
+      height: 56px;
+      font-size: 1.8rem;
+      border-radius: 14px;
+    }
+
+    .card.featured .card-title {
+      font-size: 1.3rem;
+    }
+
+    .card.featured .card-arrow {
+      font-size: 1.2rem;
+      color: #444;
+      transition: all 0.3s;
+      margin-left: 16px;
+    }
+
+    .card.featured:hover .card-arrow {
+      color: #00ff88;
+      transform: translateX(4px);
+    }
+
+    /* Stats row inside featured */
+    .stats-row {
       display: flex;
       gap: 24px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    a {
-      display: block;
-      padding: 24px 48px;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      text-decoration: none;
-      color: #fff;
-      font-size: 1.2rem;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-    a:hover {
-      transform: translateY(-4px);
-      border-color: #ffd700;
-      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
-    }
-    a span {
-      display: block;
-      font-size: 2.5rem;
-      margin-bottom: 8px;
-    }
-    a small {
-      display: block;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #00ff88;
       margin-top: 4px;
     }
-    a.live {
-      border-color: rgba(0, 255, 136, 0.3);
-      position: relative;
+
+    .stat {
+      font-size: 0.8rem;
+      color: #555;
     }
-    a.live::after {
-      content: '';
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 8px;
-      height: 8px;
-      background: #00ff88;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+
+    .stat strong {
+      color: #aaa;
+      font-weight: 600;
     }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: #444;
+    }
+
+    footer a {
+      color: #ffd700;
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    footer a:hover { opacity: 1; }
+
+    /* ─── Animations ─── */
     @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 4px #00ff88; }
-      50% { opacity: 0.4; box-shadow: 0 0 12px #00ff88; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
-    .note {
-      margin-top: 48px;
-      font-size: 0.85rem;
-      color: #666;
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      h1 { font-size: 2rem; }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+      .card.featured {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card.featured .card-arrow { display: none; }
+      .stats-row { flex-wrap: wrap; gap: 12px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>⚡ JAMES</h1>
-    <p>Private Dashboards • Updated Daily</p>
-    
-    <div class="links">
-      <a href="https://unconjectural-myrna-deeper.ngrok-free.dev/token-dashboard" class="live">
-        <span>🎫</span>
-        Token Usage
-        <small>LIVE</small>
+  <div class="page">
+    <header>
+      <div class="logo">⚡ J A M E S</div>
+      <h1>Command <span class="accent">Centre</span></h1>
+      <p class="subtitle"><span class="live-dot"></span> Systems Online · Dashboards Updated Daily</p>
+    </header>
+
+    <div class="dashboard-grid">
+
+      <!-- Featured: Token Usage (LIVE) -->
+      <a href="https://unconjectural-myrna-deeper.ngrok-free.dev/token-dashboard" class="card featured">
+        <div class="card-icon">🎫</div>
+        <div class="card-content">
+          <span class="badge live"><span class="dot"></span> Live</span>
+          <div class="card-title">Token Usage</div>
+          <div class="card-desc">Real-time model usage, session context, and cost estimates. Auto-refreshes every 30s.</div>
+          <div class="stats-row">
+            <span class="stat"><strong>Models:</strong> Opus · Kimi · Flash</span>
+            <span class="stat"><strong>Refresh:</strong> 30s</span>
+          </div>
+        </div>
+        <div class="card-arrow">→</div>
       </a>
-      <a href="theta-dashboard.html">
-        <span>📉</span>
-        Theta Decay
+
+      <!-- Theta Decay -->
+      <a href="theta-dashboard.html" class="card theta">
+        <div class="card-header">
+          <div class="card-icon">📉</div>
+          <div>
+            <div class="card-title">Theta Decay Central</div>
+            <span class="badge static">Daily</span>
+          </div>
+        </div>
+        <div class="card-desc">Covered call positions, premium collected, and P/L tracking across TSLA, META, NVDA.</div>
       </a>
-      <a href="api-dashboard.html">
-        <span>🔑</span>
-        API Dashboard
+
+      <!-- API Dashboard -->
+      <a href="api-dashboard.html" class="card api">
+        <div class="card-header">
+          <div class="card-icon">🔑</div>
+          <div>
+            <div class="card-title">API Dashboard</div>
+            <span class="badge static">Daily</span>
+          </div>
+        </div>
+        <div class="card-desc">API keys, rate limits, and credential health across all connected services.</div>
       </a>
-      <a href="task-board.html">
-        <span>📋</span>
-        Task Board
+
+      <!-- Task Board -->
+      <a href="task-board.html" class="card tasks">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <div>
+            <div class="card-title">Task Board</div>
+            <span class="badge static">Daily</span>
+          </div>
+        </div>
+        <div class="card-desc">Active tasks, cron jobs, and project status from Things 3 and OpenClaw.</div>
       </a>
-      <a href="integrations-dashboard.html">
-        <span>🔗</span>
-        Integrations
+
+      <!-- Integrations -->
+      <a href="integrations-dashboard.html" class="card integrations">
+        <div class="card-header">
+          <div class="card-icon">🔗</div>
+          <div>
+            <div class="card-title">Integrations</div>
+            <span class="badge static">Daily</span>
+          </div>
+        </div>
+        <div class="card-desc">All 22 connected services — smart home, finance, communication, and monitoring.</div>
       </a>
-      <a href="subscriptions.html">
-        <span>💳</span>
-        Subscriptions
+
+      <!-- Subscriptions -->
+      <a href="subscriptions.html" class="card subs">
+        <div class="card-header">
+          <div class="card-icon">💳</div>
+          <div>
+            <div class="card-title">Subscriptions</div>
+            <span class="badge static">Daily</span>
+          </div>
+        </div>
+        <div class="card-desc">Monthly service costs, renewal dates, and subscription management.</div>
       </a>
+
     </div>
-    
-    <p class="note">
-      🔒 This area is excluded from search engines<br>
-      <a href="../" style="color: #ffd700; background: none; border: none; padding: 8px; font-size: 0.9rem;">← Back to DarrylBots.com</a>
-    </p>
+
+    <footer>
+      <p>🔒 Private · Excluded from search engines · <a href="../">← DarrylBots.com</a></p>
+    </footer>
   </div>
 </body>
 </html>
