@@ -38,6 +38,33 @@
       margin-top: 8px;
     }
     
+    .mega-banner {
+      background: linear-gradient(135deg, rgba(0,255,136,0.15) 0%, rgba(0,200,100,0.1) 100%);
+      border: 2px solid rgba(0, 255, 136, 0.5);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .mega-banner .year-label {
+      font-size: 0.9rem;
+      color: #00ff88;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .mega-banner .mega-value {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #00ff88;
+      text-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+    }
+    .mega-banner .mega-label {
+      font-size: 1rem;
+      color: #888;
+      margin-top: 8px;
+    }
+    
     .alert-banner {
       background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,200,100,0.1) 100%);
       border: 2px solid rgba(0, 255, 136, 0.4);
@@ -52,25 +79,53 @@
     }
     .alert-stat {
       text-align: center;
+      flex: 1;
+      min-width: 100px;
     }
     .alert-stat .value {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: #00ff88;
     }
     .alert-stat .value.negative { color: #ff4466; }
     .alert-stat .value.warning { color: #ffaa00; }
     .alert-stat .label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #888;
       text-transform: uppercase;
       letter-spacing: 1px;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 16px 0;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+    }
+    .section-header h2 {
+      font-size: 1.3rem;
+      color: #00d4ff;
+    }
+    .section-badge {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(0, 212, 255, 0.2);
+      color: #00d4ff;
     }
     
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
       gap: 20px;
+      margin-bottom: 24px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
       margin-bottom: 24px;
     }
     
@@ -139,6 +194,54 @@
     .yellow { color: #ffaa00; }
     .muted { color: #666; }
     
+    .ticker-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .ticker-card .ticker-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #00d4ff;
+      margin-bottom: 4px;
+    }
+    .ticker-card .ticker-pl {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+    .ticker-card .ticker-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    .month-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 100px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .month-bar {
+      height: 24px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .month-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .month-bar-fill.positive { background: linear-gradient(90deg, #00ff88, #00cc66); }
+    .month-bar-fill.negative { background: linear-gradient(90deg, #ff4466, #cc3355); }
+    
     .iv-bar {
       width: 60px;
       height: 8px;
@@ -168,15 +271,6 @@
     .tag-close { background: rgba(255, 68, 102, 0.2); color: #ff4466; }
     .tag-sell { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
     
-    .position-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 100px 100px 80px;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .position-row:last-child { border-bottom: none; }
-    
     .watchlist-item {
       display: flex;
       justify-content: space-between;
@@ -198,24 +292,6 @@
       display: flex;
       gap: 16px;
       font-size: 0.85rem;
-    }
-    
-    .theta-viz {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .theta-bar {
-      width: 100px;
-      height: 6px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .theta-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00ff88, #ffaa00, #ff4466);
-      border-radius: 3px;
     }
     
     .strategy-card {
@@ -274,9 +350,40 @@
       50% { opacity: 0.5; transform: scale(0.8); }
     }
     
+    .tab-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #888;
+      transition: all 0.2s;
+    }
+    .tab:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .tab.active {
+      background: rgba(0, 255, 136, 0.2);
+      border-color: rgba(0, 255, 136, 0.4);
+      color: #00ff88;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
     @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
       .alert-banner { flex-direction: column; text-align: center; }
+      .mega-banner .mega-value { font-size: 2.5rem; }
     }
   </style>
 </head>
@@ -284,34 +391,336 @@
   <header>
     <h1>📉 Theta Decay Central</h1>
     <div class="tagline">"If You Ain't Theta Decaying, You Ain't Playing"</div>
-    <div class="subtitle">AI-Powered Options Dashboard • Finnhub Basic Tier • <span id="update-time">Feb 6, 2026 9:48 PM PST</span></div>
+    <div class="subtitle">AI-Powered Options Dashboard • Fidelity Data • <span id="update-time">Feb 6, 2026</span></div>
   </header>
 
-  <!-- PORTFOLIO SUMMARY -->
+  <!-- 2025 FULL YEAR HERO -->
+  <div class="mega-banner">
+    <div class="year-label">📅 2025 Full Year Results</div>
+    <div class="mega-value">+$417,121</div>
+    <div class="mega-label">Net Premium Income from Covered Calls & Cash-Secured Puts</div>
+  </div>
+
+  <!-- 2025 SUMMARY STATS -->
   <div class="alert-banner">
     <div class="alert-stat">
-      <div class="value">3</div>
-      <div class="label">Tickers Traded</div>
+      <div class="value green">$2.65M</div>
+      <div class="label">Total Premium</div>
     </div>
     <div class="alert-stat">
-      <div class="value green">$241,869</div>
-      <div class="label">90-Day Premium</div>
+      <div class="value yellow">$2.23M</div>
+      <div class="label">Cost to Close</div>
     </div>
     <div class="alert-stat">
-      <div class="value green">+$7,965</div>
-      <div class="label">Net P/L</div>
-    </div>
-    <div class="alert-stat">
-      <div class="value green">23</div>
+      <div class="value green">41</div>
       <div class="label">Expired Worthless</div>
     </div>
     <div class="alert-stat">
-      <div class="value green">3.3%</div>
+      <div class="value green">313</div>
+      <div class="label">Total Trades</div>
+    </div>
+    <div class="alert-stat">
+      <div class="value green">15.7%</div>
       <div class="label">Net Yield</div>
     </div>
     <div class="refresh-info">
       <span class="pulse"></span>
-      <span>Kimi K2.5 polling every 15m</span>
+      <span>Data: Fidelity Export</span>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE BY TICKER -->
+  <div class="section-header">
+    <h2>📊 Performance by Ticker</h2>
+    <span class="section-badge">2025 FULL YEAR</span>
+  </div>
+  
+  <div class="grid-3">
+    <div class="ticker-card">
+      <div class="ticker-name">TSLA</div>
+      <div class="ticker-pl green">+$404,494</div>
+      <div style="font-size: 0.85rem; color: #888;">Tesla Inc</div>
+      <div class="ticker-stats">
+        <div>Premium: $2.63M</div>
+        <div>Expired: 31</div>
+      </div>
+    </div>
+    <div class="ticker-card">
+      <div class="ticker-name">META</div>
+      <div class="ticker-pl green">+$8,075</div>
+      <div style="font-size: 0.85rem; color: #888;">Meta Platforms</div>
+      <div class="ticker-stats">
+        <div>Premium: $13.1K</div>
+        <div>Expired: 0</div>
+      </div>
+    </div>
+    <div class="ticker-card">
+      <div class="ticker-name">NVDA</div>
+      <div class="ticker-pl green">+$3,020</div>
+      <div style="font-size: 0.85rem; color: #888;">NVIDIA Corp</div>
+      <div class="ticker-stats">
+        <div>Premium: $7.8K</div>
+        <div>Expired: 8</div>
+      </div>
+    </div>
+    <div class="ticker-card">
+      <div class="ticker-name">PLTR</div>
+      <div class="ticker-pl green">+$1,532</div>
+      <div style="font-size: 0.85rem; color: #888;">Palantir</div>
+      <div class="ticker-stats">
+        <div>Premium: $1.5K</div>
+        <div>Expired: 2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB NAVIGATION -->
+  <div class="section-header">
+    <h2>📈 Premium Income History</h2>
+    <span class="section-badge">DETAILED VIEW</span>
+  </div>
+  
+  <div class="tab-container">
+    <div class="tab active" onclick="showTab('year')">2025 Full Year</div>
+    <div class="tab" onclick="showTab('90day')">Last 90 Days</div>
+  </div>
+
+  <!-- 2025 FULL YEAR TAB -->
+  <div id="tab-year" class="tab-content active">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📅 Monthly Breakdown - 2025</div>
+        <span class="card-badge">JAN-DEC</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Premium Collected</th>
+            <th>Cost to Close</th>
+            <th>Expired</th>
+            <th>Net P/L</th>
+            <th>Performance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>January</strong></td>
+            <td class="green">$26,572</td>
+            <td class="red">$5,344</td>
+            <td>2</td>
+            <td class="green"><strong>+$21,227</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 12%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>February</strong></td>
+            <td class="green">$126,191</td>
+            <td class="red">$93,340</td>
+            <td>4</td>
+            <td class="green"><strong>+$32,851</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 19%"></div></div></td>
+          </tr>
+          <tr style="background: rgba(0, 255, 136, 0.05);">
+            <td><strong>March</strong> ⭐</td>
+            <td class="green">$525,721</td>
+            <td class="red">$351,082</td>
+            <td>1</td>
+            <td class="green"><strong>+$174,639</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 100%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>April</strong></td>
+            <td class="green">$175,776</td>
+            <td class="red">$154,159</td>
+            <td>4</td>
+            <td class="green"><strong>+$21,617</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 12%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>May</strong></td>
+            <td class="green">$42,555</td>
+            <td class="red">$8,239</td>
+            <td>2</td>
+            <td class="green"><strong>+$34,316</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 20%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>June</strong></td>
+            <td class="green">$466,993</td>
+            <td class="red">$450,039</td>
+            <td>4</td>
+            <td class="green"><strong>+$16,954</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 10%"></div></div></td>
+          </tr>
+          <tr style="background: rgba(0, 212, 255, 0.05);">
+            <td><strong>July</strong> 🚀</td>
+            <td class="green">$87,997</td>
+            <td class="red">$2,808</td>
+            <td>2</td>
+            <td class="green"><strong>+$85,189</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 49%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>August</strong></td>
+            <td class="green">$272,913</td>
+            <td class="red">$240,989</td>
+            <td>1</td>
+            <td class="green"><strong>+$31,924</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 18%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>September</strong></td>
+            <td class="green">$367,439</td>
+            <td class="red">$345,312</td>
+            <td>4</td>
+            <td class="green"><strong>+$22,127</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 13%"></div></div></td>
+          </tr>
+          <tr style="background: rgba(255, 68, 102, 0.05);">
+            <td><strong>October</strong> ⚠️</td>
+            <td class="green">$337,367</td>
+            <td class="red">$351,097</td>
+            <td>4</td>
+            <td class="red"><strong>-$13,730</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill negative" style="width: 15%"></div></div></td>
+          </tr>
+          <tr style="background: rgba(255, 68, 102, 0.05);">
+            <td><strong>November</strong> ⚠️</td>
+            <td class="green">$6,686</td>
+            <td class="red">$17,029</td>
+            <td>5</td>
+            <td class="red"><strong>-$10,344</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill negative" style="width: 12%"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>December</strong></td>
+            <td class="green">$213,191</td>
+            <td class="red">$212,841</td>
+            <td>8</td>
+            <td class="yellow"><strong>+$350</strong></td>
+            <td><div class="month-bar"><div class="month-bar-fill positive" style="width: 1%"></div></div></td>
+          </tr>
+          <tr style="background: rgba(0, 255, 136, 0.1); font-weight: bold;">
+            <td><strong>2025 TOTAL</strong></td>
+            <td class="green"><strong>$2,649,402</strong></td>
+            <td class="red"><strong>$2,232,281</strong></td>
+            <td><strong>41</strong></td>
+            <td class="green" style="font-size: 1.1rem;"><strong>+$417,121</strong></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div style="margin-top: 20px; padding: 16px; background: rgba(0, 212, 255, 0.1); border-radius: 8px;">
+        <h4 style="color: #00d4ff; margin-bottom: 12px;">📊 2025 Insights</h4>
+        <ul style="list-style: none; font-size: 0.9rem; color: #aaa;">
+          <li>🏆 <strong style="color: #00ff88;">Best Month:</strong> March (+$174,639) — High volatility period</li>
+          <li>🚀 <strong style="color: #00d4ff;">Highest Efficiency:</strong> July (+$85,189 on just $88K premium)</li>
+          <li>⚠️ <strong style="color: #ff4466;">Losing Months:</strong> October & November (market turbulence)</li>
+          <li>💰 <strong style="color: #ffaa00;">Dominant Ticker:</strong> TSLA generated 97% of all profits</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAST 90 DAYS TAB -->
+  <div id="tab-90day" class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📈 Last 90 Days</div>
+        <span class="card-badge">NOV 8 - FEB 6</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Premium Collected</th>
+            <th>Cost to Close</th>
+            <th>Expired</th>
+            <th>Net P/L</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feb 3-7</td>
+            <td class="green">$2,278</td>
+            <td class="red">$5,685</td>
+            <td class="green">2</td>
+            <td class="red">-$3,408</td>
+          </tr>
+          <tr>
+            <td>Jan 27 - Feb 2</td>
+            <td class="green">$6,334</td>
+            <td class="red">$12,368</td>
+            <td class="green">0</td>
+            <td class="red">-$6,034</td>
+          </tr>
+          <tr>
+            <td>Jan 20-26</td>
+            <td class="green">$151</td>
+            <td class="red">$797</td>
+            <td class="green">5</td>
+            <td class="red">-$646</td>
+          </tr>
+          <tr>
+            <td>Jan 12-19</td>
+            <td class="green">$516</td>
+            <td class="muted">$0</td>
+            <td class="green">3</td>
+            <td class="green">+$516</td>
+          </tr>
+          <tr>
+            <td>Jan 2-9</td>
+            <td class="green">$10,200</td>
+            <td class="red">$43</td>
+            <td class="green">1</td>
+            <td class="green">+$10,157</td>
+          </tr>
+          <tr>
+            <td>Dec 22-29</td>
+            <td class="green">$3,965</td>
+            <td class="red">$5,040</td>
+            <td class="green">2</td>
+            <td class="red">-$1,075</td>
+          </tr>
+          <tr>
+            <td>Dec 15-21</td>
+            <td class="green">$146,048</td>
+            <td class="red">$141,563</td>
+            <td class="green">3</td>
+            <td class="green">+$4,485</td>
+          </tr>
+          <tr>
+            <td>Nov-Dec (earlier)</td>
+            <td class="green">$72,377</td>
+            <td class="red">$68,408</td>
+            <td class="green">7</td>
+            <td class="green">+$3,969</td>
+          </tr>
+          <tr style="background: rgba(0, 255, 136, 0.05);">
+            <td><strong>90-Day Total</strong></td>
+            <td class="green"><strong>$241,869</strong></td>
+            <td class="red"><strong>$233,905</strong></td>
+            <td><strong>23</strong></td>
+            <td class="green"><strong>+$7,965</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center;">
+        <div style="background: rgba(0, 255, 136, 0.1); padding: 12px; border-radius: 8px;">
+          <div style="font-size: 1.5rem; font-weight: 700; color: #00ff88;">$5,080</div>
+          <div style="font-size: 0.75rem; color: #888;">TSLA Net P/L</div>
+        </div>
+        <div style="background: rgba(0, 212, 255, 0.1); padding: 12px; border-radius: 8px;">
+          <div style="font-size: 1.5rem; font-weight: 700; color: #00d4ff;">$1,863</div>
+          <div style="font-size: 0.75rem; color: #888;">NVDA Net P/L</div>
+        </div>
+        <div style="background: rgba(170, 136, 255, 0.1); padding: 12px; border-radius: 8px;">
+          <div style="font-size: 1.5rem; font-weight: 700; color: #aa88ff;">$1,021</div>
+          <div style="font-size: 0.75rem; color: #888;">PLTR Net P/L</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -378,49 +787,6 @@
       </table>
     </div>
 
-    <!-- PUTS AT RISK -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">⚠️ Cash-Secured Puts</div>
-        <span class="card-badge" style="background: rgba(255, 68, 102, 0.2); color: #ff4466;">MONITOR</span>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Ticker</th>
-            <th>Strike</th>
-            <th>Exp</th>
-            <th>Distance</th>
-            <th>P(Safe)</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="ticker">AMZN</td>
-            <td>$230P</td>
-            <td>Feb 9</td>
-            <td class="red">-2.1%</td>
-            <td class="red">35%</td>
-            <td><span class="action-tag tag-roll">ROLL/CLOSE</span></td>
-          </tr>
-          <tr>
-            <td class="ticker">GOOG</td>
-            <td>$185P</td>
-            <td>Feb 21</td>
-            <td class="green">+6.8%</td>
-            <td class="green">89%</td>
-            <td><span class="action-tag tag-hold">HOLD</span></td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="margin-top: 16px; padding: 12px; background: rgba(255, 68, 102, 0.1); border-radius: 8px; font-size: 0.85rem;">
-        <strong style="color: #ff4466;">⚡ Alert:</strong> AMZN $230P expires Mon Feb 9. Currently ITM. Decision needed.
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-2">
     <!-- HIGH IV OPPORTUNITIES -->
     <div class="card">
       <div class="card-header">
@@ -439,7 +805,6 @@
               <span class="iv-bar"><span class="iv-fill iv-high" style="width: 85%"></span></span>
               <span class="red">IV 85%</span>
             </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
           </div>
         </div>
         <div class="watchlist-item">
@@ -453,7 +818,6 @@
               <span class="iv-bar"><span class="iv-fill iv-high" style="width: 72%"></span></span>
               <span class="yellow">IV 72%</span>
             </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
           </div>
         </div>
         <div class="watchlist-item">
@@ -467,21 +831,6 @@
               <span class="iv-bar"><span class="iv-fill iv-mid" style="width: 58%"></span></span>
               <span class="yellow">IV 58%</span>
             </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
-          </div>
-        </div>
-        <div class="watchlist-item">
-          <div class="watchlist-info">
-            <span class="ticker">ARKK</span>
-            <span class="watchlist-name">ARK Innovation</span>
-          </div>
-          <div class="watchlist-metrics">
-            <span class="price">$56.80</span>
-            <span>
-              <span class="iv-bar"><span class="iv-fill iv-mid" style="width: 52%"></span></span>
-              <span class="yellow">IV 52%</span>
-            </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
           </div>
         </div>
         <div class="watchlist-item">
@@ -495,21 +844,6 @@
               <span class="iv-bar"><span class="iv-fill iv-high" style="width: 92%"></span></span>
               <span class="red">IV 92%</span>
             </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
-          </div>
-        </div>
-        <div class="watchlist-item">
-          <div class="watchlist-info">
-            <span class="ticker">SOFI</span>
-            <span class="watchlist-name">SoFi Technologies</span>
-          </div>
-          <div class="watchlist-metrics">
-            <span class="price">$14.85</span>
-            <span>
-              <span class="iv-bar"><span class="iv-fill iv-high" style="width: 78%"></span></span>
-              <span class="red">IV 78%</span>
-            </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
           </div>
         </div>
         <div class="watchlist-item">
@@ -523,158 +857,14 @@
               <span class="iv-bar"><span class="iv-fill iv-high" style="width: 88%"></span></span>
               <span class="red">IV 88%</span>
             </span>
-            <span class="action-tag tag-sell">SELL CALLS</span>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- TOP COVERED CALL PICKS -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">💰 Top Premium Picks This Week</div>
-        <span class="card-badge">RECOMMENDATIONS</span>
-      </div>
-      <div class="strategy-card">
-        <div class="strategy-header">
-          <span class="strategy-title">LMND Feb 14 $27C</span>
-          <span class="strategy-premium">$1.85</span>
-        </div>
-        <div class="strategy-details">
-          12% OTM • 7.6% weekly premium • High IV crush expected post-earnings
-        </div>
-      </div>
-      <div class="strategy-card">
-        <div class="strategy-header">
-          <span class="strategy-title">TSLA Feb 14 $430C</span>
-          <span class="strategy-premium">$8.20</span>
-        </div>
-        <div class="strategy-details">
-          8% OTM • 2.1% weekly premium • Safe distance from current price
-        </div>
-      </div>
-      <div class="strategy-card">
-        <div class="strategy-header">
-          <span class="strategy-title">PLTR Feb 21 $90C</span>
-          <span class="strategy-premium">$2.45</span>
-        </div>
-        <div class="strategy-details">
-          15% OTM • 3.1% bi-weekly • Post-earnings IV still elevated
-        </div>
-      </div>
-      <div class="strategy-card">
-        <div class="strategy-header">
-          <span class="strategy-title">UPST Feb 14 $70C</span>
-          <span class="strategy-premium">$3.80</span>
-        </div>
-        <div class="strategy-details">
-          12% OTM • 6.1% weekly • Extreme IV, high risk/reward
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- THETA DECAY TRACKER -->
-  <div class="card" style="margin-bottom: 24px;">
-    <div class="card-header">
-      <div class="card-title">📈 90-Day Premium Income Tracker</div>
-      <span class="card-badge">FIDELITY DATA</span>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Week</th>
-          <th>Premium Collected</th>
-          <th>Cost to Close</th>
-          <th>Expired</th>
-          <th>Net P/L</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Feb 3-7</td>
-          <td class="green">$2,278</td>
-          <td class="red">$5,685</td>
-          <td class="green">2</td>
-          <td class="red">-$3,408</td>
-        </tr>
-        <tr>
-          <td>Jan 27 - Feb 2</td>
-          <td class="green">$6,334</td>
-          <td class="red">$12,368</td>
-          <td class="green">0</td>
-          <td class="red">-$6,034</td>
-        </tr>
-        <tr>
-          <td>Jan 20-26</td>
-          <td class="green">$151</td>
-          <td class="red">$797</td>
-          <td class="green">5</td>
-          <td class="red">-$646</td>
-        </tr>
-        <tr>
-          <td>Jan 12-19</td>
-          <td class="green">$516</td>
-          <td class="muted">$0</td>
-          <td class="green">3</td>
-          <td class="green">+$516</td>
-        </tr>
-        <tr>
-          <td>Jan 2-9</td>
-          <td class="green">$10,200</td>
-          <td class="red">$43</td>
-          <td class="green">1</td>
-          <td class="green">+$10,157</td>
-        </tr>
-        <tr>
-          <td>Dec 22-29</td>
-          <td class="green">$3,965</td>
-          <td class="red">$5,040</td>
-          <td class="green">2</td>
-          <td class="red">-$1,075</td>
-        </tr>
-        <tr>
-          <td>Dec 15-21</td>
-          <td class="green">$146,048</td>
-          <td class="red">$141,563</td>
-          <td class="green">3</td>
-          <td class="green">+$4,485</td>
-        </tr>
-        <tr>
-          <td>Nov-Dec (earlier)</td>
-          <td class="green">$72,377</td>
-          <td class="red">$68,408</td>
-          <td class="green">7</td>
-          <td class="green">+$3,969</td>
-        </tr>
-        <tr style="background: rgba(0, 255, 136, 0.05);">
-          <td><strong>90-Day Total</strong></td>
-          <td class="green"><strong>$241,869</strong></td>
-          <td class="red"><strong>$233,905</strong></td>
-          <td><strong>23</strong></td>
-          <td class="green"><strong>+$7,965</strong></td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center;">
-      <div style="background: rgba(0, 255, 136, 0.1); padding: 12px; border-radius: 8px;">
-        <div style="font-size: 1.5rem; font-weight: 700; color: #00ff88;">$5,080</div>
-        <div style="font-size: 0.75rem; color: #888;">TSLA Net P/L</div>
-      </div>
-      <div style="background: rgba(0, 212, 255, 0.1); padding: 12px; border-radius: 8px;">
-        <div style="font-size: 1.5rem; font-weight: 700; color: #00d4ff;">$1,863</div>
-        <div style="font-size: 0.75rem; color: #888;">NVDA Net P/L</div>
-      </div>
-      <div style="background: rgba(170, 136, 255, 0.1); padding: 12px; border-radius: 8px;">
-        <div style="font-size: 1.5rem; font-weight: 700; color: #aa88ff;">$1,021</div>
-        <div style="font-size: 0.75rem; color: #888;">PLTR Net P/L</div>
       </div>
     </div>
   </div>
 
   <!-- MARKET CONDITIONS -->
-  <div class="card">
+  <div class="card" style="margin-top: 20px;">
     <div class="card-header">
       <div class="card-title">🌡️ Market Conditions</div>
       <span class="card-badge">VIX & SENTIMENT</span>
@@ -696,7 +886,7 @@
         <div style="font-size: 0.75rem; color: #666;">Bullish bias</div>
       </div>
       <div>
-        <div style="font-size: 2rem; font-weight: 700; color: #aa88ff;">Thu</div>
+        <div style="font-size: 2rem; font-weight: 700; color: #aa88ff;">Fri</div>
         <div style="font-size: 0.8rem; color: #888;">Next Expiry</div>
         <div style="font-size: 0.75rem; color: #666;">Feb 14 weeklies</div>
       </div>
@@ -705,8 +895,8 @@
 
   <footer>
     <p>
-      Powered by <a href="https://finnhub.io">Finnhub Basic</a> (300 calls/min) • 
-      Agent: Kimi K2.5 (FREE) • 
+      Data: <a href="https://www.fidelity.com">Fidelity</a> Export • 
+      Analysis: Kimi K2.5 (FREE) • 
       <a href="./api-dashboard.html">API Dashboard</a> • 
       <a href="https://darrylbots.com">DarrylBots</a>
     </p>
@@ -714,5 +904,17 @@
       ⚠️ Not financial advice. Options involve significant risk. Past performance ≠ future results.
     </p>
   </footer>
+
+  <script>
+    function showTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      
+      // Show selected tab
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
 </body>
 </html>
