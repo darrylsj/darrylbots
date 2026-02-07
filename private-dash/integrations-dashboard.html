@@ -167,16 +167,16 @@
 <body>
   <header>
     <h1>🔗 Integrations</h1>
-    <p>JAMES Connected Services • Last Updated: <span id="update-time">February 6, 2026 6:25 PM PST</span></p>
+    <p>JAMES Connected Services • Last Updated: <span id="update-time">February 7, 2026</span></p>
   </header>
 
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-number">24</div>
+      <div class="stat-number">35</div>
       <div class="stat-label">Total Integrations</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">22</div>
+      <div class="stat-number">33</div>
       <div class="stat-label">Active</div>
     </div>
     <div class="stat-card">
@@ -443,6 +443,28 @@
         <div class="detail-row">
           <span class="detail-label">Features</span>
           <span class="detail-value">Play, volume, groups</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Samsung SmartThings -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📱</div>
+        <div>
+          <div class="integration-name">Samsung SmartThings</div>
+          <div class="integration-provider">SmartThings API</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">smartthings</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Devices</span>
+          <span class="detail-value">22 (TVs, Sonos, switches, sensors)</span>
         </div>
       </div>
     </div>
@@ -740,7 +762,358 @@
         </div>
         <div class="detail-row">
           <span class="detail-label">Voice</span>
-          <span class="detail-value">British Male (Polly.Brian)</span>
+          <span class="detail-value">Deepgram Aura (orion)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- iMessage -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">💬</div>
+        <div>
+          <div class="integration-name">iMessage</div>
+          <div class="integration-provider">macOS native</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">imsg</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Access</span>
+          <span class="detail-value">Read-only (chats, history, search)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telegram -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">✈️</div>
+        <div>
+          <div class="integration-name">Telegram</div>
+          <div class="integration-provider">OpenClaw native channel</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Type</span>
+          <span class="detail-value">Direct messaging channel</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Features</span>
+          <span class="detail-value">Bidirectional chat</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deepgram TTS -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🎤</div>
+        <div>
+          <div class="integration-name">Deepgram TTS</div>
+          <div class="integration-provider">Deepgram Aura</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">deepgram-tts</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Voice</span>
+          <span class="detail-value">aura-orion-en (British male)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Credit</span>
+          <span class="detail-value">$200 free (no expiry)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gemini TTS -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🗣️</div>
+        <div>
+          <div class="integration-name">Gemini TTS</div>
+          <div class="integration-provider">Google Gemini Flash</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">gemini-tts</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Cost</span>
+          <span class="detail-value">~$0.001/request</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI & LLM -->
+  <h2 class="section-title">🤖 AI & LLM Providers</h2>
+  <div class="integration-grid">
+
+    <!-- NVIDIA NIM -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🟢</div>
+        <div>
+          <div class="integration-name">NVIDIA NIM</div>
+          <div class="integration-provider">Free LLM API</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Models</span>
+          <span class="detail-value">Kimi K2.5, DeepSeek V3.2, Llama 3.3</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Cost</span>
+          <span class="detail-value">FREE (180+ models)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- xAI Grok -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🖼️</div>
+        <div>
+          <div class="integration-name">xAI Grok</div>
+          <div class="integration-provider">Image & Video Generation</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Models</span>
+          <span class="detail-value">grok-imagine-image, grok-imagine-video</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DeepSeek -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🧠</div>
+        <div>
+          <div class="integration-name">DeepSeek</div>
+          <div class="integration-provider">Reasoning & Chat</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Models</span>
+          <span class="detail-value">R1 (reasoning), V3 (chat)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Use</span>
+          <span class="detail-value">Book writing, complex reasoning</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Gemini -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">✨</div>
+        <div>
+          <div class="integration-name">Google Gemini</div>
+          <div class="integration-provider">Gemini CLI</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">gemini</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Use</span>
+          <span class="detail-value">Q&A, summaries, TTS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Replicate -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🎬</div>
+        <div>
+          <div class="integration-name">Replicate</div>
+          <div class="integration-provider">SadTalker lip-sync</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Model</span>
+          <span class="detail-value">cjwbw/sadtalker</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Cost</span>
+          <span class="detail-value">~$0.05/video</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTIVITY -->
+  <h2 class="section-title">📝 Productivity</h2>
+  <div class="integration-grid">
+
+    <!-- Things 3 -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">✅</div>
+        <div>
+          <div class="integration-name">Things 3</div>
+          <div class="integration-provider">Task Management</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">things</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apple Notes -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📒</div>
+        <div>
+          <div class="integration-name">Apple Notes</div>
+          <div class="integration-provider">macOS native</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">memo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apple Reminders -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">⏰</div>
+        <div>
+          <div class="integration-name">Apple Reminders</div>
+          <div class="integration-provider">macOS native</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">remindctl</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONITORING & DATA -->
+  <h2 class="section-title">📡 Monitoring & Data</h2>
+  <div class="integration-grid">
+
+    <!-- USGS Earthquake -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🌍</div>
+        <div>
+          <div class="integration-name">USGS Earthquake</div>
+          <div class="integration-provider">USGS Hazards API</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">quake</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Default</span>
+          <span class="detail-value">Danville, CA (100km radius)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Places -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">📍</div>
+        <div>
+          <div class="integration-name">Google Places</div>
+          <div class="integration-provider">Places API (New)</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">CLI</span>
+          <span class="detail-value">goplaces</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stessa -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🏘️</div>
+        <div>
+          <div class="integration-name">Stessa</div>
+          <div class="integration-provider">Rental Property Tracking</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Method</span>
+          <span class="detail-value">Browser automation</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Properties</span>
+          <span class="detail-value">Toronto, Florida, Walnut Creek</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rental Expense Tracker -->
+    <div class="integration-card">
+      <div class="integration-header">
+        <div class="integration-icon">🧾</div>
+        <div>
+          <div class="integration-name">Rental Expense Tracker</div>
+          <div class="integration-provider">Google Sheets</div>
+        </div>
+        <span class="integration-status status-active">Active</span>
+      </div>
+      <div class="integration-details">
+        <div class="detail-row">
+          <span class="detail-label">Purpose</span>
+          <span class="detail-value">Schedule E tax filing</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Categories</span>
+          <span class="detail-value">15 IRS Schedule E categories</span>
         </div>
       </div>
     </div>
@@ -916,8 +1289,8 @@
   </div>
 
   <footer>
-    <p>Built by JAMES ⚡ | <a href="token-dashboard.html">🎫 Token Dashboard</a> | <a href="theta-dashboard.html">Theta Central</a> | <a href="task-board.html">Task Board</a> | <a href="../">DarrylBots.com</a></p>
-    <p style="margin-top: 8px; font-size: 0.8rem;">Token data auto-refreshes every 30s</p>
+    <p>Built by JAMES ⚡ | <a href="index.html">Command Centre</a> | <a href="task-board.html">Task Board</a> | <a href="../">DarrylBots.com</a></p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">Updated on material changes • 35 integrations</p>
   </footer>
 
   <script>
