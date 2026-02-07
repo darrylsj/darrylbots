@@ -123,17 +123,10 @@
       50% { transform: translateY(-8px); }
     }
     
-    .cookie-quality {
+    .cookie-name {
       font-size: 1.1rem;
       font-weight: 600;
       color: #555;
-      margin-bottom: 5px;
-    }
-    
-    .cookie-stars {
-      color: #ffc107;
-      font-size: 1.2rem;
-      letter-spacing: 2px;
     }
     
     .cookie-owner {
@@ -154,6 +147,20 @@
     
     .cookie-owner.p1 { background: #4caf50; }
     .cookie-owner.p2 { background: #2196f3; }
+    
+    .cookie-reveal {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      color: #ffc107;
+      letter-spacing: 2px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .cookie.taken .cookie-reveal,
+    .game-over .cookie-reveal {
+      opacity: 1;
+    }
     
     .scoreboard {
       display: grid;
@@ -196,6 +203,12 @@
       font-size: 0.9rem;
       color: #666;
       margin-top: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .game-over .score-points {
+      opacity: 1;
     }
     
     .btn {
@@ -217,16 +230,6 @@
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-    
-    .btn-secondary {
-      background: #f5f5f5;
-      color: #333;
-      margin-top: 10px;
-    }
-    
-    .btn-secondary:hover {
-      background: #e0e0e0;
     }
     
     .rules {
@@ -305,10 +308,10 @@
   <h1>🍪 Cookie Picker</h1>
   <p class="subtitle">The Fair Division Game — Pick wisely!</p>
   
-  <div class="game-container">
+  <div class="game-container" id="game-container">
     <div class="status-bar">
       <span class="player-indicator" id="current-player">Player 1's Turn</span>
-      <span class="turn-info" id="turn-info">Pick 1 cookie</span>
+      <span class="turn-info" id="turn-info">Pick 1 treat</span>
     </div>
     
     <div id="winner-area"></div>
@@ -335,10 +338,10 @@
     <div class="rules">
       <h3>📜 How to Play</h3>
       <ol>
-        <li><strong>Player 1</strong> picks <strong>1 cookie</strong> first</li>
-        <li><strong>Player 2</strong> picks <strong>2 cookies</strong> from remaining</li>
-        <li><strong>Player 1</strong> gets the <strong>last cookie</strong> automatically</li>
-        <li>Most points wins! ⭐ = 1 point each</li>
+        <li><strong>Player 1</strong> picks <strong>1 treat</strong> first</li>
+        <li><strong>Player 2</strong> picks <strong>2 treats</strong> from remaining</li>
+        <li><strong>Player 1</strong> gets the <strong>last treat</strong> automatically</li>
+        <li>Most points wins! But you won't know the values until picked... 🤔</li>
       </ol>
     </div>
   </div>
@@ -348,15 +351,26 @@
   </footer>
 
   <script>
-    const COOKIES = [
-      { emoji: '🍪', name: 'Golden Deluxe', stars: 4 },
-      { emoji: '🥠', name: 'Fortune Cookie', stars: 3 },
-      { emoji: '🧁', name: 'Mini Cupcake', stars: 2 },
-      { emoji: '🥧', name: 'Humble Crumble', stars: 1 }
+    // 14 treats with hidden values (1-5 stars)
+    const ALL_TREATS = [
+      { emoji: '🍪', name: 'Chocolate Chip', stars: 5 },
+      { emoji: '🥠', name: 'Fortune Cookie', stars: 2 },
+      { emoji: '🧁', name: 'Mini Cupcake', stars: 4 },
+      { emoji: '🥧', name: 'Apple Pie', stars: 3 },
+      { emoji: '🍩', name: 'Glazed Donut', stars: 4 },
+      { emoji: '🍰', name: 'Cheesecake', stars: 5 },
+      { emoji: '🎂', name: 'Birthday Cake', stars: 5 },
+      { emoji: '🍫', name: 'Chocolate Bar', stars: 3 },
+      { emoji: '🍬', name: 'Candy', stars: 1 },
+      { emoji: '🍭', name: 'Lollipop', stars: 2 },
+      { emoji: '🍮', name: 'Flan', stars: 3 },
+      { emoji: '🍡', name: 'Dango', stars: 2 },
+      { emoji: '🥮', name: 'Mooncake', stars: 4 },
+      { emoji: '🥐', name: 'Croissant', stars: 3 },
     ];
     
     let gameState = {
-      phase: 1, // 1: P1 picks 1, 2: P2 picks 2, 3: P1 gets last, 4: game over
+      phase: 1, // 1: P1 picks 1, 2: P2 picks 2, 3: game over
       p1Picks: [],
       p2Picks: [],
       cookies: []
@@ -372,14 +386,20 @@
     }
     
     function resetGame() {
+      // Pick 4 random treats from the pool
+      const shuffled = shuffleArray(ALL_TREATS);
+      const selected = shuffled.slice(0, 4);
+      
       gameState = {
         phase: 1,
         p1Picks: [],
         p2Picks: [],
-        cookies: shuffleArray(COOKIES).map((c, i) => ({ ...c, id: i, taken: false, owner: null }))
+        cookies: selected.map((c, i) => ({ ...c, id: i, taken: false, owner: null }))
       };
+      
+      document.getElementById('game-container').classList.remove('game-over');
       document.getElementById('winner-area').innerHTML = '';
-      document.getElementById('play-btn').textContent = '🔄 Restart Game';
+      document.getElementById('play-btn').textContent = '🔄 New Game';
       renderGame();
     }
     
@@ -407,7 +427,8 @@
             lastCookie.owner = 1;
             gameState.p1Picks.push(lastCookie);
           }
-          gameState.phase = 4;
+          gameState.phase = 3;
+          document.getElementById('game-container').classList.add('game-over');
         }
       }
       
@@ -423,18 +444,21 @@
           classes += ' taken';
           classes += cookie.owner === 1 ? ' player1' : ' player2';
         }
-        if (gameState.phase === 4) classes += ' disabled';
+        if (gameState.phase === 3) classes += ' disabled';
         
         const ownerBadge = cookie.owner 
           ? `<div class="cookie-owner p${cookie.owner}">P${cookie.owner}</div>` 
           : '';
         
+        // Only show stars after game is over or cookie is taken
+        const starsDisplay = '⭐'.repeat(cookie.stars);
+        
         return `
           <div class="${classes}" onclick="pickCookie(${cookie.id})">
             ${ownerBadge}
             <span class="cookie-emoji">${cookie.emoji}</span>
-            <div class="cookie-quality">${cookie.name}</div>
-            <div class="cookie-stars">${'⭐'.repeat(cookie.stars)}</div>
+            <div class="cookie-name">${cookie.name}</div>
+            <div class="cookie-reveal">${starsDisplay}</div>
           </div>
         `;
       }).join('');
@@ -445,14 +469,14 @@
       
       if (gameState.phase === 1) {
         playerEl.textContent = "🟢 Player 1's Turn";
-        turnEl.textContent = "Pick 1 cookie";
+        turnEl.textContent = "Pick 1 treat";
       } else if (gameState.phase === 2) {
         playerEl.textContent = "🔵 Player 2's Turn";
         const remaining = 2 - gameState.p2Picks.length;
-        turnEl.textContent = `Pick ${remaining} cookie${remaining > 1 ? 's' : ''}`;
-      } else if (gameState.phase === 4) {
+        turnEl.textContent = `Pick ${remaining} treat${remaining > 1 ? 's' : ''}`;
+      } else if (gameState.phase === 3) {
         playerEl.textContent = "🎉 Game Over!";
-        turnEl.textContent = "See results below";
+        turnEl.textContent = "Values revealed!";
       }
       
       // Update scores
@@ -465,7 +489,7 @@
       document.getElementById('p2-points').textContent = `${p2Points} point${p2Points !== 1 ? 's' : ''}`;
       
       // Show winner
-      if (gameState.phase === 4) {
+      if (gameState.phase === 3) {
         const winnerArea = document.getElementById('winner-area');
         if (p1Points > p2Points) {
           winnerArea.innerHTML = `
