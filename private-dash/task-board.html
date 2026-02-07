@@ -152,16 +152,16 @@
 <body>
   <header>
     <h1>⚡ JAMES Task Board</h1>
-    <p>Darryl Sladden • Since January 30, 2026 • Updated February 6, 6:25 PM</p>
+    <p>Darryl Sladden • Since January 30, 2026 • Updated February 7, 2026</p>
   </header>
 
   <div class="stats">
     <div class="stat highlight">
-      <div class="stat-number">85+</div>
+      <div class="stat-number">95+</div>
       <div class="stat-label">Tasks Completed</div>
     </div>
     <div class="stat">
-      <div class="stat-number">5</div>
+      <div class="stat-number">3</div>
       <div class="stat-label">In Progress</div>
     </div>
     <div class="stat">
@@ -169,11 +169,11 @@
       <div class="stat-label">Planned</div>
     </div>
     <div class="stat cost">
-      <div class="stat-number">$645</div>
-      <div class="stat-label">7-Day API Cost</div>
+      <div class="stat-number">20</div>
+      <div class="stat-label">Cron Jobs</div>
     </div>
     <div class="stat">
-      <div class="stat-number">8</div>
+      <div class="stat-number">9</div>
       <div class="stat-label">Days Active</div>
     </div>
   </div>
@@ -227,11 +227,10 @@
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Private Dashboard Area</div>
-        <div class="task-desc">API + Task dashboards at /private-dash/ with noindex</div>
+        <div class="task-desc">6 dashboards at /private-dash/ with noindex</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag date">Feb 1</span>
         </div>
       </div>
@@ -244,12 +243,12 @@
         </div>
       </div>
       
-      <div class="task done new">
-        <div class="task-title">Dashboard Auto-Update Cron</div>
-        <div class="task-desc">Every 2 days — refresh API costs + tasks</div>
+      <div class="task done">
+        <div class="task-title">Command Centre Redesign</div>
+        <div class="task-desc">Dark minimal hub with live Token Usage + 5 static dashboards</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
-          <span class="tag tool">Cron</span>
+          <span class="tag date">Feb 7</span>
+          <span class="tag tool">Cloudflare</span>
         </div>
       </div>
     </div>
@@ -315,8 +314,8 @@
     <div class="column">
       <div class="column-header">
         <span class="column-icon">⚙️</span>
-        <span class="column-title">Active Automations</span>
-        <span class="column-count">18</span>
+        <span class="column-title">Active Automations (20 Cron Jobs)</span>
+        <span class="column-count">20</span>
       </div>
       
       <div class="task done">
@@ -324,14 +323,25 @@
         <div class="task-desc">7:00 AM — News, email, calendar via WhatsApp</div>
         <div class="task-meta">
           <span class="tag tool">Cron</span>
+          <span class="tag">Daily</span>
         </div>
       </div>
       
       <div class="task done">
         <div class="task-title">Daily Elon Summary</div>
-        <div class="task-desc">7:30 AM — X posts + news mentions</div>
+        <div class="task-desc">7:30 AM — X posts + news mentions via WhatsApp</div>
         <div class="task-meta">
           <span class="tag tool">Cron</span>
+          <span class="tag">Daily</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Robotics News</div>
+        <div class="task-desc">7:00 AM — Tesla Bot, Figure, Boston Dynamics via WhatsApp</div>
+        <div class="task-meta">
+          <span class="tag tool">Kimi K2.5</span>
+          <span class="tag">Daily</span>
         </div>
       </div>
       
@@ -340,14 +350,55 @@
         <div class="task-desc">Hourly 7am-1pm M-F — GOOG, CVX, TSLA, ARKK</div>
         <div class="task-meta">
           <span class="tag tool">Finnhub</span>
+          <span class="tag">Market Hours</span>
         </div>
       </div>
       
       <div class="task done">
         <div class="task-title">Covered Call Scanner</div>
-        <div class="task-desc">Monday 7am — TSLA weeklies 10-15% OTM</div>
+        <div class="task-desc">Mon/Wed 6:30 AM — TSLA weeklies 10-15% OTM</div>
         <div class="task-meta">
-          <span class="tag tool">Cron</span>
+          <span class="tag tool">Finnhub</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Covered Call Monitor</div>
+        <div class="task-desc">Tue-Fri 1:30 PM — decay tracking, roll/close alerts</div>
+        <div class="task-meta">
+          <span class="tag tool">Finnhub</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Powerwall Monitor</div>
+        <div class="task-desc">Hourly 6am-10pm — battery, grid, solar alerts</div>
+        <div class="task-meta">
+          <span class="tag tool">pypowerwall</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Solar Production Logger</div>
+        <div class="task-desc">Hourly 6am-8pm — daily kWh tracking</div>
+        <div class="task-meta">
+          <span class="tag tool">pypowerwall</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Flume Water Monitor</div>
+        <div class="task-desc">Hourly 24/7 — leaks, high usage, disconnect</div>
+        <div class="task-meta">
+          <span class="tag tool">Flume API</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Home Status Check</div>
+        <div class="task-desc">Daily 8 PM — all systems summary</div>
+        <div class="task-meta">
+          <span class="tag tool">home-status</span>
         </div>
       </div>
       
@@ -361,25 +412,41 @@
       
       <div class="task done">
         <div class="task-title">LinkedIn Monitor</div>
-        <div class="task-desc">9am/12pm/3pm/6pm Mon-Fri</div>
+        <div class="task-desc">9am/12pm/3pm/6pm Mon-Fri — browser automation</div>
         <div class="task-meta">
-          <span class="tag tool">Browser</span>
+          <span class="tag tool">Chrome</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">WhatsApp Monitor</div>
+        <div class="task-desc">9 AM & 6 PM — check chats via wacli</div>
+        <div class="task-meta">
+          <span class="tag tool">wacli</span>
         </div>
       </div>
       
       <div class="task done">
         <div class="task-title">Lunch Ordering</div>
-        <div class="task-desc">Tue/Wed/Thu — waiter.com auto-order</div>
+        <div class="task-desc">Tue/Wed/Thu 7am + 7:45am — waiter.com</div>
         <div class="task-meta">
           <span class="tag tool">Browser</span>
         </div>
       </div>
       
       <div class="task done">
-        <div class="task-title">Self-Improvement</div>
-        <div class="task-desc">Every 6 hours — skill discovery</div>
+        <div class="task-title">Danville Family Events</div>
+        <div class="task-desc">Sundays 9 AM — weekly event digest</div>
         <div class="task-meta">
-          <span class="tag tool">Cron</span>
+          <span class="tag tool">Web Search</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">School Calendar Sync</div>
+        <div class="task-desc">1st of month — St. Isidore ICS → Google Calendar</div>
+        <div class="task-meta">
+          <span class="tag tool">gog</span>
         </div>
       </div>
       
@@ -387,67 +454,31 @@
         <div class="task-title">Auto-Update System</div>
         <div class="task-desc">Daily 3 AM — OpenClaw + skills updates</div>
         <div class="task-meta">
-          <span class="tag tool">Cron</span>
+          <span class="tag tool">npm</span>
         </div>
       </div>
       
       <div class="task done">
-        <div class="task-title">Moltbook Heartbeat</div>
-        <div class="task-desc">Every 4 hours — AI social network</div>
+        <div class="task-title">Self-Improvement</div>
+        <div class="task-desc">Every 6 hours — skill discovery + capability gaps</div>
         <div class="task-meta">
-          <span class="tag tool">Cron</span>
-        </div>
-      </div>
-      
-      <div class="task done new">
-        <div class="task-title">Powerwall Monitor</div>
-        <div class="task-desc">Hourly 6am-10pm — battery, grid, solar alerts</div>
-        <div class="task-meta">
-          <span class="tag new">NEW</span>
-          <span class="tag tool">pypowerwall</span>
-        </div>
-      </div>
-      
-      <div class="task done new">
-        <div class="task-title">Flume Water Monitor</div>
-        <div class="task-desc">Hourly 24/7 — leaks, high usage, disconnect</div>
-        <div class="task-meta">
-          <span class="tag new">NEW</span>
-          <span class="tag tool">PyFlume</span>
+          <span class="tag tool">Kimi K2.5</span>
         </div>
       </div>
       
       <div class="task done">
-        <div class="task-title">Gmail Receipt Filter</div>
-        <div class="task-desc">Auto-labels receipts, invoices</div>
+        <div class="task-title">Dashboard Audit</div>
+        <div class="task-desc">Daily 6 AM — check for material changes</div>
         <div class="task-meta">
-          <span class="tag">Gmail</span>
+          <span class="tag tool">Kimi K2.5</span>
         </div>
       </div>
       
       <div class="task done">
-        <div class="task-title">Dashboard Update Cron</div>
-        <div class="task-desc">Every 2 days — API costs + task board</div>
+        <div class="task-title">Theta Dashboard Update</div>
+        <div class="task-desc">Positions + P/L refresh</div>
         <div class="task-meta">
           <span class="tag tool">Cron</span>
-        </div>
-      </div>
-      
-      <div class="task done new">
-        <div class="task-title">WhatsApp Monitor</div>
-        <div class="task-desc">9 AM & 6 PM — check chats via wacli</div>
-        <div class="task-meta">
-          <span class="tag new">NEW</span>
-          <span class="tag tool">wacli</span>
-        </div>
-      </div>
-      
-      <div class="task done new">
-        <div class="task-title">X/Twitter Posting</div>
-        <div class="task-desc">Tweet capability via API (x-post CLI)</div>
-        <div class="task-meta">
-          <span class="tag new">NEW</span>
-          <span class="tag tool">X API</span>
         </div>
       </div>
     </div>
@@ -516,38 +547,34 @@
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Twilio SMS & Voice</div>
         <div class="task-desc">Send SMS + make voice calls via API</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag tool">Twilio</span>
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Two-Way Voice Calls</div>
         <div class="task-desc">ngrok + Express server for incoming calls</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag date">Feb 6</span>
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Nest Real-Time Events</div>
         <div class="task-desc">Pub/Sub push to ngrok — doorbell + person alerts</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag tool">Pub/Sub</span>
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Options Portfolio Monitor</div>
         <div class="task-desc">7 positions tracked — TSLA, AMZN, GOOG, ARKK, LMND</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag tool">Finnhub</span>
         </div>
       </div>
@@ -609,30 +636,81 @@
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Email Archive Organizer</div>
         <div class="task-desc">Daily 3 AM — 50 emails/batch, starting Jan 2024</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag tool">Kimi K2.5</span>
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Olivia CYO Track Registered</div>
         <div class="task-desc">$705 total — first practice Mon Feb 9, 4 PM</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag date">Feb 6</span>
         </div>
       </div>
       
-      <div class="task done new">
+      <div class="task done">
         <div class="task-title">Domino Vet Bills Collected</div>
         <div class="task-desc">8 PDFs saved to ~/Documents/Pets/Domino/</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag date">Feb 6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE PROJECTS -->
+    <div class="column">
+      <div class="column-header">
+        <span class="column-icon">🔥</span>
+        <span class="column-title">Active Projects</span>
+        <span class="column-count">5</span>
+      </div>
+      
+      <div class="task">
+        <div class="task-title">2025 Tax Preparation</div>
+        <div class="task-desc">Income/loss analysis for 3 rental properties. Receipt organization complete, awaiting property docs.</div>
+        <div class="task-meta">
+          <span class="tag date">Priority</span>
+          <span class="tag">Schedule E</span>
+        </div>
+      </div>
+      
+      <div class="task">
+        <div class="task-title">Fat Astronauts Book</div>
+        <div class="task-desc">Writing project via DeepSeek R1. 5 files created, backed up to Box.</div>
+        <div class="task-meta">
+          <span class="tag tool">DeepSeek R1</span>
+          <span class="tag">In Progress</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Theta Decay Central</div>
+        <div class="task-desc">2025 full year: +$417K net P/L. Dashboard with auth, daily monitoring.</div>
+        <div class="task-meta">
+          <span class="tag tool">Finnhub</span>
+          <span class="tag">$417K P/L</span>
+        </div>
+      </div>
+      
+      <div class="task done">
+        <div class="task-title">Token Usage Dashboard</div>
+        <div class="task-desc">Real-time model usage tracking. Live at ngrok URL, auto-refreshes 30s.</div>
+        <div class="task-meta">
+          <span class="tag tool">Port 4202</span>
+          <span class="tag date">Feb 7</span>
+        </div>
+      </div>
+      
+      <div class="task">
+        <div class="task-title">Twilio Voice System</div>
+        <div class="task-desc">Two-way voice calls with Deepgram TTS. ngrok + Express server.</div>
+        <div class="task-meta">
+          <span class="tag tool">Twilio</span>
+          <span class="tag tool">Deepgram</span>
         </div>
       </div>
     </div>
@@ -663,20 +741,18 @@
         </div>
       </div>
       
-      <div class="task future new">
+      <div class="task future">
         <div class="task-title">Nest Pub/Sub Setup</div>
         <div class="task-desc">Event images from cameras + doorbell</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag">Future</span>
         </div>
       </div>
       
-      <div class="task future new">
+      <div class="task future">
         <div class="task-title">Cost Optimization</div>
         <div class="task-desc">Shift sub-agents to free NVIDIA models (Kimi K2.5)</div>
         <div class="task-meta">
-          <span class="tag new">NEW</span>
           <span class="tag">Optimization</span>
         </div>
       </div>
@@ -708,8 +784,8 @@
   </div>
 
   <footer>
-    <p>Built by JAMES ⚡ | <a href="api-dashboard.html">API Dashboard</a> | <a href="../">DarrylBots.com</a></p>
-    <p style="margin-top: 8px; font-size: 0.8rem;">Auto-updates every 2 days • Next update: Feb 7, 2026</p>
+    <p>Built by JAMES ⚡ | <a href="index.html">Command Centre</a> | <a href="api-dashboard.html">API Dashboard</a> | <a href="../">DarrylBots.com</a></p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">Updated on material changes • Last: February 7, 2026</p>
   </footer>
 </body>
 </html>
