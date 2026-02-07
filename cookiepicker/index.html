@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍪 Cookie Picker - The Fair Division Game</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+    
+    h1 {
+      color: white;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .game-container {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+    
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      border-radius: 12px;
+    }
+    
+    .player-indicator {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #667eea;
+    }
+    
+    .turn-info {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    
+    .cookies-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .cookie {
+      position: relative;
+      background: linear-gradient(145deg, #fff8e7 0%, #ffe4b5 100%);
+      border-radius: 20px;
+      padding: 25px 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .cookie:hover:not(.taken):not(.disabled) {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      border-color: #667eea;
+    }
+    
+    .cookie.taken {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: scale(0.95);
+    }
+    
+    .cookie.taken.player1 {
+      background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 100%);
+      border-color: #4caf50;
+    }
+    
+    .cookie.taken.player2 {
+      background: linear-gradient(145deg, #e3f2fd 0%, #bbdefb 100%);
+      border-color: #2196f3;
+    }
+    
+    .cookie.disabled {
+      cursor: not-allowed;
+    }
+    
+    .cookie-emoji {
+      font-size: 4rem;
+      margin-bottom: 10px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .cookie:nth-child(2) .cookie-emoji { animation-delay: 0.5s; }
+    .cookie:nth-child(3) .cookie-emoji { animation-delay: 1s; }
+    .cookie:nth-child(4) .cookie-emoji { animation-delay: 1.5s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .cookie-quality {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    
+    .cookie-stars {
+      color: #ffc107;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+    
+    .cookie-owner {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    .cookie-owner.p1 { background: #4caf50; }
+    .cookie-owner.p2 { background: #2196f3; }
+    
+    .scoreboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .score-card {
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .score-card.p1 {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      border: 2px solid #4caf50;
+    }
+    
+    .score-card.p2 {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border: 2px solid #2196f3;
+    }
+    
+    .score-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+    
+    .score-card.p1 .score-name { color: #2e7d32; }
+    .score-card.p2 .score-name { color: #1565c0; }
+    
+    .score-cookies {
+      font-size: 1.5rem;
+      min-height: 40px;
+    }
+    
+    .score-points {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #333;
+      margin-top: 10px;
+    }
+    
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+    
+    .rules {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .rules h3 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    
+    .rules ol {
+      padding-left: 20px;
+    }
+    
+    .rules li {
+      margin-bottom: 5px;
+    }
+    
+    .winner-banner {
+      background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+      color: #333;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+      animation: celebrate 0.5s ease;
+    }
+    
+    @keyframes celebrate {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .winner-banner h2 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    
+    .winner-banner p {
+      font-size: 1rem;
+    }
+    
+    .tie-banner {
+      background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+    }
+    
+    footer {
+      margin-top: 30px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    
+    footer a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .cookies-grid { gap: 12px; }
+      .cookie { padding: 20px 10px; }
+      .cookie-emoji { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🍪 Cookie Picker</h1>
+  <p class="subtitle">The Fair Division Game — Pick wisely!</p>
+  
+  <div class="game-container">
+    <div class="status-bar">
+      <span class="player-indicator" id="current-player">Player 1's Turn</span>
+      <span class="turn-info" id="turn-info">Pick 1 cookie</span>
+    </div>
+    
+    <div id="winner-area"></div>
+    
+    <div class="cookies-grid" id="cookies-grid">
+      <!-- Cookies will be rendered here -->
+    </div>
+    
+    <div class="scoreboard">
+      <div class="score-card p1">
+        <div class="score-name">🟢 Player 1</div>
+        <div class="score-cookies" id="p1-cookies"></div>
+        <div class="score-points" id="p1-points">0 points</div>
+      </div>
+      <div class="score-card p2">
+        <div class="score-name">🔵 Player 2</div>
+        <div class="score-cookies" id="p2-cookies"></div>
+        <div class="score-points" id="p2-points">0 points</div>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" id="play-btn" onclick="resetGame()">🎮 New Game</button>
+    
+    <div class="rules">
+      <h3>📜 How to Play</h3>
+      <ol>
+        <li><strong>Player 1</strong> picks <strong>1 cookie</strong> first</li>
+        <li><strong>Player 2</strong> picks <strong>2 cookies</strong> from remaining</li>
+        <li><strong>Player 1</strong> gets the <strong>last cookie</strong> automatically</li>
+        <li>Most points wins! ⭐ = 1 point each</li>
+      </ol>
+    </div>
+  </div>
+  
+  <footer>
+    Made with 🍪 by <a href="https://darrylbots.com">DarrylBots</a>
+  </footer>
+
+  <script>
+    const COOKIES = [
+      { emoji: '🍪', name: 'Golden Deluxe', stars: 4 },
+      { emoji: '🥠', name: 'Fortune Cookie', stars: 3 },
+      { emoji: '🧁', name: 'Mini Cupcake', stars: 2 },
+      { emoji: '🥧', name: 'Humble Crumble', stars: 1 }
+    ];
+    
+    let gameState = {
+      phase: 1, // 1: P1 picks 1, 2: P2 picks 2, 3: P1 gets last, 4: game over
+      p1Picks: [],
+      p2Picks: [],
+      cookies: []
+    };
+    
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+    
+    function resetGame() {
+      gameState = {
+        phase: 1,
+        p1Picks: [],
+        p2Picks: [],
+        cookies: shuffleArray(COOKIES).map((c, i) => ({ ...c, id: i, taken: false, owner: null }))
+      };
+      document.getElementById('winner-area').innerHTML = '';
+      document.getElementById('play-btn').textContent = '🔄 Restart Game';
+      renderGame();
+    }
+    
+    function pickCookie(id) {
+      const cookie = gameState.cookies.find(c => c.id === id);
+      if (!cookie || cookie.taken) return;
+      
+      if (gameState.phase === 1) {
+        // Player 1 picks first cookie
+        cookie.taken = true;
+        cookie.owner = 1;
+        gameState.p1Picks.push(cookie);
+        gameState.phase = 2;
+      } else if (gameState.phase === 2) {
+        // Player 2 picks 2 cookies
+        cookie.taken = true;
+        cookie.owner = 2;
+        gameState.p2Picks.push(cookie);
+        
+        if (gameState.p2Picks.length === 2) {
+          // Auto-assign last cookie to Player 1
+          const lastCookie = gameState.cookies.find(c => !c.taken);
+          if (lastCookie) {
+            lastCookie.taken = true;
+            lastCookie.owner = 1;
+            gameState.p1Picks.push(lastCookie);
+          }
+          gameState.phase = 4;
+        }
+      }
+      
+      renderGame();
+    }
+    
+    function renderGame() {
+      // Render cookies
+      const grid = document.getElementById('cookies-grid');
+      grid.innerHTML = gameState.cookies.map(cookie => {
+        let classes = 'cookie';
+        if (cookie.taken) {
+          classes += ' taken';
+          classes += cookie.owner === 1 ? ' player1' : ' player2';
+        }
+        if (gameState.phase === 4) classes += ' disabled';
+        
+        const ownerBadge = cookie.owner 
+          ? `<div class="cookie-owner p${cookie.owner}">P${cookie.owner}</div>` 
+          : '';
+        
+        return `
+          <div class="${classes}" onclick="pickCookie(${cookie.id})">
+            ${ownerBadge}
+            <span class="cookie-emoji">${cookie.emoji}</span>
+            <div class="cookie-quality">${cookie.name}</div>
+            <div class="cookie-stars">${'⭐'.repeat(cookie.stars)}</div>
+          </div>
+        `;
+      }).join('');
+      
+      // Update status
+      const playerEl = document.getElementById('current-player');
+      const turnEl = document.getElementById('turn-info');
+      
+      if (gameState.phase === 1) {
+        playerEl.textContent = "🟢 Player 1's Turn";
+        turnEl.textContent = "Pick 1 cookie";
+      } else if (gameState.phase === 2) {
+        playerEl.textContent = "🔵 Player 2's Turn";
+        const remaining = 2 - gameState.p2Picks.length;
+        turnEl.textContent = `Pick ${remaining} cookie${remaining > 1 ? 's' : ''}`;
+      } else if (gameState.phase === 4) {
+        playerEl.textContent = "🎉 Game Over!";
+        turnEl.textContent = "See results below";
+      }
+      
+      // Update scores
+      const p1Points = gameState.p1Picks.reduce((sum, c) => sum + c.stars, 0);
+      const p2Points = gameState.p2Picks.reduce((sum, c) => sum + c.stars, 0);
+      
+      document.getElementById('p1-cookies').textContent = gameState.p1Picks.map(c => c.emoji).join(' ') || '—';
+      document.getElementById('p2-cookies').textContent = gameState.p2Picks.map(c => c.emoji).join(' ') || '—';
+      document.getElementById('p1-points').textContent = `${p1Points} point${p1Points !== 1 ? 's' : ''}`;
+      document.getElementById('p2-points').textContent = `${p2Points} point${p2Points !== 1 ? 's' : ''}`;
+      
+      // Show winner
+      if (gameState.phase === 4) {
+        const winnerArea = document.getElementById('winner-area');
+        if (p1Points > p2Points) {
+          winnerArea.innerHTML = `
+            <div class="winner-banner">
+              <h2>🏆 Player 1 Wins!</h2>
+              <p>${p1Points} vs ${p2Points} points</p>
+            </div>
+          `;
+        } else if (p2Points > p1Points) {
+          winnerArea.innerHTML = `
+            <div class="winner-banner">
+              <h2>🏆 Player 2 Wins!</h2>
+              <p>${p2Points} vs ${p1Points} points</p>
+            </div>
+          `;
+        } else {
+          winnerArea.innerHTML = `
+            <div class="winner-banner tie-banner">
+              <h2>🤝 It's a Tie!</h2>
+              <p>Both players got ${p1Points} points</p>
+            </div>
+          `;
+        }
+      }
+    }
+    
+    // Initialize
+    resetGame();
+  </script>
+</body>
+</html>
