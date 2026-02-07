@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Token Usage | JAMES</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0f2027 100%);
+      min-height: 100vh;
+      padding: 24px;
+      color: #e0e0e0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      color: #00d4aa;
+      text-shadow: 0 0 30px rgba(0, 212, 170, 0.5);
+      margin-bottom: 8px;
+    }
+    header p { color: #888; font-size: 1rem; }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00d4aa;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px #00d4aa; }
+      50% { opacity: 0.5; box-shadow: 0 0 20px #00d4aa; }
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(0, 212, 170, 0.2);
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00d4aa, #00ff88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-number.gold { background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; background-clip: text; }
+    .stat-number.blue { background: linear-gradient(135deg, #6495ed, #00bfff); -webkit-background-clip: text; background-clip: text; }
+    .stat-number.pink { background: linear-gradient(135deg, #ff88ff, #ff66cc); -webkit-background-clip: text; background-clip: text; }
+    .stat-number.red { background: linear-gradient(135deg, #ff6b6b, #ff8888); -webkit-background-clip: text; background-clip: text; }
+    .stat-label {
+      color: #666;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 8px;
+    }
+    .stat-sub {
+      color: #888;
+      font-size: 0.75rem;
+      margin-top: 4px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto 32px auto;
+    }
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #00d4aa;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .model-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .model-row:last-child { border-bottom: none; }
+    .model-name { color: #ddd; font-weight: 500; }
+    .model-tokens { color: #888; font-family: 'SF Mono', Monaco, monospace; }
+    .model-cost { color: #ffd700; font-weight: 600; }
+    .session-item {
+      margin-bottom: 16px;
+    }
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .session-name { color: #ddd; font-size: 0.85rem; }
+    .session-pct { color: #00d4aa; font-weight: 600; }
+    .progress-bar {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00d4aa, #ffd700);
+      transition: width 0.5s ease;
+    }
+    .cost-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .cost-item {
+      background: rgba(255,255,255,0.02);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .cost-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffd700;
+    }
+    .cost-label {
+      font-size: 0.75rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #666;
+    }
+    footer a { color: #00d4aa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .refresh-info {
+      font-size: 0.75rem;
+      color: #555;
+      text-align: center;
+      margin-top: 16px;
+    }
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      header h1 { font-size: 1.8rem; }
+      .stat-number { font-size: 2rem; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎫 Token Usage</h1>
+    <p><span class="status-dot"></span>Live • Auto-refresh 30s • <span id="update-time">Loading...</span></p>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number" id="total-tokens">—</div>
+      <div class="stat-label">Total Tokens</div>
+      <div class="stat-sub" id="total-tokens-raw"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number blue" id="input-tokens">—</div>
+      <div class="stat-label">Input</div>
+      <div class="stat-sub">Prompts & Context</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number pink" id="output-tokens">—</div>
+      <div class="stat-label">Output</div>
+      <div class="stat-sub">Responses</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number gold" id="active-sessions">—</div>
+      <div class="stat-label">Sessions</div>
+      <div class="stat-sub">With tokens used</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number red" id="est-cost">—</div>
+      <div class="stat-label">Est. Cost</div>
+      <div class="stat-sub">This session batch</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">📊 By Model</div>
+      <div id="model-list">
+        <div style="color: #666;">Loading...</div>
+      </div>
+      <div class="cost-breakdown">
+        <div class="cost-item">
+          <div class="cost-value" id="opus-cost">$0.00</div>
+          <div class="cost-label">Claude Opus</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-value" id="kimi-cost">$0.00</div>
+          <div class="cost-label">Kimi K2.5 (Free)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">🔥 Active Sessions</div>
+      <div id="session-list">
+        <div style="color: #666;">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">💰 Cost Estimates</div>
+      <table style="width: 100%; font-size: 0.85rem;">
+        <thead>
+          <tr style="color: #666; text-align: left;">
+            <th style="padding: 8px 0;">Model</th>
+            <th>Input $/M</th>
+            <th>Output $/M</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody id="pricing-table">
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <td style="padding: 12px 0; color: #ffd700;">Claude Opus 4.5</td>
+            <td style="color: #ddd;">$15.00</td>
+            <td style="color: #ddd;">$75.00</td>
+            <td style="color: #888;">Anthropic</td>
+          </tr>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <td style="padding: 12px 0; color: #00d4aa;">Kimi K2.5</td>
+            <td style="color: #ddd;">$0.00</td>
+            <td style="color: #ddd;">$0.00</td>
+            <td style="color: #888;">NVIDIA NIM</td>
+          </tr>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <td style="padding: 12px 0; color: #6495ed;">DeepSeek V3</td>
+            <td style="color: #ddd;">$0.14</td>
+            <td style="color: #ddd;">$0.28</td>
+            <td style="color: #888;">DeepSeek</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 0; color: #ff88ff;">DeepSeek R1</td>
+            <td style="color: #ddd;">$0.55</td>
+            <td style="color: #ddd;">$2.19</td>
+            <td style="color: #888;">DeepSeek</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">📈 Context Usage</div>
+      <div id="context-chart">
+        <div style="color: #666;">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="refresh-info">
+    API: 127.0.0.1:4202 • Data from OpenClaw Gateway • Updated every 30s
+  </div>
+
+  <footer>
+    <p>JAMES Token Monitor ⚡ | <a href="integrations-dashboard.html">Integrations</a> | <a href="theta-dashboard.html">Theta Central</a> | <a href="../">DarrylBots.com</a></p>
+  </footer>
+
+  <script>
+    const TOKEN_API = 'http://127.0.0.1:4202/status';
+    
+    // Pricing per million tokens
+    const PRICING = {
+      'claude-opus-4-5': { input: 15.00, output: 75.00 },
+      'moonshotai/kimi-k2.5': { input: 0, output: 0 },
+      'deepseek-chat': { input: 0.14, output: 0.28 },
+      'deepseek-reasoner': { input: 0.55, output: 2.19 }
+    };
+    
+    function formatNumber(n) {
+      if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+      return n.toLocaleString();
+    }
+    
+    function formatCost(dollars) {
+      if (dollars < 0.01) return '<$0.01';
+      if (dollars < 1) return '$' + dollars.toFixed(2);
+      return '$' + dollars.toFixed(2);
+    }
+    
+    function calculateCost(model, inputTokens, outputTokens) {
+      const pricing = PRICING[model] || PRICING['claude-opus-4-5'];
+      const inputCost = (inputTokens / 1000000) * pricing.input;
+      const outputCost = (outputTokens / 1000000) * pricing.output;
+      return inputCost + outputCost;
+    }
+    
+    function formatSessionKey(key) {
+      const parts = key.split(':');
+      if (parts.length >= 3) {
+        const suffix = parts.slice(2).join(':');
+        if (suffix === 'main') return '💬 Main Session';
+        if (suffix.startsWith('cron:')) return '⏰ ' + suffix.substring(5, 13) + '...';
+        return suffix.substring(0, 20);
+      }
+      return key.substring(0, 20);
+    }
+    
+    async function updateDashboard() {
+      try {
+        const res = await fetch(TOKEN_API, {
+          headers: {
+            'ngrok-skip-browser-warning': 'true'
+          }
+        });
+        if (!res.ok) throw new Error('API unavailable');
+        const data = await res.json();
+        
+        if (data.error) throw new Error(data.error);
+        
+        // Update totals
+        document.getElementById('total-tokens').textContent = formatNumber(data.totals.totalTokens);
+        document.getElementById('total-tokens-raw').textContent = data.totals.totalTokens.toLocaleString() + ' tokens';
+        document.getElementById('input-tokens').textContent = formatNumber(data.totals.inputTokens);
+        document.getElementById('output-tokens').textContent = formatNumber(data.totals.outputTokens);
+        document.getElementById('active-sessions').textContent = data.totals.activeSessions;
+        
+        // Calculate total cost
+        let totalCost = 0;
+        let opusCost = 0;
+        let kimiCost = 0;
+        
+        // Model breakdown
+        const modelHtml = Object.entries(data.byModel)
+          .sort((a, b) => b[1].tokens - a[1].tokens)
+          .map(([model, info]) => {
+            const shortModel = model.includes('/') ? model.split('/').pop() : model;
+            const color = model.includes('opus') ? '#ffd700' : 
+                         model.includes('kimi') ? '#00d4aa' : '#888';
+            
+            // Estimate cost (assume 80% input, 20% output)
+            const inputEst = info.tokens * 0.8;
+            const outputEst = info.tokens * 0.2;
+            const cost = calculateCost(model, inputEst, outputEst);
+            totalCost += cost;
+            
+            if (model.includes('opus')) opusCost += cost;
+            if (model.includes('kimi')) kimiCost += cost;
+            
+            return `<div class="model-row">
+              <span class="model-name" style="color: ${color};">${shortModel}</span>
+              <span class="model-tokens">${formatNumber(info.tokens)} (${info.count} sessions)</span>
+              <span class="model-cost">${formatCost(cost)}</span>
+            </div>`;
+          }).join('');
+        document.getElementById('model-list').innerHTML = modelHtml || '<div style="color: #666;">No data</div>';
+        
+        // Update costs
+        document.getElementById('est-cost').textContent = formatCost(totalCost);
+        document.getElementById('opus-cost').textContent = formatCost(opusCost);
+        document.getElementById('kimi-cost').textContent = formatCost(kimiCost);
+        
+        // Session list
+        const sessionsHtml = data.sessions.slice(0, 6).map(s => {
+          const barWidth = Math.min(100, s.percentUsed);
+          const barColor = s.percentUsed > 80 ? '#ff6b6b' : 
+                          s.percentUsed > 50 ? '#ffd700' : '#00d4aa';
+          return `<div class="session-item">
+            <div class="session-header">
+              <span class="session-name">${formatSessionKey(s.key)}</span>
+              <span class="session-pct">${s.percentUsed}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${barWidth}%; background: ${barColor};"></div>
+            </div>
+          </div>`;
+        }).join('');
+        document.getElementById('session-list').innerHTML = sessionsHtml || '<div style="color: #666;">No sessions</div>';
+        
+        // Context chart
+        const contextHtml = data.sessions.slice(0, 5).map(s => {
+          const used = formatNumber(s.totalTokens);
+          const max = formatNumber(s.contextTokens);
+          return `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem;">
+            <span style="color: #888;">${formatSessionKey(s.key)}</span>
+            <span style="color: #ddd;">${used} / ${max}</span>
+          </div>`;
+        }).join('');
+        document.getElementById('context-chart').innerHTML = contextHtml || '<div style="color: #666;">No data</div>';
+        
+        // Update time
+        const time = new Date(data.timestamp).toLocaleTimeString('en-US', { 
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        document.getElementById('update-time').textContent = time;
+        
+      } catch (err) {
+        console.warn('Token API error:', err);
+        document.getElementById('total-tokens').textContent = '—';
+        document.getElementById('update-time').textContent = 'API offline';
+      }
+    }
+    
+    // Initial load + refresh
+    updateDashboard();
+    setInterval(updateDashboard, 30000);
+  </script>
+</body>
+</html>

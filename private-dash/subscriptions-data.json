@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-02-07T05:48:00Z",
+  "lastUpdated": "2026-02-07T17:53:00Z",
   "summary": {
-    "monthlyTotal": 617,
-    "annualProjection": 7404,
-    "activeCount": 15,
+    "monthlyTotal": 625,
+    "annualProjection": 7500,
+    "activeCount": 16,
     "needsAttention": 1
   },
   "subscriptions": [
@@ -132,6 +132,17 @@
       "lastCharge": "2026-02-06",
       "status": "active",
       "notes": "Basic tier: 300 calls/min, options data, higher limits"
+    },
+    {
+      "id": "ngrok",
+      "name": "ngrok Personal",
+      "description": "Secure tunnels - Theta, Token, Voice dashboards",
+      "category": "tech",
+      "amount": 8,
+      "frequency": "monthly",
+      "lastCharge": "2026-02-07",
+      "status": "active",
+      "notes": "Personal tier: No interstitial, 2 domains, 3GB bandwidth"
     },
     {
       "id": "tesla-insurance",
