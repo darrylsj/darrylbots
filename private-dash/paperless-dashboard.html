@@ -183,6 +183,9 @@ body {
 .badge.financial { background: rgba(88,166,255,0.2); color: var(--accent); }
 .badge.medical { background: rgba(248,81,73,0.2); color: var(--red); }
 .badge.legal { background: rgba(188,140,255,0.2); color: var(--purple); }
+.badge.dental { background: rgba(255,110,180,0.2); color: #ff6eb4; }
+.badge.vision { background: rgba(218,112,214,0.2); color: #da70d6; }
+.badge.vet { background: rgba(139,105,20,0.2); color: #c9a832; }
 .badge.other { background: rgba(139,148,158,0.2); color: var(--text-dim); }
 
 .tax-checklist {
@@ -245,6 +248,11 @@ body {
     <div class="value" id="taxCount">—</div>
     <div class="detail">Schedule E & other tax-relevant</div>
   </div>
+  <div class="stat-card" style="--accent-color: #3fb950">
+    <div class="label">HSA Reimbursable</div>
+    <div class="value" style="color:#3fb950" id="hsaCount">—</div>
+    <div class="detail">Dental + Vision (Chevron HDHP)</div>
+  </div>
   <div class="stat-card entity">
     <div class="label">Top Entity</div>
     <div class="value" id="topEntity">—</div>
@@ -304,10 +312,13 @@ const TYPE_COLORS = {
   'tax': '#d29922',
   'financial': '#58a6ff',
   'medical': '#f85149',
+  'dental': '#ff6eb4',
+  'vision': '#da70d6',
   'legal': '#bc8cff',
   'property': '#79c0ff',
   'education': '#56d364',
   'vehicle': '#e3b341',
+  'vet': '#8b6914',
   'archive': '#8b949e'
 };
 
@@ -322,8 +333,11 @@ function getTypeBadgeClass(type) {
   if (type.startsWith('tax')) return 'tax';
   if (type.startsWith('receipt')) return 'receipt';
   if (type.startsWith('financial')) return 'financial';
+  if (type.startsWith('dental')) return 'dental';
+  if (type.startsWith('vision')) return 'vision';
   if (type.startsWith('medical')) return 'medical';
   if (type.startsWith('legal')) return 'legal';
+  if (type.startsWith('vet')) return 'vet';
   return 'other';
 }
 
@@ -380,6 +394,9 @@ async function loadStats() {
     const todayCount = (stats.byDay && stats.byDay[today]) || 0;
     document.getElementById('todayCount').textContent = todayCount;
     document.getElementById('todayDate').textContent = today;
+    
+    // HSA
+    document.getElementById('hsaCount').textContent = stats.hsaReimbursable || 0;
     
     // Top entity
     if (stats.byEntity) {

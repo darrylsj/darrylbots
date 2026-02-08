@@ -57,9 +57,9 @@
   {
     "id": "doc_0004",
     "originalName": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
-    "filename": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
-    "path": "Medical/Darryl",
-    "type": "medical/darryl",
+    "filename": "2026-01-29_dental_delta-dental_claim-summary.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
     "entity": "Delta Dental",
     "person": "Darryl",
     "property": "none",
@@ -69,15 +69,17 @@
     "taxCategory": null,
     "summary": "Claim Summary",
     "tags": [
-      "medical-darryl"
+      "dental",
+      "hsa-reimbursable",
+      "delta-dental"
     ]
   },
   {
     "id": "doc_0005",
     "originalName": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
-    "filename": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
-    "path": "Medical/Darryl",
-    "type": "medical/darryl",
+    "filename": "2026-01-29_dental_deltadental_claim-payment.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
     "entity": "Deltadental",
     "person": "Darryl",
     "property": "none",
@@ -87,15 +89,17 @@
     "taxCategory": null,
     "summary": "Claim Payment",
     "tags": [
-      "medical-darryl"
+      "dental",
+      "hsa-reimbursable",
+      "delta-dental"
     ]
   },
   {
     "id": "doc_0006",
     "originalName": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
-    "filename": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
-    "path": "Medical/Darryl",
-    "type": "medical/darryl",
+    "filename": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
     "entity": "Delta Dental",
     "person": "Darryl",
     "property": "none",
@@ -105,25 +109,29 @@
     "taxCategory": null,
     "summary": "Benefits Usage Summary",
     "tags": [
-      "medical-darryl"
+      "dental",
+      "hsa-reimbursable",
+      "delta-dental"
     ]
   },
   {
     "id": "doc_0007",
     "originalName": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
-    "filename": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
-    "path": "Property/Edinburgh",
-    "type": "property/edinburgh",
+    "filename": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
+    "path": "Tax/2025/Rental \u2014 Toronto",
+    "type": "tax/rental-toronto",
     "entity": "Td",
     "person": "Family",
-    "property": "Edinburgh",
+    "property": "Toronto",
     "date": "2026-01-23",
     "scanned": "2026-02-08T11:24:08.333202",
-    "taxRelevant": false,
+    "taxRelevant": true,
     "taxCategory": null,
     "summary": "Mortgage Payoff Notification",
     "tags": [
-      "property-edinburgh"
+      "tax-rental-toronto",
+      "tax-2025",
+      "td"
     ]
   },
   {
@@ -147,20 +155,20 @@
   {
     "id": "doc_0009",
     "originalName": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
-    "filename": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
-    "path": "Tax/2025/Deductions",
-    "type": "tax/deductions",
+    "filename": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
+    "path": "Vet/Domino",
+    "type": "vet/domino",
     "entity": "Blackhawk Veterinary Hospital",
     "person": "Family",
     "property": "none",
     "date": "2026-02-03",
     "scanned": "2026-02-08T11:23:51.987428",
-    "taxRelevant": true,
+    "taxRelevant": false,
     "taxCategory": null,
     "summary": "Invoice For Domino",
     "tags": [
-      "tax-deductions",
-      "tax-2025"
+      "vet",
+      "domino"
     ]
   },
   {

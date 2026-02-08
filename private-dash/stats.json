@@ -3,10 +3,10 @@
   "byType": {
     "archive": 2,
     "financial/investments": 1,
-    "medical/darryl": 3,
-    "property/edinburgh": 1,
+    "dental": 3,
+    "tax/rental-toronto": 1,
     "receipt/2025": 1,
-    "tax/deductions": 1,
+    "vet/domino": 1,
     "tax/income": 1
   },
   "byDay": {
@@ -24,9 +24,10 @@
     "Certified Property Managers Of South": 1
   },
   "byProperty": {
-    "Edinburgh": 1
+    "Toronto": 1
   },
   "taxDocCount": 3,
+  "hsaReimbursable": 3,
   "recentDocs": [
     {
       "name": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
@@ -53,35 +54,35 @@
       "processedAt": "2026-02-08T11:16:47.564627"
     },
     {
-      "name": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
-      "type": "medical/darryl",
+      "name": "2026-01-29_dental_delta-dental_claim-summary.pdf",
+      "type": "dental",
       "entity": "Delta Dental",
       "summary": "Claim Summary",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:10.002569"
     },
     {
-      "name": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
-      "type": "medical/darryl",
+      "name": "2026-01-29_dental_deltadental_claim-payment.pdf",
+      "type": "dental",
       "entity": "Deltadental",
       "summary": "Claim Payment",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:13.779189"
     },
     {
-      "name": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
-      "type": "medical/darryl",
+      "name": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
+      "type": "dental",
       "entity": "Delta Dental",
       "summary": "Benefits Usage Summary",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:22.085219"
     },
     {
-      "name": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
-      "type": "property/edinburgh",
+      "name": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
+      "type": "tax/rental-toronto",
       "entity": "Td",
       "summary": "Mortgage Payoff Notification",
-      "taxRelevant": false,
+      "taxRelevant": true,
       "processedAt": "2026-02-08T11:24:08.333202"
     },
     {
@@ -93,11 +94,11 @@
       "processedAt": "2026-02-08T10:57:31.422537"
     },
     {
-      "name": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
-      "type": "tax/deductions",
+      "name": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
+      "type": "vet/domino",
       "entity": "Blackhawk Veterinary Hospital",
       "summary": "Invoice For Domino",
-      "taxRelevant": true,
+      "taxRelevant": false,
       "processedAt": "2026-02-08T11:23:51.987428"
     },
     {
@@ -110,5 +111,5 @@
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-08T11:28:26.281265"
+  "lastProcessed": "2026-02-08T11:37:43.484743"
 }
