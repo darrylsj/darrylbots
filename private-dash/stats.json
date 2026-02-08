@@ -1,34 +1,87 @@
 {
-  "totalProcessed": 10,
+  "totalProcessed": 20,
   "byType": {
-    "archive": 2,
+    "archive": 8,
     "financial/investments": 1,
-    "dental": 3,
-    "tax/rental-toronto": 1,
+    "legal/contracts": 1,
+    "medical/darryl": 1,
+    "dental": 5,
     "receipt/2025": 1,
-    "vet/domino": 1,
-    "tax/income": 1
+    "tax/rental-florida": 1,
+    "tax/rental-toronto": 1,
+    "vet/domino": 1
   },
   "byDay": {
-    "2026-02-08": 10
+    "2026-02-08": 20
   },
   "byEntity": {
-    "02082026": 1,
+    "Null": 1,
+    "Unclassified Document": 1,
+    "Unreadable": 1,
+    "02082026": 2,
     "Language Assistance Notice": 1,
     "Rocketdollar": 1,
-    "Delta Dental": 2,
-    "Deltadental": 1,
-    "Td": 1,
+    "California State": 1,
+    "Quest Diagnostics": 1,
+    "Delta Dental": 3,
+    "Deltadental": 2,
     "Target": 1,
-    "Blackhawk Veterinary Hospital": 1,
-    "Certified Property Managers Of South": 1
+    "Certified Property Managers": 1,
+    "Td": 1,
+    "Blackhawk Veterinary Hospital": 1
   },
-  "byProperty": {
-    "Toronto": 1
-  },
+  "byProperty": {},
   "taxDocCount": 3,
-  "hsaReimbursable": 3,
+  "hsaReimbursable": 5,
   "recentDocs": [
+    {
+      "name": "2026-02-08_archive_null_blank-or-unreadable.pdf",
+      "type": "archive",
+      "entity": "Null",
+      "summary": "Blank Or Unreadable",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:05.932261"
+    },
+    {
+      "name": "2026-02-08_archive_unclassified-document.pdf",
+      "type": "archive",
+      "entity": "Unclassified Document",
+      "summary": "2026 02 08_Archive_Unclassified Document",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:06.724969"
+    },
+    {
+      "name": "2026-02-08_archive_unknown_no-text-extracted.pdf",
+      "type": "archive",
+      "entity": "Unknown",
+      "summary": "No Text Extracted",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:08.753438"
+    },
+    {
+      "name": "2026-02-08_archive_unknown_unclassifiable-document.pdf",
+      "type": "archive",
+      "entity": "Unknown",
+      "summary": "Unclassifiable Document",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:05.968245"
+    },
+    {
+      "name": "2026-02-08_archive_unreadable.pdf",
+      "type": "archive",
+      "entity": "Unreadable",
+      "summary": "2026 02 08_Archive_Unreadable",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:08.735906"
+    },
+    {
+      "name": "2026-02-08_unclassified_02082026_003_ocr.pdf",
+      "type": "archive",
+      "entity": "02082026",
+      "summary": "Ocr",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:30.684138"
+    },
     {
       "name": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
       "type": "archive",
@@ -41,7 +94,7 @@
       "name": "undated_archive_language-assistance-notice.pdf",
       "type": "archive",
       "entity": "Language Assistance Notice",
-      "summary": "Language Assistance Notice",
+      "summary": "Undated_Archive_Language Assistance Notice",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:25.633663"
     },
@@ -54,12 +107,36 @@
       "processedAt": "2026-02-08T11:16:47.564627"
     },
     {
+      "name": "2026-02-08_legal-contracts_california-state_medical-debt-disclosure.pdf",
+      "type": "legal/contracts",
+      "entity": "California State",
+      "summary": "Medical Debt Disclosure",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:39.238344"
+    },
+    {
+      "name": "2026-02-03_medical-darryl_quest-diagnostics_laboratory-bill.pdf",
+      "type": "medical/darryl",
+      "entity": "Quest Diagnostics",
+      "summary": "Laboratory Bill",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:37.561643"
+    },
+    {
       "name": "2026-01-29_dental_delta-dental_claim-summary.pdf",
       "type": "dental",
       "entity": "Delta Dental",
       "summary": "Claim Summary",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:10.002569"
+    },
+    {
+      "name": "2026-01-29_dental_deltadental_claim-payment-darryl-sladden.pdf",
+      "type": "dental",
+      "entity": "Deltadental",
+      "summary": "Claim Payment Darryl Sladden",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:16.996703"
     },
     {
       "name": "2026-01-29_dental_deltadental_claim-payment.pdf",
@@ -70,20 +147,20 @@
       "processedAt": "2026-02-08T11:24:13.779189"
     },
     {
+      "name": "2026-02-08_dental_delta-dental_benefits-usage-summary-darryl.pdf",
+      "type": "dental",
+      "entity": "Delta Dental",
+      "summary": "Benefits Usage Summary Darryl",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:57:26.661234"
+    },
+    {
       "name": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
       "type": "dental",
       "entity": "Delta Dental",
       "summary": "Benefits Usage Summary",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:24:22.085219"
-    },
-    {
-      "name": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
-      "type": "tax/rental-toronto",
-      "entity": "Td",
-      "summary": "Mortgage Payoff Notification",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:08.333202"
     },
     {
       "name": "2025-12-14_receipt-2025_target_household-items.pdf",
@@ -94,22 +171,31 @@
       "processedAt": "2026-02-08T10:57:31.422537"
     },
     {
+      "name": "2025-12-31_tax-rental-florida_certified-property-managers_1099-misc-rental-income.pdf",
+      "type": "tax/rental-florida",
+      "entity": "Certified Property Managers",
+      "summary": "1099 Misc Rental Income",
+      "taxRelevant": true,
+      "processedAt": "2026-02-08T11:24:05.621724"
+    },
+    {
+      "name": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
+      "type": "tax/rental-toronto",
+      "entity": "Td",
+      "summary": "Mortgage Payoff Notification",
+      "taxRelevant": true,
+      "processedAt": "2026-02-08T11:24:08.333202"
+    },
+    {
       "name": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
       "type": "vet/domino",
       "entity": "Blackhawk Veterinary Hospital",
-      "summary": "Invoice For Domino",
+      "summary": "Invoice Domino",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:23:51.987428"
-    },
-    {
-      "name": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
-      "type": "tax/income",
-      "entity": "Certified Property Managers Of South",
-      "summary": "1099 Misc Rental Income Florida",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:05.621724"
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-08T11:37:43.484743"
+  "lastProcessed": "2026-02-08T12:16:10.774821",
+  "lastScanRun": "2026-02-08T12:16:10.774823"
 }

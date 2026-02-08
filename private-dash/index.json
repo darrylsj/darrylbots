@@ -1,193 +1,302 @@
 [
   {
     "id": "doc_0001",
-    "originalName": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
-    "filename": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
+    "filename": "2026-02-08_archive_null_blank-or-unreadable.pdf",
     "path": "Archive",
     "type": "archive",
-    "entity": "02082026",
-    "person": "Family",
-    "property": "none",
+    "entity": "Null",
     "date": "2026-02-08",
-    "scanned": "2026-02-08T11:16:00.976546",
+    "scanned": "2026-02-08T11:57:05.932261",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "American Express P.O. Box 981540 El Paso.Tx 79998",
+    "hsaReimbursable": false,
+    "summary": "Blank Or Unreadable",
     "tags": [
       "archive"
     ]
   },
   {
     "id": "doc_0002",
-    "originalName": "undated_archive_language-assistance-notice.pdf",
-    "filename": "undated_archive_language-assistance-notice.pdf",
+    "filename": "2026-02-08_archive_unclassified-document.pdf",
     "path": "Archive",
     "type": "archive",
-    "entity": "Language Assistance Notice",
-    "person": "Family",
-    "property": "none",
-    "date": "",
-    "scanned": "2026-02-08T11:24:25.633663",
+    "entity": "Unclassified Document",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:06.724969",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "Language Assistance Notice",
+    "hsaReimbursable": false,
+    "summary": "2026 02 08_Archive_Unclassified Document",
     "tags": [
       "archive"
     ]
   },
   {
     "id": "doc_0003",
-    "originalName": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
-    "filename": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
-    "path": "Financial/Investments",
-    "type": "financial/investments",
-    "entity": "Rocketdollar",
-    "person": "Family",
-    "property": "none",
-    "date": "2026-01-21",
-    "scanned": "2026-02-08T11:16:47.564627",
-    "taxRelevant": true,
-    "taxCategory": null,
-    "summary": "Ira Summary 5498",
+    "filename": "2026-02-08_archive_unknown_no-text-extracted.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "Unknown",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:08.753438",
+    "taxRelevant": false,
+    "hsaReimbursable": false,
+    "summary": "No Text Extracted",
     "tags": [
-      "financial-investments",
-      "tax-2025"
+      "archive"
     ]
   },
   {
     "id": "doc_0004",
-    "originalName": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
-    "filename": "2026-01-29_dental_delta-dental_claim-summary.pdf",
-    "path": "Medical/Dental",
-    "type": "dental",
-    "entity": "Delta Dental",
-    "person": "Darryl",
-    "property": "none",
-    "date": "2026-01-29",
-    "scanned": "2026-02-08T11:24:10.002569",
+    "filename": "2026-02-08_archive_unknown_unclassifiable-document.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "Unknown",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:05.968245",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "Claim Summary",
+    "hsaReimbursable": false,
+    "summary": "Unclassifiable Document",
     "tags": [
-      "dental",
-      "hsa-reimbursable",
-      "delta-dental"
+      "archive"
     ]
   },
   {
     "id": "doc_0005",
-    "originalName": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
-    "filename": "2026-01-29_dental_deltadental_claim-payment.pdf",
-    "path": "Medical/Dental",
-    "type": "dental",
-    "entity": "Deltadental",
-    "person": "Darryl",
-    "property": "none",
-    "date": "2026-01-29",
-    "scanned": "2026-02-08T11:24:13.779189",
+    "filename": "2026-02-08_archive_unreadable.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "Unreadable",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:08.735906",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "Claim Payment",
+    "hsaReimbursable": false,
+    "summary": "2026 02 08_Archive_Unreadable",
     "tags": [
-      "dental",
-      "hsa-reimbursable",
-      "delta-dental"
+      "archive"
     ]
   },
   {
     "id": "doc_0006",
-    "originalName": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
-    "filename": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
-    "path": "Medical/Dental",
-    "type": "dental",
-    "entity": "Delta Dental",
-    "person": "Darryl",
-    "property": "none",
+    "filename": "2026-02-08_unclassified_02082026_003_ocr.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "02082026",
     "date": "2026-02-08",
-    "scanned": "2026-02-08T11:24:22.085219",
+    "scanned": "2026-02-08T11:57:30.684138",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "Benefits Usage Summary",
+    "hsaReimbursable": false,
+    "summary": "Ocr",
     "tags": [
-      "dental",
-      "hsa-reimbursable",
-      "delta-dental"
+      "archive"
     ]
   },
   {
     "id": "doc_0007",
-    "originalName": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
-    "filename": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
-    "path": "Tax/2025/Rental \u2014 Toronto",
-    "type": "tax/rental-toronto",
-    "entity": "Td",
-    "person": "Family",
-    "property": "Toronto",
-    "date": "2026-01-23",
-    "scanned": "2026-02-08T11:24:08.333202",
-    "taxRelevant": true,
-    "taxCategory": null,
-    "summary": "Mortgage Payoff Notification",
+    "filename": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "02082026",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:16:00.976546",
+    "taxRelevant": false,
+    "hsaReimbursable": false,
+    "summary": "American Express P.O. Box 981540 El Paso.Tx 79998",
     "tags": [
-      "tax-rental-toronto",
-      "tax-2025",
-      "td"
+      "archive"
     ]
   },
   {
     "id": "doc_0008",
-    "originalName": "2025-12-14_receipt-2025_target_household-items.pdf",
+    "filename": "undated_archive_language-assistance-notice.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "Language Assistance Notice",
+    "date": "",
+    "scanned": "2026-02-08T11:24:25.633663",
+    "taxRelevant": false,
+    "hsaReimbursable": false,
+    "summary": "Undated_Archive_Language Assistance Notice",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0009",
+    "filename": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
+    "path": "Financial/Investments",
+    "type": "financial/investments",
+    "entity": "Rocketdollar",
+    "date": "2026-01-21",
+    "scanned": "2026-02-08T11:16:47.564627",
+    "taxRelevant": true,
+    "hsaReimbursable": false,
+    "summary": "Ira Summary 5498",
+    "tags": [
+      "financial-investments"
+    ]
+  },
+  {
+    "id": "doc_0010",
+    "filename": "2026-02-08_legal-contracts_california-state_medical-debt-disclosure.pdf",
+    "path": "Legal/Contracts",
+    "type": "legal/contracts",
+    "entity": "California State",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:39.238344",
+    "taxRelevant": false,
+    "hsaReimbursable": false,
+    "summary": "Medical Debt Disclosure",
+    "tags": [
+      "legal-contracts"
+    ]
+  },
+  {
+    "id": "doc_0011",
+    "filename": "2026-02-03_medical-darryl_quest-diagnostics_laboratory-bill.pdf",
+    "path": "Medical/Darryl",
+    "type": "medical/darryl",
+    "entity": "Quest Diagnostics",
+    "date": "2026-02-03",
+    "scanned": "2026-02-08T11:57:37.561643",
+    "taxRelevant": false,
+    "hsaReimbursable": false,
+    "summary": "Laboratory Bill",
+    "tags": [
+      "medical-darryl"
+    ]
+  },
+  {
+    "id": "doc_0012",
+    "filename": "2026-01-29_dental_delta-dental_claim-summary.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
+    "entity": "Delta Dental",
+    "date": "2026-01-29",
+    "scanned": "2026-02-08T11:24:10.002569",
+    "taxRelevant": false,
+    "hsaReimbursable": true,
+    "summary": "Claim Summary",
+    "tags": [
+      "dental"
+    ]
+  },
+  {
+    "id": "doc_0013",
+    "filename": "2026-01-29_dental_deltadental_claim-payment-darryl-sladden.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
+    "entity": "Deltadental",
+    "date": "2026-01-29",
+    "scanned": "2026-02-08T11:57:16.996703",
+    "taxRelevant": false,
+    "hsaReimbursable": true,
+    "summary": "Claim Payment Darryl Sladden",
+    "tags": [
+      "dental"
+    ]
+  },
+  {
+    "id": "doc_0014",
+    "filename": "2026-01-29_dental_deltadental_claim-payment.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
+    "entity": "Deltadental",
+    "date": "2026-01-29",
+    "scanned": "2026-02-08T11:24:13.779189",
+    "taxRelevant": false,
+    "hsaReimbursable": true,
+    "summary": "Claim Payment",
+    "tags": [
+      "dental"
+    ]
+  },
+  {
+    "id": "doc_0015",
+    "filename": "2026-02-08_dental_delta-dental_benefits-usage-summary-darryl.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
+    "entity": "Delta Dental",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:57:26.661234",
+    "taxRelevant": false,
+    "hsaReimbursable": true,
+    "summary": "Benefits Usage Summary Darryl",
+    "tags": [
+      "dental"
+    ]
+  },
+  {
+    "id": "doc_0016",
+    "filename": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
+    "path": "Medical/Dental",
+    "type": "dental",
+    "entity": "Delta Dental",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:24:22.085219",
+    "taxRelevant": false,
+    "hsaReimbursable": true,
+    "summary": "Benefits Usage Summary",
+    "tags": [
+      "dental"
+    ]
+  },
+  {
+    "id": "doc_0017",
     "filename": "2025-12-14_receipt-2025_target_household-items.pdf",
     "path": "Receipts/2025",
     "type": "receipt/2025",
     "entity": "Target",
-    "person": "Family",
-    "property": "none",
     "date": "2025-12-14",
     "scanned": "2026-02-08T10:57:31.422537",
     "taxRelevant": false,
-    "taxCategory": null,
+    "hsaReimbursable": false,
     "summary": "Household Items",
     "tags": [
       "receipt-2025"
     ]
   },
   {
-    "id": "doc_0009",
-    "originalName": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
+    "id": "doc_0018",
+    "filename": "2025-12-31_tax-rental-florida_certified-property-managers_1099-misc-rental-income.pdf",
+    "path": "Tax/2025/Rental \u2014 Florida",
+    "type": "tax/rental-florida",
+    "entity": "Certified Property Managers",
+    "date": "2025-12-31",
+    "scanned": "2026-02-08T11:24:05.621724",
+    "taxRelevant": true,
+    "hsaReimbursable": false,
+    "summary": "1099 Misc Rental Income",
+    "tags": [
+      "tax-rental-florida"
+    ]
+  },
+  {
+    "id": "doc_0019",
+    "filename": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
+    "path": "Tax/2025/Rental \u2014 Toronto",
+    "type": "tax/rental-toronto",
+    "entity": "Td",
+    "date": "2026-01-23",
+    "scanned": "2026-02-08T11:24:08.333202",
+    "taxRelevant": true,
+    "hsaReimbursable": false,
+    "summary": "Mortgage Payoff Notification",
+    "tags": [
+      "tax-rental-toronto"
+    ]
+  },
+  {
+    "id": "doc_0020",
     "filename": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
     "path": "Vet/Domino",
     "type": "vet/domino",
     "entity": "Blackhawk Veterinary Hospital",
-    "person": "Family",
-    "property": "none",
     "date": "2026-02-03",
     "scanned": "2026-02-08T11:23:51.987428",
     "taxRelevant": false,
-    "taxCategory": null,
-    "summary": "Invoice For Domino",
+    "hsaReimbursable": false,
+    "summary": "Invoice Domino",
     "tags": [
-      "vet",
-      "domino"
-    ]
-  },
-  {
-    "id": "doc_0010",
-    "originalName": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
-    "filename": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
-    "path": "Tax/2025/Income",
-    "type": "tax/income",
-    "entity": "Certified Property Managers Of South",
-    "person": "Family",
-    "property": "none",
-    "date": "2026-02-08",
-    "scanned": "2026-02-08T11:24:05.621724",
-    "taxRelevant": true,
-    "taxCategory": null,
-    "summary": "1099 Misc Rental Income Florida",
-    "tags": [
-      "tax-income",
-      "tax-2025"
+      "vet-domino"
     ]
   }
 ]

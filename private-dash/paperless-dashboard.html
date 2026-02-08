@@ -229,6 +229,7 @@ body {
   <div>
     <h1>📄 Paperless</h1>
     <div class="subtitle">ScanSnap iX2500 → JAMES AI → Google Drive</div>
+    <div class="subtitle" id="lastScan" style="margin-top:4px; font-size:13px;">Last scan: —</div>
   </div>
 </div>
 
@@ -394,6 +395,11 @@ async function loadStats() {
     const todayCount = (stats.byDay && stats.byDay[today]) || 0;
     document.getElementById('todayCount').textContent = todayCount;
     document.getElementById('todayDate').textContent = today;
+    
+    // Last scan
+    if (stats.lastScanRun) {
+      document.getElementById('lastScan').textContent = 'Last scan: ' + timeAgo(stats.lastScanRun) + ' (' + new Date(stats.lastScanRun).toLocaleString() + ')';
+    }
     
     // HSA
     document.getElementById('hsaCount').textContent = stats.hsaReimbursable || 0;
