@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📄 Paperless — Scanning Dashboard</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 24px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+.header .subtitle {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.stat-card .label {
+  color: var(--text-dim);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.stat-card .value {
+  font-size: 36px;
+  font-weight: 700;
+}
+.stat-card .detail {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.stat-card.tax .value { color: var(--orange); }
+.stat-card.total .value { color: var(--accent); }
+.stat-card.today .value { color: var(--green); }
+.stat-card.entity .value { color: var(--purple); font-size: 24px; }
+
+.section {
+  margin-bottom: 32px;
+}
+.section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 768px) {
+  .chart-container { grid-template-columns: 1fr; }
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.chart-card h3 {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bar-label {
+  font-size: 13px;
+  min-width: 120px;
+  text-align: right;
+  color: var(--text-dim);
+}
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--bg);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 30px;
+  transition: width 0.6s ease;
+}
+
+.recent-table {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.recent-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.recent-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.recent-table td {
+  padding: 10px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.recent-table tr:last-child td { border-bottom: none; }
+.recent-table tr:hover { background: rgba(88,166,255,0.05); }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge.tax { background: rgba(210,153,34,0.2); color: var(--orange); }
+.badge.receipt { background: rgba(63,185,80,0.2); color: var(--green); }
+.badge.financial { background: rgba(88,166,255,0.2); color: var(--accent); }
+.badge.medical { background: rgba(248,81,73,0.2); color: var(--red); }
+.badge.legal { background: rgba(188,140,255,0.2); color: var(--purple); }
+.badge.other { background: rgba(139,148,158,0.2); color: var(--text-dim); }
+
+.tax-checklist {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item .check { font-size: 16px; }
+.checklist-item.done { color: var(--text-dim); }
+.checklist-item.done .check { color: var(--green); }
+.checklist-item.pending .check { color: var(--text-dim); }
+
+.footer {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📄 Paperless</h1>
+    <div class="subtitle">ScanSnap iX2500 → JAMES AI → Google Drive</div>
+  </div>
+</div>
+
+<div class="stats-grid" id="statsGrid">
+  <div class="stat-card total">
+    <div class="label">Total Processed</div>
+    <div class="value" id="totalProcessed">—</div>
+    <div class="detail" id="lastProcessed">Loading...</div>
+  </div>
+  <div class="stat-card today">
+    <div class="label">Today</div>
+    <div class="value" id="todayCount">—</div>
+    <div class="detail" id="todayDate"></div>
+  </div>
+  <div class="stat-card tax">
+    <div class="label">Tax Documents</div>
+    <div class="value" id="taxCount">—</div>
+    <div class="detail">Schedule E & other tax-relevant</div>
+  </div>
+  <div class="stat-card entity">
+    <div class="label">Top Entity</div>
+    <div class="value" id="topEntity">—</div>
+    <div class="detail" id="topEntityCount"></div>
+  </div>
+</div>
+
+<div class="chart-container">
+  <div class="chart-card">
+    <h3>Documents by Type</h3>
+    <div class="bar-chart" id="typeChart"></div>
+  </div>
+  <div class="chart-card">
+    <h3>Documents by Property</h3>
+    <div class="bar-chart" id="propertyChart"></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📋 Recent Documents</h2>
+  <div class="recent-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Type</th>
+          <th>Entity</th>
+          <th>Summary</th>
+          <th>Processed</th>
+        </tr>
+      </thead>
+      <tbody id="recentDocs">
+        <tr><td colspan="5" class="loading">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📊 Daily Activity</h2>
+  <div class="chart-card">
+    <div class="bar-chart" id="dailyChart"></div>
+  </div>
+</div>
+
+<div class="footer">
+  Powered by JAMES ⚡ · ScanSnap iX2500 + Gemini Flash + Google Drive<br>
+  <span id="refreshTime"></span>
+</div>
+
+<script>
+const STATS_URL = 'stats.json';
+const INDEX_URL = 'index.json';
+
+const TYPE_COLORS = {
+  'receipt': '#3fb950',
+  'tax': '#d29922',
+  'financial': '#58a6ff',
+  'medical': '#f85149',
+  'legal': '#bc8cff',
+  'property': '#79c0ff',
+  'education': '#56d364',
+  'vehicle': '#e3b341',
+  'archive': '#8b949e'
+};
+
+function getTypeColor(type) {
+  for (const [key, color] of Object.entries(TYPE_COLORS)) {
+    if (type.startsWith(key)) return color;
+  }
+  return '#8b949e';
+}
+
+function getTypeBadgeClass(type) {
+  if (type.startsWith('tax')) return 'tax';
+  if (type.startsWith('receipt')) return 'receipt';
+  if (type.startsWith('financial')) return 'financial';
+  if (type.startsWith('medical')) return 'medical';
+  if (type.startsWith('legal')) return 'legal';
+  return 'other';
+}
+
+function timeAgo(dateStr) {
+  const now = new Date();
+  const then = new Date(dateStr);
+  const mins = Math.floor((now - then) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+}
+
+function renderBarChart(containerId, data, maxVal) {
+  const container = document.getElementById(containerId);
+  if (!data || Object.keys(data).length === 0) {
+    container.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:8px">No data yet</div>';
+    return;
+  }
+  const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = maxVal || Math.max(...sorted.map(([, v]) => v));
+  
+  container.innerHTML = sorted.map(([label, count]) => {
+    const pct = Math.max(5, (count / max) * 100);
+    const color = getTypeColor(label);
+    return `
+      <div class="bar-row">
+        <div class="bar-label">${label}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%;background:${color}">${count}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+async function loadStats() {
+  try {
+    const resp = await fetch(STATS_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('No stats');
+    const stats = await resp.json();
+    
+    // Top stats
+    document.getElementById('totalProcessed').textContent = stats.totalProcessed || 0;
+    document.getElementById('taxCount').textContent = stats.taxDocCount || 0;
+    
+    if (stats.lastProcessed) {
+      document.getElementById('lastProcessed').textContent = 'Last: ' + timeAgo(stats.lastProcessed);
+    }
+    
+    // Today
+    const today = new Date().toISOString().slice(0, 10);
+    const todayCount = (stats.byDay && stats.byDay[today]) || 0;
+    document.getElementById('todayCount').textContent = todayCount;
+    document.getElementById('todayDate').textContent = today;
+    
+    // Top entity
+    if (stats.byEntity) {
+      const sorted = Object.entries(stats.byEntity).sort((a, b) => b[1] - a[1]);
+      if (sorted.length > 0) {
+        document.getElementById('topEntity').textContent = sorted[0][0];
+        document.getElementById('topEntityCount').textContent = `${sorted[0][1]} documents`;
+      }
+    }
+    
+    // Charts
+    renderBarChart('typeChart', stats.byType);
+    renderBarChart('propertyChart', stats.byProperty);
+    
+    // Daily chart
+    if (stats.byDay) {
+      const last14 = Object.entries(stats.byDay)
+        .sort((a, b) => b[0].localeCompare(a[0]))
+        .slice(0, 14)
+        .reverse();
+      const dailyData = {};
+      last14.forEach(([date, count]) => {
+        dailyData[date] = count;
+      });
+      renderBarChart('dailyChart', dailyData);
+    }
+    
+    // Recent docs
+    if (stats.recentDocs && stats.recentDocs.length > 0) {
+      const tbody = document.getElementById('recentDocs');
+      tbody.innerHTML = stats.recentDocs.slice(0, 20).map(doc => `
+        <tr>
+          <td>${doc.name || '—'}</td>
+          <td><span class="badge ${getTypeBadgeClass(doc.type)}">${doc.type}</span>
+              ${doc.taxRelevant ? ' <span class="badge tax">TAX</span>' : ''}</td>
+          <td>${doc.entity || '—'}</td>
+          <td>${doc.summary || '—'}</td>
+          <td>${doc.processedAt ? timeAgo(doc.processedAt) : '—'}</td>
+        </tr>
+      `).join('');
+    }
+    
+  } catch (e) {
+    console.log('Stats not available yet:', e);
+    document.getElementById('totalProcessed').textContent = '0';
+    document.getElementById('todayCount').textContent = '0';
+    document.getElementById('taxCount').textContent = '0';
+    document.getElementById('topEntity').textContent = '—';
+  }
+  
+  document.getElementById('refreshTime').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+}
+
+loadStats();
+setInterval(loadStats, 60000);
+</script>
+</body>
+</html>

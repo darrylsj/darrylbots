@@ -1,0 +1,21 @@
+[
+  {
+    "id": "doc_0001",
+    "originalName": "02082026.pdf",
+    "filename": "2025-12-14_receipt-2025_target_household-items.pdf",
+    "path": "Receipts/2025",
+    "type": "receipt/2025",
+    "entity": "Target",
+    "person": "Family",
+    "property": "none",
+    "date": "2025-12-14",
+    "scanned": "2026-02-08T19:05:02.377041+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Target receipt for apparel, furniture, health and beauty, and office supplies.",
+    "tags": [
+      "receipt-2025",
+      "target"
+    ]
+  }
+]

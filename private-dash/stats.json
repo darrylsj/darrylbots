@@ -1,0 +1,26 @@
+{
+  "totalProcessed": 1,
+  "byType": {
+    "receipt/2025": 1
+  },
+  "byDay": {
+    "2026-02-08": 1
+  },
+  "byEntity": {
+    "Target": 1
+  },
+  "byProperty": {},
+  "taxDocCount": 0,
+  "recentDocs": [
+    {
+      "name": "2025-12-14_receipt-2025_target_household-items",
+      "type": "receipt/2025",
+      "entity": "Target",
+      "summary": "Target receipt for apparel, furniture, health and beauty, and office supplies.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:05:02.377093"
+    }
+  ],
+  "firstProcessed": "2026-02-08",
+  "lastProcessed": "2026-02-08T11:05:02.377086"
+}
