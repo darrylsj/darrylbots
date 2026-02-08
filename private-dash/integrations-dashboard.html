@@ -189,48 +189,6 @@
     </div>
   </div>
 
-  <!-- TOKEN USAGE (LIVE) -->
-  <h2 class="section-title" style="color: #00d4aa;">🎫 Token Usage <span style="font-size: 0.7rem; color: #666; font-weight: normal; margin-left: 8px;">LIVE</span></h2>
-  <div id="token-section" class="integration-grid" style="margin-bottom: 32px;">
-    <div class="integration-card" style="grid-column: span 2; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 212, 170, 0.02) 100%); border: 1px solid rgba(0, 212, 170, 0.3);">
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; margin-bottom: 20px;">
-        <div>
-          <div id="token-total" style="font-size: 1.8rem; font-weight: 700; color: #00d4aa;">—</div>
-          <div style="color: #666; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Total Tokens</div>
-        </div>
-        <div>
-          <div id="token-input" style="font-size: 1.8rem; font-weight: 700; color: #6495ed;">—</div>
-          <div style="color: #666; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Input</div>
-        </div>
-        <div>
-          <div id="token-output" style="font-size: 1.8rem; font-weight: 700; color: #ff88ff;">—</div>
-          <div style="color: #666; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Output</div>
-        </div>
-        <div>
-          <div id="token-sessions" style="font-size: 1.8rem; font-weight: 700; color: #ffd700;">—</div>
-          <div style="color: #666; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Active Sessions</div>
-        </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 12px;">
-          <div style="color: #00d4aa; font-weight: 600; margin-bottom: 12px; font-size: 0.9rem;">📊 By Model</div>
-          <div id="token-by-model" style="font-size: 0.85rem;">
-            <div style="color: #666;">Loading...</div>
-          </div>
-        </div>
-        <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 12px;">
-          <div style="color: #00d4aa; font-weight: 600; margin-bottom: 12px; font-size: 0.9rem;">🔥 Top Sessions</div>
-          <div id="token-sessions-list" style="font-size: 0.85rem;">
-            <div style="color: #666;">Loading...</div>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top: 16px; text-align: center; font-size: 0.75rem; color: #555;">
-        Updated: <span id="token-updated">—</span> • Auto-refresh every 30s • API: 127.0.0.1:4202
-      </div>
-    </div>
-  </div>
-
   <!-- BOX.COM FEATURED -->
   <h2 class="section-title" style="color: #0061d5;">📦 Employer Spotlight</h2>
   <div class="integration-grid">
@@ -1293,87 +1251,6 @@
     <p style="margin-top: 8px; font-size: 0.8rem;">Updated on material changes • 35 integrations</p>
   </footer>
 
-  <script>
-    // Token Usage API
-    const TOKEN_API = 'http://127.0.0.1:4202/status';
-    
-    function formatNumber(n) {
-      if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-      if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
-      return n.toString();
-    }
-    
-    function formatSessionKey(key) {
-      // agent:main:cron:abc123 -> cron:abc123
-      // agent:main:main -> main
-      const parts = key.split(':');
-      if (parts.length >= 3) {
-        return parts.slice(2).join(':').substring(0, 25);
-      }
-      return key.substring(0, 25);
-    }
-    
-    async function updateTokenUsage() {
-      try {
-        const res = await fetch(TOKEN_API, {
-          headers: {
-            'ngrok-skip-browser-warning': 'true'
-          }
-        });
-        if (!res.ok) throw new Error('API unavailable');
-        const data = await res.json();
-        
-        // Update totals
-        document.getElementById('token-total').textContent = formatNumber(data.totals.totalTokens);
-        document.getElementById('token-input').textContent = formatNumber(data.totals.inputTokens);
-        document.getElementById('token-output').textContent = formatNumber(data.totals.outputTokens);
-        document.getElementById('token-sessions').textContent = data.totals.activeSessions;
-        
-        // Update by model
-        const modelHtml = Object.entries(data.byModel)
-          .sort((a, b) => b[1].tokens - a[1].tokens)
-          .map(([model, info]) => {
-            const shortModel = model.includes('/') ? model.split('/').pop() : model;
-            const color = model.includes('opus') ? '#ffd700' : 
-                         model.includes('kimi') ? '#00d4aa' : '#888';
-            return `<div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <span style="color: ${color};">${shortModel}</span>
-              <span style="color: #aaa;">${formatNumber(info.tokens)} (${info.count})</span>
-            </div>`;
-          }).join('');
-        document.getElementById('token-by-model').innerHTML = modelHtml || '<div style="color: #666;">No data</div>';
-        
-        // Update sessions list
-        const sessionsHtml = data.sessions.slice(0, 5).map(s => {
-          const barWidth = Math.min(100, s.percentUsed);
-          return `<div style="margin-bottom: 8px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 2px;">
-              <span style="color: #ddd;">${formatSessionKey(s.key)}</span>
-              <span style="color: #888;">${s.percentUsed}%</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); border-radius: 4px; height: 4px; overflow: hidden;">
-              <div style="background: linear-gradient(90deg, #00d4aa, #ffd700); width: ${barWidth}%; height: 100%;"></div>
-            </div>
-          </div>`;
-        }).join('');
-        document.getElementById('token-sessions-list').innerHTML = sessionsHtml || '<div style="color: #666;">No sessions</div>';
-        
-        // Update timestamp
-        const time = new Date(data.timestamp).toLocaleTimeString('en-US', { 
-          hour: '2-digit', minute: '2-digit', second: '2-digit' 
-        });
-        document.getElementById('token-updated').textContent = time;
-        
-      } catch (err) {
-        console.warn('Token API error:', err);
-        document.getElementById('token-total').textContent = '—';
-        document.getElementById('token-updated').textContent = 'API offline';
-      }
-    }
-    
-    // Initial load + refresh every 30s
-    updateTokenUsage();
-    setInterval(updateTokenUsage, 30000);
-  </script>
+
 </body>
 </html>
