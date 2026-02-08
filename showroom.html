@@ -57,6 +57,34 @@
       color: var(--white);
     }
     .logo-text span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      opacity: 1;
+      font-weight: 600;
+    }
+    .nav-cta {
+      background: var(--accent);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #ea580c; }
     
     .hero {
       padding: 140px 24px 60px;
@@ -222,12 +250,15 @@
         <div class="logo-icon">🤖</div>
         <div class="logo-text">Darryl<span>Bots</span></div>
       </a>
-      <ul style="display: flex; gap: 2rem; list-style: none; align-items: center;">
-        <li><a href="index.html" style="color: white; text-decoration: none; opacity: 0.8;">Home</a></li>
-        <li><a href="showroom.html" style="color: white; text-decoration: none; font-weight: 600;">Showroom</a></li>
-        <li><a href="robot-specs.html" style="color: white; text-decoration: none; opacity: 0.8;">Robot Specs</a></li>
-        <li><a href="about.html" style="color: white; text-decoration: none; opacity: 0.8;">About</a></li>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="showroom.html" class="active">Meet the Bots</a></li>
+        <li><a href="robot-specs.html">Robot Specs</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="gallery/">Gallery</a></li>
       </ul>
+      <a href="index.html#newsletter" class="nav-cta">Get Updates</a>
     </div>
   </nav>
 

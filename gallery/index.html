@@ -70,7 +70,17 @@
       text-decoration: none;
       opacity: 0.8;
     }
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; font-weight: 600; }
+    .nav-cta {
+      background: var(--primary);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .nav-cta:hover { background: #2563EB; }
     
     .hero {
       padding: 140px 24px 60px;
@@ -200,12 +210,14 @@
         <div class="logo-text">Darryl<span>Bots</span></div>
       </a>
       <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../showroom.html">Showroom</a></li>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../showroom.html">Meet the Bots</a></li>
         <li><a href="../robot-specs.html">Robot Specs</a></li>
         <li><a href="../about.html">About</a></li>
-        <li><a href="index.html" style="font-weight: 600;">Gallery</a></li>
+        <li><a href="../index.html#news">News</a></li>
+        <li><a href="index.html" class="active">Gallery</a></li>
       </ul>
+      <a href="../index.html#newsletter" class="nav-cta">Get Updates</a>
     </div>
   </nav>
 
