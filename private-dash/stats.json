@@ -1,26 +1,114 @@
 {
-  "totalProcessed": 1,
+  "totalProcessed": 10,
   "byType": {
-    "receipt/2025": 1
+    "archive": 2,
+    "financial/investments": 1,
+    "medical/darryl": 3,
+    "property/edinburgh": 1,
+    "receipt/2025": 1,
+    "tax/deductions": 1,
+    "tax/income": 1
   },
   "byDay": {
-    "2026-02-08": 1
+    "2026-02-08": 10
   },
   "byEntity": {
-    "Target": 1
+    "02082026": 1,
+    "Language Assistance Notice": 1,
+    "Rocketdollar": 1,
+    "Delta Dental": 2,
+    "Deltadental": 1,
+    "Td": 1,
+    "Target": 1,
+    "Blackhawk Veterinary Hospital": 1,
+    "Certified Property Managers Of South": 1
   },
-  "byProperty": {},
-  "taxDocCount": 0,
+  "byProperty": {
+    "Edinburgh": 1
+  },
+  "taxDocCount": 3,
   "recentDocs": [
     {
-      "name": "2025-12-14_receipt-2025_target_household-items",
+      "name": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
+      "type": "archive",
+      "entity": "02082026",
+      "summary": "American Express P.O. Box 981540 El Paso.Tx 79998",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:16:00.976546"
+    },
+    {
+      "name": "undated_archive_language-assistance-notice.pdf",
+      "type": "archive",
+      "entity": "Language Assistance Notice",
+      "summary": "Language Assistance Notice",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:24:25.633663"
+    },
+    {
+      "name": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
+      "type": "financial/investments",
+      "entity": "Rocketdollar",
+      "summary": "Ira Summary 5498",
+      "taxRelevant": true,
+      "processedAt": "2026-02-08T11:16:47.564627"
+    },
+    {
+      "name": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
+      "type": "medical/darryl",
+      "entity": "Delta Dental",
+      "summary": "Claim Summary",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:24:10.002569"
+    },
+    {
+      "name": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
+      "type": "medical/darryl",
+      "entity": "Deltadental",
+      "summary": "Claim Payment",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:24:13.779189"
+    },
+    {
+      "name": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
+      "type": "medical/darryl",
+      "entity": "Delta Dental",
+      "summary": "Benefits Usage Summary",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:24:22.085219"
+    },
+    {
+      "name": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
+      "type": "property/edinburgh",
+      "entity": "Td",
+      "summary": "Mortgage Payoff Notification",
+      "taxRelevant": false,
+      "processedAt": "2026-02-08T11:24:08.333202"
+    },
+    {
+      "name": "2025-12-14_receipt-2025_target_household-items.pdf",
       "type": "receipt/2025",
       "entity": "Target",
-      "summary": "Target receipt for apparel, furniture, health and beauty, and office supplies.",
+      "summary": "Household Items",
       "taxRelevant": false,
-      "processedAt": "2026-02-08T11:05:02.377093"
+      "processedAt": "2026-02-08T10:57:31.422537"
+    },
+    {
+      "name": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
+      "type": "tax/deductions",
+      "entity": "Blackhawk Veterinary Hospital",
+      "summary": "Invoice For Domino",
+      "taxRelevant": true,
+      "processedAt": "2026-02-08T11:23:51.987428"
+    },
+    {
+      "name": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
+      "type": "tax/income",
+      "entity": "Certified Property Managers Of South",
+      "summary": "1099 Misc Rental Income Florida",
+      "taxRelevant": true,
+      "processedAt": "2026-02-08T11:24:05.621724"
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-08T11:05:02.377086"
+  "lastProcessed": "2026-02-08T11:28:26.281265"
 }

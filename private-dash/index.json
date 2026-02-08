@@ -1,7 +1,134 @@
 [
   {
     "id": "doc_0001",
-    "originalName": "02082026.pdf",
+    "originalName": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
+    "filename": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "02082026",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:16:00.976546",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "American Express P.O. Box 981540 El Paso.Tx 79998",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0002",
+    "originalName": "undated_archive_language-assistance-notice.pdf",
+    "filename": "undated_archive_language-assistance-notice.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "Language Assistance Notice",
+    "person": "Family",
+    "property": "none",
+    "date": "",
+    "scanned": "2026-02-08T11:24:25.633663",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Language Assistance Notice",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0003",
+    "originalName": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
+    "filename": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
+    "path": "Financial/Investments",
+    "type": "financial/investments",
+    "entity": "Rocketdollar",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-01-21",
+    "scanned": "2026-02-08T11:16:47.564627",
+    "taxRelevant": true,
+    "taxCategory": null,
+    "summary": "Ira Summary 5498",
+    "tags": [
+      "financial-investments",
+      "tax-2025"
+    ]
+  },
+  {
+    "id": "doc_0004",
+    "originalName": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
+    "filename": "2026-01-29_medical-darryl_delta-dental_claim-summary.pdf",
+    "path": "Medical/Darryl",
+    "type": "medical/darryl",
+    "entity": "Delta Dental",
+    "person": "Darryl",
+    "property": "none",
+    "date": "2026-01-29",
+    "scanned": "2026-02-08T11:24:10.002569",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Claim Summary",
+    "tags": [
+      "medical-darryl"
+    ]
+  },
+  {
+    "id": "doc_0005",
+    "originalName": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
+    "filename": "2026-01-29_medical-darryl_deltadental_claim-payment.pdf",
+    "path": "Medical/Darryl",
+    "type": "medical/darryl",
+    "entity": "Deltadental",
+    "person": "Darryl",
+    "property": "none",
+    "date": "2026-01-29",
+    "scanned": "2026-02-08T11:24:13.779189",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Claim Payment",
+    "tags": [
+      "medical-darryl"
+    ]
+  },
+  {
+    "id": "doc_0006",
+    "originalName": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
+    "filename": "2026-02-08_medical-darryl_delta-dental_benefits-usage-summary.pdf",
+    "path": "Medical/Darryl",
+    "type": "medical/darryl",
+    "entity": "Delta Dental",
+    "person": "Darryl",
+    "property": "none",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:24:22.085219",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Benefits Usage Summary",
+    "tags": [
+      "medical-darryl"
+    ]
+  },
+  {
+    "id": "doc_0007",
+    "originalName": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
+    "filename": "2026-01-23_property-edinburgh_td_mortgage-payoff-notification.pdf",
+    "path": "Property/Edinburgh",
+    "type": "property/edinburgh",
+    "entity": "Td",
+    "person": "Family",
+    "property": "Edinburgh",
+    "date": "2026-01-23",
+    "scanned": "2026-02-08T11:24:08.333202",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Mortgage Payoff Notification",
+    "tags": [
+      "property-edinburgh"
+    ]
+  },
+  {
+    "id": "doc_0008",
+    "originalName": "2025-12-14_receipt-2025_target_household-items.pdf",
     "filename": "2025-12-14_receipt-2025_target_household-items.pdf",
     "path": "Receipts/2025",
     "type": "receipt/2025",
@@ -9,13 +136,50 @@
     "person": "Family",
     "property": "none",
     "date": "2025-12-14",
-    "scanned": "2026-02-08T19:05:02.377041+00:00",
+    "scanned": "2026-02-08T10:57:31.422537",
     "taxRelevant": false,
     "taxCategory": null,
-    "summary": "Target receipt for apparel, furniture, health and beauty, and office supplies.",
+    "summary": "Household Items",
     "tags": [
-      "receipt-2025",
-      "target"
+      "receipt-2025"
+    ]
+  },
+  {
+    "id": "doc_0009",
+    "originalName": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
+    "filename": "2026-02-03_tax-deductions_blackhawk-veterinary-hospital_invoice-for-domino.pdf",
+    "path": "Tax/2025/Deductions",
+    "type": "tax/deductions",
+    "entity": "Blackhawk Veterinary Hospital",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-02-03",
+    "scanned": "2026-02-08T11:23:51.987428",
+    "taxRelevant": true,
+    "taxCategory": null,
+    "summary": "Invoice For Domino",
+    "tags": [
+      "tax-deductions",
+      "tax-2025"
+    ]
+  },
+  {
+    "id": "doc_0010",
+    "originalName": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
+    "filename": "2026-02-08_tax-income_certified-property-managers-of-south_1099-misc-rental-income-florida.pdf",
+    "path": "Tax/2025/Income",
+    "type": "tax/income",
+    "entity": "Certified Property Managers Of South",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-02-08",
+    "scanned": "2026-02-08T11:24:05.621724",
+    "taxRelevant": true,
+    "taxCategory": null,
+    "summary": "1099 Misc Rental Income Florida",
+    "tags": [
+      "tax-income",
+      "tax-2025"
     ]
   }
 ]
