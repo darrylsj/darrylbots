@@ -1,8 +1,17 @@
 {
   "title": "Robot Life Gallery",
   "description": "AI-generated images and videos of humanoid robots helping with everyday tasks",
-  "lastUpdated": "2026-02-04",
+  "lastUpdated": "2026-02-08",
   "images": [
+    {
+      "filename": "robot-playing-with-domino-20260208.png",
+      "title": "Backyard Playtime",
+      "description": "A cheerful humanoid robot playing fetch with Domino the Bernedoodle in a sunny suburban backyard.",
+      "date": "February 8, 2026",
+      "task": "Playing with the dog",
+      "type": "image",
+      "generator": "xAI Grok Imagine"
+    },
     {
       "filename": "robot-groceries-20260204.png",
       "title": "Grocery Run Assistant",
