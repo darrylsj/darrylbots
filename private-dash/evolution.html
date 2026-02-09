@@ -22,6 +22,32 @@
       --blue: #4488ff;
       --purple: #aa44ff;
       --cyan: #00ddff;
+      --sky-top: #0a0a1a;
+      --sky-mid: #0f1525;
+      --sky-bot: #121a30;
+      --ground: #0a1a0a;
+      --road: #1a1a2a;
+    }
+    body.light {
+      --bg-dark: #f5f5f0;
+      --bg-card: #ffffff;
+      --bg-hover: #eeeee8;
+      --border: #d0d0c8;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #999;
+      --green: #00994d;
+      --green-dim: #007733;
+      --amber: #cc8800;
+      --red: #cc2222;
+      --blue: #2266cc;
+      --purple: #7722cc;
+      --cyan: #0099bb;
+      --sky-top: #87CEEB;
+      --sky-mid: #add8f0;
+      --sky-bot: #c8e8c0;
+      --ground: #3a7a2a;
+      --road: #666;
     }
     body {
       font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
@@ -56,8 +82,14 @@
     .stat-value.cyan { color: var(--cyan); }
 
     /* City Canvas */
+    .theme-toggle {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 14px; font-family: inherit; font-size: 0.85rem; cursor: pointer;
+      color: var(--text-primary); transition: all 0.3s;
+    }
+    .theme-toggle:hover { border-color: var(--green); }
     .city-wrapper {
-      background: linear-gradient(180deg, #0a0a1a 0%, #0f1525 40%, #121a30 100%);
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-bot) 100%);
       border: 1px solid var(--border); border-radius: 16px;
       overflow: hidden; position: relative; margin-bottom: 20px;
     }
@@ -145,6 +177,7 @@
         <a href="index.html">Dashboard</a>
         <a href="callworks.html">CallWorks</a>
         <a href="evolution.html" class="active">Evolution</a>
+        <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">☀️ Day</button>
       </nav>
     </header>
 
@@ -292,7 +325,32 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 
 // ── Drawing Functions ──
+const isLight = () => document.body.classList.contains('light');
+
 function drawStars(count) {
+  if (isLight()) {
+    // Daytime: draw clouds instead of stars
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    for (let i = 0; i < 5; i++) {
+      const cx = (Math.sin(i * 127.1 + 311.7) * 0.5 + 0.5) * canvas.width;
+      const cy = 30 + (Math.sin(i * 269.5) * 0.5 + 0.5) * canvas.height * 0.25;
+      for (let j = 0; j < 4; j++) {
+        ctx.beginPath();
+        ctx.arc(cx + j * 18 - 27, cy + Math.sin(j * 2) * 5, 14 + j * 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    // Sun
+    ctx.fillStyle = '#FFD700';
+    ctx.beginPath();
+    ctx.arc(canvas.width - 80, 60, 30, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,215,0,0.2)';
+    ctx.beginPath();
+    ctx.arc(canvas.width - 80, 60, 45, 0, Math.PI * 2);
+    ctx.fill();
+    return;
+  }
   ctx.fillStyle = '#ffffff';
   for (let i = 0; i < count; i++) {
     const x = (Math.sin(i * 127.1 + 311.7) * 0.5 + 0.5) * canvas.width;
@@ -304,16 +362,15 @@ function drawStars(count) {
   ctx.globalAlpha = 1;
 }
 
+function getCSS(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
 function drawGround() {
   const groundY = canvas.height * 0.75;
-  // Ground
-  ctx.fillStyle = '#0a1a0a';
+  ctx.fillStyle = getCSS('--ground');
   ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
-  // Road
-  ctx.fillStyle = '#1a1a2a';
+  ctx.fillStyle = getCSS('--road');
   ctx.fillRect(0, groundY - 2, canvas.width, 20);
-  // Road lines
-  ctx.strokeStyle = '#333';
+  ctx.strokeStyle = isLight() ? '#999' : '#333';
   ctx.setLineDash([15, 10]);
   ctx.beginPath();
   ctx.moveTo(0, groundY + 8);
@@ -382,7 +439,7 @@ function drawBuilding(x, groundY, w, h, color, name, type, alpha) {
       const sy = by - 20 - i * 12 - Math.sin(t + i) * 5;
       const sx = bx + w - 7 + Math.sin(t * 0.7 + i * 2) * 8;
       const sr = 4 + i * 2;
-      ctx.fillStyle = `rgba(150,150,150,${0.3 - i * 0.08})`;
+      ctx.fillStyle = isLight() ? `rgba(80,80,80,${0.25 - i * 0.06})` : `rgba(150,150,150,${0.3 - i * 0.08})`;
       ctx.beginPath();
       ctx.arc(sx, sy, sr, 0, Math.PI * 2);
       ctx.fill();
@@ -425,9 +482,29 @@ function drawRoad(x, groundY, name, color, alpha) {
   ctx.globalAlpha = 1;
 }
 
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  const btn = document.getElementById('theme-btn');
+  btn.textContent = isLight() ? '🌙 Night' : '☀️ Day';
+  localStorage.setItem('jt-theme', isLight() ? 'light' : 'dark');
+}
+// Restore saved theme
+if (localStorage.getItem('jt-theme') === 'light') {
+  document.body.classList.add('light');
+  document.getElementById('theme-btn').textContent = '🌙 Night';
+}
+
 // ── Main Draw ──
 function drawCity(dayIndex) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Draw sky gradient on canvas
+  const skyTop = getCSS('--sky-top');
+  const skyBot = getCSS('--sky-bot');
+  const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.75);
+  skyGrad.addColorStop(0, skyTop);
+  skyGrad.addColorStop(1, skyBot);
+  ctx.fillStyle = skyGrad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, 0, 0); // no-op, just ensuring fresh frame
   
   const maxIdx = DAYS.length - 1;
   const currentDay = Math.min(Math.floor(dayIndex), maxIdx);
