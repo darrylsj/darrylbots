@@ -322,7 +322,12 @@ function drawGround() {
   ctx.setLineDash([]);
 }
 
+function hex6(c) {
+  if (c.length === 4) return '#' + c[1]+c[1]+c[2]+c[2]+c[3]+c[3];
+  return c;
+}
 function drawBuilding(x, groundY, w, h, color, name, type, alpha) {
+  color = hex6(color);
   const bx = x - w / 2;
   const by = groundY - h;
   
