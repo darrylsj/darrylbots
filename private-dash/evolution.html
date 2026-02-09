@@ -243,10 +243,27 @@
   </div>
 
 <script>
+// ── City Hall Evolution (grows with each version) ──
+const CITYHALL_VERSIONS = [
+  { version: '2026.1.29', w: 40, h: 50, floors: 2, label: 'v1.29' },   // Jan 30: tiny shack
+  { version: '2026.1.30', w: 50, h: 65, floors: 3, label: 'v1.30' },   // Jan 31: small building
+  { version: '2026.2.1',  w: 60, h: 80, floors: 4, label: 'v2.1' },    // Feb 3: getting taller
+  { version: '2026.2.2-3',w: 65, h: 95, floors: 5, label: 'v2.2' },    // Feb 5: impressive
+  { version: '2026.2.6-3',w: 72, h: 108, floors: 6, label: 'v2.6' },   // Feb 7: tower
+  { version: '2026.2.9',  w: 80, h: 125, floors: 7, label: 'v2.9' },   // Feb 9: skyscraper
+];
+
+function getCityHallForDay(dayIdx) {
+  // Map day index to version level
+  const versionMap = [0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5]; // day 0-10 → version idx
+  const v = CITYHALL_VERSIONS[versionMap[Math.min(dayIdx, 10)]];
+  return { type: 'cityhall', name: 'OpenClaw', color: '#00ff88', x: 0.5, w: v.w, h: v.h, _ver: v };
+}
+
 // ── Timeline Data ──
 const DAYS = [
   { date: "Jan 30", label: "🎂 JAMES Is Born", buildings: [
-    { type: 'cityhall', name: 'OpenClaw', color: '#00ff88', x: 0.5, w: 80, h: 120 },
+    { type: 'cityhall', name: 'OpenClaw', color: '#00ff88', x: 0.5, w: 40, h: 50 },
     { type: 'road', name: 'Telegram', color: '#4488ff', x: 0.45 },
   ], events: ['OpenClaw 2026.1.29 installed', 'Anthropic API key configured', 'Telegram bot connected'], stats: { skills: 0, integrations: 1, crons: 0, version: '2026.1.29' }},
   { date: "Jan 31", label: "🏗️ First Integrations", buildings: [
@@ -313,7 +330,6 @@ const canvas = document.getElementById('city-canvas');
 const ctx = canvas.getContext('2d');
 const slider = document.getElementById('timeline-slider');
 let isPlaying = false;
-let playInterval = null;
 
 // Responsive canvas
 function resizeCanvas() {
@@ -417,16 +433,45 @@ function drawBuilding(x, groundY, w, h, color, name, type, alpha) {
   
   // Roof accent for special buildings
   if (type === 'cityhall') {
+    // Triangular roof
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.moveTo(bx, by);
-    ctx.lineTo(bx + w / 2, by - 20);
+    ctx.lineTo(bx + w / 2, by - 25);
     ctx.lineTo(bx + w, by);
     ctx.fill();
-    // Flag
+    // Spire
     ctx.fillStyle = color;
-    ctx.fillRect(bx + w / 2 - 1, by - 35, 2, 20);
-    ctx.fillRect(bx + w / 2 + 1, by - 35, 12, 8);
+    ctx.fillRect(bx + w / 2 - 2, by - 45, 4, 25);
+    // Flag
+    ctx.fillRect(bx + w / 2 + 2, by - 45, 14, 9);
+    // Dome on top for tall buildings
+    if (h > 90) {
+      ctx.beginPath();
+      ctx.arc(bx + w / 2, by - 25, w * 0.15, Math.PI, 0);
+      ctx.fillStyle = color + '60';
+      ctx.fill();
+    }
+    // Columns for really tall buildings
+    if (h > 70) {
+      ctx.fillStyle = color + 'aa';
+      ctx.fillRect(bx + 3, by, 4, h * 0.3);
+      ctx.fillRect(bx + w - 7, by, 4, h * 0.3);
+    }
+    // Clock face for the biggest
+    if (h > 100) {
+      ctx.beginPath();
+      ctx.arc(bx + w / 2, by + 20, 8, 0, Math.PI * 2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // Clock hands
+      const t = Date.now() * 0.001;
+      ctx.beginPath();
+      ctx.moveTo(bx + w / 2, by + 20);
+      ctx.lineTo(bx + w / 2 + Math.cos(t) * 5, by + 20 + Math.sin(t) * 5);
+      ctx.stroke();
+    }
   }
   
   if (type === 'factory') {
@@ -515,12 +560,18 @@ function drawCity(dayIndex) {
   drawGround();
   
   // Draw all buildings up to current day
+  // City Hall is drawn LAST (on top) using the evolving version
+  const cityHall = getCityHallForDay(currentDay);
+  
   for (let d = 0; d <= currentDay; d++) {
     const day = DAYS[d];
     const isNewest = d === currentDay;
     
     for (const b of day.buildings) {
       const alpha = isNewest ? Math.min(frac * 3 + 0.3, 1) : 1;
+      
+      // Skip cityhall entries — we draw the evolved one at the end
+      if (b.type === 'cityhall') continue;
       
       if (b.type === 'road') {
         drawRoad(b.x, groundY, b.name, b.color, alpha);
@@ -530,6 +581,9 @@ function drawCity(dayIndex) {
       }
     }
   }
+  
+  // Draw evolving City Hall last (always visible, grows with version)
+  drawBuilding(cityHall.x * canvas.width, groundY, cityHall.w, cityHall.h, cityHall.color, cityHall.name, 'cityhall', 1);
   
   // Update UI
   const dayData = DAYS[currentDay];
@@ -564,7 +618,6 @@ slider.addEventListener('input', () => {
 function togglePlay() {
   const btn = document.getElementById('play-btn');
   if (isPlaying) {
-    clearInterval(playInterval);
     isPlaying = false;
     btn.textContent = '▶ Play Evolution';
     btn.classList.remove('playing');
@@ -573,30 +626,38 @@ function togglePlay() {
     isPlaying = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
-    playInterval = setInterval(() => {
-      let v = parseFloat(slider.value) + 0.05;
-      if (v > 10) {
-        v = 10;
-        clearInterval(playInterval);
-        isPlaying = false;
-        btn.textContent = '▶ Play Evolution';
-        btn.classList.remove('playing');
-      }
-      slider.value = v;
-      drawCity(v);
-    }, 80);
   }
 }
 
-// Animate smoke continuously
-function animate() {
-  drawCity(parseFloat(slider.value));
+// Single animation loop — handles both continuous smoke and playback
+let lastPlayTick = 0;
+function animate(ts) {
+  try {
+    // Advance slider during playback
+    if (isPlaying) {
+      if (ts - lastPlayTick > 80) {
+        lastPlayTick = ts;
+        let v = parseFloat(slider.value) + 0.05;
+        if (v >= 10) {
+          v = 10;
+          isPlaying = false;
+          const btn = document.getElementById('play-btn');
+          btn.textContent = '▶ Play Evolution';
+          btn.classList.remove('playing');
+        }
+        slider.value = v;
+      }
+    }
+    drawCity(parseFloat(slider.value));
+  } catch (e) {
+    console.error('drawCity error:', e);
+  }
   requestAnimationFrame(animate);
 }
 
 // Init
 resizeCanvas();
-animate();
+requestAnimationFrame(animate);
 </script>
 </body>
 </html>
