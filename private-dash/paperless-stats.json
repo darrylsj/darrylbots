@@ -40,7 +40,8 @@
   },
   "byProperty": {
     "Edinburgh": 2,
-    "edinburgh": 1
+    "1 King West, Toronto": 1,
+    "Tamarac, FL": 1
   },
   "taxDocCount": 10,
   "hsaReimbursable": 5,
@@ -51,7 +52,8 @@
       "entity": "ADT",
       "summary": "ADT security system bill for 520 Edinburgh Cir.",
       "taxRelevant": false,
-      "processedAt": "2026-02-08T21:24:06.980400"
+      "processedAt": "2026-02-08T21:24:06.980400",
+      "property": "Edinburgh"
     },
     {
       "name": "2026-01-06_receipt_target_stationery-office-supplies",
@@ -104,10 +106,11 @@
     {
       "name": "2025-12-31_tax-deductions_patelco-credit-union_mortgage-interest-edinburgh",
       "type": "tax/deductions",
-      "entity": "PATELCO CREDIT UNION",
+      "entity": "Patelco Credit Union",
       "summary": "Form 1098 for mortgage interest paid to Patelco Credit Union for the Edinburgh property.",
       "taxRelevant": true,
-      "processedAt": "2026-02-08T21:22:48.952873"
+      "processedAt": "2026-02-08T21:22:48.952873",
+      "property": "Edinburgh"
     },
     {
       "name": "2026-02-08_legal-contracts_california-state_medical-debt-disclosure.pdf",
@@ -168,10 +171,11 @@
     {
       "name": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
       "type": "tax/rental-toronto",
-      "entity": "Td",
+      "entity": "TD Bank",
       "summary": "Mortgage Payoff Notification",
       "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:08.333202"
+      "processedAt": "2026-02-08T11:24:08.333202",
+      "property": "1 King West, Toronto"
     },
     {
       "name": "2025-12-31_tax-rental-florida_certified-property-managers_1099-misc-rental-income.pdf",
@@ -179,7 +183,8 @@
       "entity": "Certified Property Managers",
       "summary": "1099 Misc Rental Income",
       "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:05.621724"
+      "processedAt": "2026-02-08T11:24:05.621724",
+      "property": "Tamarac, FL"
     },
     {
       "name": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
