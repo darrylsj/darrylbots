@@ -330,6 +330,7 @@ const canvas = document.getElementById('city-canvas');
 const ctx = canvas.getContext('2d');
 const slider = document.getElementById('timeline-slider');
 let isPlaying = false;
+let playValue = 0; // Separate counter to avoid slider rounding issues
 
 // Responsive canvas
 function resizeCanvas() {
@@ -623,6 +624,7 @@ function togglePlay() {
     btn.classList.remove('playing');
   } else {
     slider.value = 0;
+    playValue = 0;
     isPlaying = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
@@ -635,9 +637,10 @@ function animate(ts) {
   try {
     // Advance slider during playback
     if (isPlaying) {
-      if (ts - lastPlayTick > 80) {
+      if (ts - lastPlayTick > 120) {
         lastPlayTick = ts;
-        let v = parseFloat(slider.value) + 0.05;
+        playValue += 0.1;
+        let v = playValue;
         if (v >= 10) {
           v = 10;
           isPlaying = false;
