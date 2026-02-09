@@ -41,7 +41,7 @@
 <body>
   <header>
     <h1>⚡ Command Centre</h1>
-    <p>JAMES Operations Dashboard &bull; Last updated: Feb 9, 2026 2:26 AM PST</p>
+    <p>JAMES Operations Dashboard &bull; Last updated: Feb 9, 2026 1:20 PM PST</p>
   </header>
 
   <h2 class="section-title">🔗 Dashboards</h2>
@@ -90,8 +90,8 @@
       <tr><td>🚨 AMZN $230 Put Decision</td><td class="mono">one-shot Feb 9</td><td>~7h</td><td>—</td><td><span class="badge badge-active">Pending</span></td></tr>
       <tr><td>📄 Paperless Inbox</td><td class="mono">*/30m 7a-10p</td><td>~7h</td><td>—</td><td><span class="badge badge-idle">Idle</span></td></tr>
       <tr><td>🦞 Moltbook Heartbeat</td><td class="mono">8a/12p/4p/8p</td><td>~8h</td><td>4d ago</td><td><span class="badge badge-ok">OK</span></td></tr>
-      <tr><td>Lunch Reminder</td><td class="mono">7:10a Tu/We/Th</td><td>~1d</td><td>4d ago</td><td><span class="badge badge-error">Error</span></td></tr>
-      <tr><td>Lunch Auto-Order</td><td class="mono">7:45a Tu/We/Th</td><td>~1d</td><td>4d ago</td><td><span class="badge badge-error">Error</span></td></tr>
+      <tr><td>Lunch Reminder (+ TG fallback)</td><td class="mono">7:10a Tu/We/Th</td><td>~1d</td><td>4d ago</td><td><span class="badge badge-error">Error</span></td></tr>
+      <tr><td>Lunch Auto-Order (+ TG fallback)</td><td class="mono">7:45a Tu/We/Th</td><td>~1d</td><td>4d ago</td><td><span class="badge badge-error">Error</span></td></tr>
       <tr><td>WhatsApp Monitor</td><td class="mono">9:10a/6:10p</td><td>~9h</td><td>—</td><td><span class="badge badge-idle">Idle</span></td></tr>
       <tr><td>LinkedIn Monitor</td><td class="mono">9:20a M-F ×4</td><td>~9h</td><td>4d ago</td><td><span class="badge badge-ok">OK</span></td></tr>
       <tr><td>📊 Options Portfolio</td><td class="mono">1:30p Tu-Fr</td><td>~2d</td><td>4d ago</td><td><span class="badge badge-ok">OK</span></td></tr>
@@ -120,12 +120,13 @@
     <div class="int-badge">🌡️ Nest (12 devices)</div>
     <div class="int-badge">🔋 Powerwall 3</div>
     <div class="int-badge">💧 Flume Water</div>
-    <div class="int-badge">📺 SmartThings (22)</div>
+    <div class="int-badge" style="border-color: rgba(255,170,0,0.4); color: #ffaa00;">📺 SmartThings (OAuth needed)</div>
     <div class="int-badge">🚗 Tessie (Blu)</div>
     <div class="int-badge">🏊 iAqualink</div>
     <div class="int-badge">🅧 X/Twitter</div>
     <div class="int-badge">💬 WhatsApp</div>
     <div class="int-badge">🔍 Brave Search</div>
+    <div class="int-badge">🅧 Grok (X search)</div>
     <div class="int-badge">📍 iCloud Find My</div>
     <div class="int-badge">📧 AgentMail</div>
     <div class="int-badge">📚 PowerSchool</div>
@@ -139,7 +140,7 @@
       <tr><td style="color: #00ff88; font-weight: 600; border: none;">🔒 ngrok (2 tunnels)</td><td style="border: none;">→ james-dash.ngrok.app (voice:4100) + free tunnel (claw-dash:8890, auth: darryl/Theta)</td></tr>
       <tr><td style="color: #ffd700; font-weight: 600; border: none;">⚙️ LaunchD Services</td><td style="border: none;">→ Voice server, Glances, ngrok (auto-start on boot)</td></tr>
       <tr><td style="color: #60a5fa; font-weight: 600; border: none;">🖥️ Local Stack</td><td style="border: none;">→ Glances (61208) → API Server (8889) → Proxy (8890) → ngrok</td></tr>
-      <tr><td style="color: #f472b6; font-weight: 600; border: none;">🤖 OpenClaw</td><td style="border: none;">→ v2026.2.6-3 • Opus 4.6 main • 46 crons • 25+ skills • Heartbeat every 30m</td></tr>
+      <tr><td style="color: #f472b6; font-weight: 600; border: none;">🤖 OpenClaw</td><td style="border: none;">→ v2026.2.9 • Opus 4.6 main + Gemini Pro fallback • 46 crons • 22 skills • Heartbeat every 30m</td></tr>
     </table>
   </div>
 
