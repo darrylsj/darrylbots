@@ -362,7 +362,7 @@ function drawStars(count) {
   ctx.globalAlpha = 1;
 }
 
-function getCSS(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function getCSS(v) { return getComputedStyle(document.body).getPropertyValue(v).trim(); }
 
 function drawGround() {
   const groundY = canvas.height * 0.75;
