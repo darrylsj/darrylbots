@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CallWorks | Active Positions</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-hover: #1a1a2a;
+      --border: #2a2a3a;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+      --text-muted: #555;
+      --green: #00ff88;
+      --green-dim: #00aa55;
+      --amber: #ffaa00;
+      --red: #ff4444;
+      --blue: #4488ff;
+    }
+    
+    body {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+    }
+    
+    .logo:hover { opacity: 0.8; }
+    
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+    
+    nav a:hover { color: var(--green); }
+    nav a.active { color: var(--green); }
+    
+    .summary-bar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .summary-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .summary-icon { font-size: 1.5rem; }
+    
+    .summary-text {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .summary-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    
+    .summary-value {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .summary-value.positive { color: var(--green); }
+    .summary-value.negative { color: var(--red); }
+    .summary-value.warning { color: var(--amber); }
+    
+    .positions-grid {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .position-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s;
+    }
+    
+    .position-card:hover {
+      border-color: var(--text-secondary);
+    }
+    
+    .position-card.profitable { border-left: 4px solid var(--green); }
+    .position-card.watch { border-left: 4px solid var(--amber); }
+    .position-card.danger { border-left: 4px solid var(--red); }
+    
+    .position-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .position-symbol {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .symbol-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--amber);
+    }
+    
+    .option-badge {
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .option-badge.call {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--green);
+    }
+    
+    .option-badge.put {
+      background: rgba(255, 68, 68, 0.15);
+      color: var(--red);
+    }
+    
+    .position-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    
+    .status-badge {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .status-badge.hold {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--green);
+    }
+    
+    .status-badge.close {
+      background: rgba(255, 170, 0, 0.15);
+      color: var(--amber);
+    }
+    
+    .status-badge.danger {
+      background: rgba(255, 68, 68, 0.15);
+      color: var(--red);
+    }
+    
+    .status-badge.expired {
+      background: rgba(100, 100, 100, 0.15);
+      color: var(--text-secondary);
+    }
+    
+    .dte {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .dte.urgent { color: var(--red); font-weight: 600; }
+    
+    .position-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .detail-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    
+    .detail-value {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .detail-value.positive { color: var(--green); }
+    .detail-value.negative { color: var(--red); }
+    
+    .position-notes {
+      background: var(--bg-hover);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 16px;
+    }
+    
+    .position-notes strong {
+      color: var(--amber);
+    }
+    
+    .action-recommendation {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+    
+    .action-recommendation.hold {
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+    
+    .action-recommendation.close {
+      background: rgba(255, 170, 0, 0.1);
+      color: var(--amber);
+      border: 1px solid rgba(255, 170, 0, 0.3);
+    }
+    
+    .action-recommendation.urgent {
+      background: rgba(255, 68, 68, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+    }
+    
+    .action-recommendation.max-profit {
+      background: rgba(68, 136, 255, 0.1);
+      color: var(--blue);
+      border: 1px solid rgba(68, 136, 255, 0.3);
+    }
+    
+    .update-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .refresh-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .refresh-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+    
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    
+    @media (max-width: 768px) {
+      .summary-bar { flex-direction: column; }
+      .position-header { flex-direction: column; align-items: flex-start; }
+      .position-status { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="callworks.html" class="logo">📞 CallWorks</a>
+      <nav>
+        <a href="callworks.html">Home</a>
+        <a href="callworks-history.html">Historical</a>
+        <a href="callworks-active.html" class="active">Active</a>
+      </nav>
+    </header>
+    
+    <div class="summary-bar">
+      <div class="summary-item">
+        <div class="summary-icon">📊</div>
+        <div class="summary-text">
+          <span class="summary-label">Open Positions</span>
+          <span class="summary-value">7</span>
+        </div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon">💰</div>
+        <div class="summary-text">
+          <span class="summary-label">Feb MTD P/L</span>
+          <span class="summary-value positive">+$1,892</span>
+        </div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon">⚠️</div>
+        <div class="summary-text">
+          <span class="summary-label">Needs Attention</span>
+          <span class="summary-value warning">2</span>
+        </div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon">🏦</div>
+        <div class="summary-text">
+          <span class="summary-label">Total Premium</span>
+          <span class="summary-value">$15,847</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="positions-grid" id="positions-container">
+      
+      <!-- TSLA $465 Call - Expiring Worthless -->
+      <div class="position-card profitable">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">TSLA</span>
+            <span class="option-badge call">CALL</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge expired">EXPIRING WORTHLESS</span>
+            <span class="dte urgent">1 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$465</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Feb 9, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">1</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$0.77</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Current Value</span>
+            <span class="detail-value">$0.02</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+97.4%</span>
+          </div>
+        </div>
+        <div class="action-recommendation max-profit">
+          🎯 MAX PROFIT — Let expire worthless
+        </div>
+      </div>
+      
+      <!-- AMZN $230 Put - ITM Danger -->
+      <div class="position-card danger">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">AMZN</span>
+            <span class="option-badge put">PUT</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge danger">ITM - ASSIGNMENT LIKELY</span>
+            <span class="dte urgent">1 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$230</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Feb 9, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">1</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$9.38</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">AMZN Price</span>
+            <span class="detail-value">$226.27</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Intrinsic Value</span>
+            <span class="detail-value negative">-$3.73</span>
+          </div>
+        </div>
+        <div class="position-notes">
+          <strong>⚠️ Decision Needed:</strong> Put is $3.73 ITM. Assignment will result in buying 100 shares @ $230. 
+          Net cost basis: $220.62 (strike - premium). Consider rolling out if you don't want the shares.
+        </div>
+        <div class="action-recommendation urgent">
+          🚨 DECISION REQUIRED — Roll or accept assignment
+        </div>
+      </div>
+      
+      <!-- AMZN $200 Put - Expiring Worthless -->
+      <div class="position-card profitable">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">AMZN</span>
+            <span class="option-badge put">PUT</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge expired">EXPIRING WORTHLESS</span>
+            <span class="dte urgent">1 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$200</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Feb 9, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">1</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$1.71</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Current Value</span>
+            <span class="detail-value">$0.01</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+99.4%</span>
+          </div>
+        </div>
+        <div class="action-recommendation max-profit">
+          🎯 MAX PROFIT — Let expire worthless
+        </div>
+      </div>
+      
+      <!-- ARKK $82 Call - Expired Worthless -->
+      <div class="position-card profitable">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">ARKK</span>
+            <span class="option-badge call">CALL</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge expired">EXPIRED WORTHLESS</span>
+            <span class="dte">Expired Feb 6</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$82</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Feb 6, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">16</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$0.12</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Total Collected</span>
+            <span class="detail-value positive">$192.00</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+100%</span>
+          </div>
+        </div>
+        <div class="action-recommendation max-profit">
+          ✅ CLOSED — Expired worthless, 100% profit
+        </div>
+      </div>
+      
+      <!-- GOOG $335 Call - Hold -->
+      <div class="position-card profitable">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">GOOG</span>
+            <span class="option-badge call">CALL</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge hold">HOLD</span>
+            <span class="dte">68 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$335</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Apr 17, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">6</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$6.03</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Current Value</span>
+            <span class="detail-value">$2.84</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+52.9%</span>
+          </div>
+        </div>
+        <div class="position-notes">
+          GOOG trading at ~$185. Strike is well OTM with good buffer. Let theta continue to decay.
+        </div>
+        <div class="action-recommendation hold">
+          ⏳ HOLD — Time decay working in your favor
+        </div>
+      </div>
+      
+      <!-- GOOG $340 Call - Hold -->
+      <div class="position-card profitable">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">GOOG</span>
+            <span class="option-badge call">CALL</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge hold">HOLD</span>
+            <span class="dte">130 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$340</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Jun 18, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">5</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$6.23</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Current Value</span>
+            <span class="detail-value">$3.70</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+40.6%</span>
+          </div>
+        </div>
+        <div class="position-notes">
+          Longer-dated position. Still have plenty of time for theta to work. Strike is ~84% OTM.
+        </div>
+        <div class="action-recommendation hold">
+          ⏳ HOLD — Plenty of time remaining
+        </div>
+      </div>
+      
+      <!-- LMND $92 Call - Consider Close -->
+      <div class="position-card watch">
+        <div class="position-header">
+          <div class="position-symbol">
+            <span class="symbol-name">LMND</span>
+            <span class="option-badge call">CALL</span>
+          </div>
+          <div class="position-status">
+            <span class="status-badge close">CONSIDER CLOSE</span>
+            <span class="dte">26 DTE</span>
+          </div>
+        </div>
+        <div class="position-details">
+          <div class="detail-item">
+            <span class="detail-label">Strike</span>
+            <span class="detail-value">$92</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expiration</span>
+            <span class="detail-value">Mar 6, 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contracts</span>
+            <span class="detail-value">7</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Entry Premium</span>
+            <span class="detail-value">$12.25</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Current Value</span>
+            <span class="detail-value">$2.63</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">P/L</span>
+            <span class="detail-value positive">+78.5%</span>
+          </div>
+        </div>
+        <div class="position-notes">
+          <strong>💡 Consider closing:</strong> 78% profit captured with 26 days remaining. LMND is volatile — 
+          locking in profits here is prudent. Remaining upside is ~$1,841 vs risk of reversal.
+        </div>
+        <div class="action-recommendation close">
+          💰 CONSIDER CLOSE — 78% profit, lock it in
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="update-info">
+      <span>Last updated: <span id="update-time"></span></span>
+      <span>Stock prices delayed 15 min</span>
+      <button class="refresh-btn" onclick="location.reload()">↻ Refresh</button>
+    </div>
+    
+    <footer>
+      <p>CallWorks Active Positions • Updated during market hours</p>
+      <p style="margin-top: 8px;">"If You Ain't Theta Decaying, You Ain't Playing"</p>
+    </footer>
+  </div>
+  
+  <script>
+    // Update timestamp
+    document.getElementById('update-time').textContent = 
+      new Date().toLocaleString('en-US', { 
+        timeZone: 'America/Los_Angeles',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+    
+    // Calculate days to expiry
+    function calculateDTE(expDate) {
+      const exp = new Date(expDate);
+      const now = new Date();
+      const diff = Math.ceil((exp - now) / (1000 * 60 * 60 * 24));
+      return Math.max(0, diff);
+    }
+    
+    // Positions data from positions.json (for cron updates)
+    const POSITIONS = {
+      lastUpdated: "2026-02-08T20:05:00-08:00",
+      positions: [
+        {
+          symbol: "TSLA",
+          type: "call",
+          strike: 465,
+          expiration: "2026-02-09",
+          contracts: 1,
+          entryPrice: 0.77,
+          currentPrice: 0.02,
+          stockPrice: 375.12,
+          status: "expiring_worthless"
+        },
+        {
+          symbol: "AMZN",
+          type: "put",
+          strike: 230,
+          expiration: "2026-02-09",
+          contracts: 1,
+          entryPrice: 9.38,
+          currentPrice: 4.50,
+          stockPrice: 226.27,
+          status: "itm_danger"
+        },
+        {
+          symbol: "AMZN",
+          type: "put",
+          strike: 200,
+          expiration: "2026-02-09",
+          contracts: 1,
+          entryPrice: 1.71,
+          currentPrice: 0.01,
+          stockPrice: 226.27,
+          status: "expiring_worthless"
+        },
+        {
+          symbol: "ARKK",
+          type: "call",
+          strike: 82,
+          expiration: "2026-02-06",
+          contracts: 16,
+          entryPrice: 0.12,
+          currentPrice: 0,
+          status: "expired_worthless"
+        },
+        {
+          symbol: "GOOG",
+          type: "call",
+          strike: 335,
+          expiration: "2026-04-17",
+          contracts: 6,
+          entryPrice: 6.03,
+          currentPrice: 2.84,
+          stockPrice: 185.42,
+          status: "hold"
+        },
+        {
+          symbol: "GOOG",
+          type: "call",
+          strike: 340,
+          expiration: "2026-06-18",
+          contracts: 5,
+          entryPrice: 6.23,
+          currentPrice: 3.70,
+          stockPrice: 185.42,
+          status: "hold"
+        },
+        {
+          symbol: "LMND",
+          type: "call",
+          strike: 92,
+          expiration: "2026-03-06",
+          contracts: 7,
+          entryPrice: 12.25,
+          currentPrice: 2.63,
+          stockPrice: 68.50,
+          status: "consider_close"
+        }
+      ]
+    };
+  </script>
+</body>
+</html>

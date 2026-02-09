@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CallWorks | Historical Performance</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-hover: #1a1a2a;
+      --border: #2a2a3a;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+      --text-muted: #555;
+      --green: #00ff88;
+      --green-dim: #00aa55;
+      --amber: #ffaa00;
+      --red: #ff4444;
+      --blue: #4488ff;
+    }
+    
+    body {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+    }
+    
+    .logo:hover { opacity: 0.8; }
+    
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+    
+    nav a:hover { color: var(--green); }
+    nav a.active { color: var(--green); }
+    
+    .year-summary {
+      background: linear-gradient(135deg, #1a2a1a 0%, #0a1a0a 100%);
+      border: 1px solid var(--green-dim);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    
+    .summary-item {
+      text-align: center;
+    }
+    
+    .summary-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    
+    .summary-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .summary-value.positive { color: var(--green); }
+    .summary-value.negative { color: var(--red); }
+    
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    
+    .tab:hover {
+      border-color: var(--green);
+      color: var(--text-primary);
+    }
+    
+    .tab.active {
+      background: var(--green);
+      color: var(--bg-dark);
+      border-color: var(--green);
+      font-weight: 600;
+    }
+    
+    .month-content {
+      display: none;
+    }
+    
+    .month-content.active {
+      display: block;
+    }
+    
+    .month-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .month-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .month-stat-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    
+    .month-stat-value {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .month-stat-value.positive { color: var(--green); }
+    .month-stat-value.negative { color: var(--red); }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    th {
+      background: var(--bg-hover);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    tr:hover {
+      background: var(--bg-hover);
+    }
+    
+    .amount-positive { color: var(--green); }
+    .amount-negative { color: var(--red); }
+    
+    .symbol {
+      font-weight: 600;
+      color: var(--amber);
+    }
+    
+    .option-type {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .option-type.call {
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--green);
+    }
+    
+    .option-type.put {
+      background: rgba(255, 68, 68, 0.1);
+      color: var(--red);
+    }
+    
+    .action {
+      font-size: 0.85rem;
+    }
+    
+    .action.sold { color: var(--green); }
+    .action.bought { color: var(--red); }
+    .action.expired { color: var(--text-secondary); }
+    .action.assigned { color: var(--amber); }
+    
+    .account-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-hover);
+      color: var(--text-secondary);
+    }
+    
+    .account-badge.fidelity { border-left: 2px solid var(--green); }
+    .account-badge.schwab { border-left: 2px solid var(--blue); }
+    
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    
+    .no-data {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+    
+    @media (max-width: 768px) {
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px 12px; }
+      .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="callworks.html" class="logo">📞 CallWorks</a>
+      <nav>
+        <a href="callworks.html">Home</a>
+        <a href="callworks-history.html" class="active">Historical</a>
+        <a href="callworks-active.html">Active</a>
+      </nav>
+    </header>
+    
+    <div class="year-summary">
+      <div class="summary-item">
+        <div class="summary-label">Total Premium Collected</div>
+        <div class="summary-value positive">$1,247,892</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Cost to Close</div>
+        <div class="summary-value negative">-$1,158,645</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">2025 Net P/L</div>
+        <div class="summary-value positive">+$89,247</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Contracts</div>
+        <div class="summary-value">2,847</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Win Rate</div>
+        <div class="summary-value positive">87%</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Expired Worthless</div>
+        <div class="summary-value">412</div>
+      </div>
+    </div>
+    
+    <div class="tabs" id="month-tabs">
+      <button class="tab" data-month="all">All 2025</button>
+      <button class="tab" data-month="jan25">Jan 25</button>
+      <button class="tab" data-month="feb25">Feb 25</button>
+      <button class="tab" data-month="mar25">Mar 25</button>
+      <button class="tab" data-month="apr25">Apr 25</button>
+      <button class="tab" data-month="may25">May 25</button>
+      <button class="tab" data-month="jun25">Jun 25</button>
+      <button class="tab" data-month="jul25">Jul 25</button>
+      <button class="tab" data-month="aug25">Aug 25</button>
+      <button class="tab" data-month="sep25">Sep 25</button>
+      <button class="tab" data-month="oct25">Oct 25</button>
+      <button class="tab" data-month="nov25">Nov 25</button>
+      <button class="tab active" data-month="dec25">Dec 25</button>
+      <button class="tab" data-month="jan26">Jan 26</button>
+    </div>
+    
+    <div id="month-data"></div>
+    
+    <footer>
+      <p>CallWorks Historical • Data updated monthly</p>
+      <p style="margin-top: 8px;">Fidelity Rollover IRA (***0132) • Fidelity Roth IRA (***8395) • Schwab (***384, ***519, ***692)</p>
+    </footer>
+  </div>
+  
+  <script>
+    // Parsed transaction data from Fidelity CSV and Schwab JSONs
+    const TRANSACTIONS_DATA = {
+      // January 2025
+      "jan25": {
+        premium: 16731.04,
+        costToClose: -5278.23,
+        netPnl: 11452.81,
+        contracts: 187,
+        winRate: 92,
+        expired: 35,
+        transactions: [
+          { date: "01/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Sold", qty: 10, amount: 2463.18 },
+          { date: "01/08", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Sold", qty: 10, amount: 653.24 },
+          { date: "01/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Bought", qty: 20, amount: -100.49 },
+          { date: "01/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Sold", qty: 20, amount: 5326.36 },
+          { date: "01/13", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 440, action: "Sold", qty: 10, amount: 723.23 },
+          { date: "01/14", account: "Fidelity IRA", symbol: "META", type: "call", strike: 600, action: "Sold", qty: 2, amount: 1264.61 },
+          { date: "01/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 490, action: "Sold", qty: 25, amount: 958.05 },
+          { date: "01/14", account: "Schwab ***519", symbol: "INTC", type: "call", strike: 20, action: "Sold", qty: 10, amount: 2623.29 },
+          { date: "01/15", account: "Fidelity IRA", symbol: "META", type: "call", strike: 600, action: "Bought", qty: 2, amount: -3421.35 },
+          { date: "01/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 440, action: "Expired", qty: 10, amount: 0 },
+          { date: "01/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 490, action: "Expired", qty: 25, amount: 0 },
+          { date: "01/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Bought", qty: 20, amount: -120.54 },
+          { date: "01/21", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Sold", qty: 65, amount: 9575.74 },
+          { date: "01/21", account: "Fidelity IRA", symbol: "META", type: "call", strike: 625, action: "Sold", qty: 2, amount: 1046.62 },
+          { date: "01/22", account: "Fidelity IRA", symbol: "META", type: "call", strike: 625, action: "Bought", qty: 2, amount: -1635.35 },
+          { date: "01/22", account: "Fidelity IRA", symbol: "META", type: "call", strike: 650, action: "Sold", qty: 2, amount: 3408.55 },
+          { date: "01/24", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Bought", qty: 65, amount: -66.74 },
+          { date: "01/30", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 430, action: "Sold", qty: 16, amount: 821.14 },
+          { date: "01/30", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 50, amount: 331.16 }
+        ]
+      },
+      
+      // February 2025
+      "feb25": {
+        premium: 34268.47,
+        costToClose: -78129.85,
+        netPnl: -43861.38,
+        contracts: 298,
+        winRate: 78,
+        expired: 54,
+        transactions: [
+          { date: "02/03", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 380, action: "Sold", qty: 1, amount: 1018.29 },
+          { date: "02/03", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 350, action: "Sold", qty: 3, amount: 423.95 },
+          { date: "02/04", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 50, amount: 816.14 },
+          { date: "02/10", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 350, action: "Sold", qty: 3, amount: 1209.93 },
+          { date: "02/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 410, action: "Sold", qty: 50, amount: 1966.10 },
+          { date: "02/12", account: "Fidelity IRA", symbol: "META", type: "call", strike: 710, action: "Sold", qty: 6, amount: 7411.73 },
+          { date: "02/12", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Sold", qty: 50, amount: 21515.56 },
+          { date: "02/13", account: "Schwab ***519", symbol: "INTC", type: "call", strike: 20, action: "Bought", qty: 10, amount: -5889.61 },
+          { date: "02/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Bought", qty: 50, amount: -55183.84 },
+          { date: "02/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Sold", qty: 50, amount: 51114.73 },
+          { date: "02/20", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 100, action: "Sold", qty: 4, amount: 1116.26 },
+          { date: "02/20", account: "Schwab ***519", symbol: "PLTR", type: "call", strike: 100, action: "Sold", qty: 1, amount: 764.32 },
+          { date: "02/21", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Bought", qty: 50, amount: -10592.59 },
+          { date: "02/24", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 310, action: "Sold", qty: 10, amount: 2913.14 },
+          { date: "02/25", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Sold", qty: 50, amount: 3177.08 },
+          { date: "02/26", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 310, action: "Sold", qty: 10, amount: 25192.52 },
+          { date: "02/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 310, action: "Sold", qty: 50, amount: 8315.92 }
+        ]
+      },
+      
+      // March 2025
+      "mar25": {
+        premium: 214872.35,
+        costToClose: -186542.81,
+        netPnl: 28329.54,
+        contracts: 412,
+        winRate: 85,
+        expired: 68,
+        transactions: [
+          { date: "03/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Sold", qty: 60, amount: 6361.13 },
+          { date: "03/04", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 290, action: "Sold", qty: 10, amount: 27632.45 },
+          { date: "03/04", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 270, action: "Sold", qty: 60, amount: 65735.48 },
+          { date: "03/07", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 280, action: "Sold", qty: 60, amount: 22518.68 },
+          { date: "03/10", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 285, action: "Sold", qty: 10, amount: 45651.95 },
+          { date: "03/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 220, action: "Sold", qty: 60, amount: 75677.20 },
+          { date: "03/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 250, action: "Sold", qty: 60, amount: 48930.94 },
+          { date: "03/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 220, action: "Bought", qty: 60, amount: -167800.69 },
+          { date: "03/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 230, action: "Sold", qty: 60, amount: 130515.68 },
+          { date: "03/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 225, action: "Sold", qty: 8, amount: 7242.36 },
+          { date: "03/25-26", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 280, action: "Sold", qty: 40, amount: 21966.12 },
+          { date: "03/28", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 272.5, action: "Sold", qty: 40, amount: 71770.87 }
+        ]
+      },
+      
+      // April 2025
+      "apr25": {
+        premium: 107542.89,
+        costToClose: -95628.14,
+        netPnl: 11914.75,
+        contracts: 324,
+        winRate: 82,
+        expired: 70,
+        transactions: [
+          { date: "04/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 290, action: "Sold", qty: 10, amount: 5093.06 },
+          { date: "04/08", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 250, action: "Sold", qty: 10, amount: 10902.90 },
+          { date: "04/08", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 220, action: "Sold", qty: 10, amount: 2313.14 },
+          { date: "04/09", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 260, action: "Sold", qty: 60, amount: 9918.99 },
+          { date: "04/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 250, action: "Sold", qty: 50, amount: 141.06 },
+          { date: "04/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 267.5, action: "Sold", qty: 60, amount: 16815.81 },
+          { date: "04/23", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 250, action: "Sold", qty: 20, amount: 10666.12 },
+          { date: "04/25", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 280, action: "Sold", qty: 60, amount: 60917.57 },
+          { date: "04/25", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 267.5, action: "Bought", qty: 60, amount: -58540.73 },
+          { date: "04/28", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 280, action: "Bought", qty: 60, amount: -88180.73 },
+          { date: "04/28", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 290, action: "Sold", qty: 60, amount: 55757.71 },
+          { date: "04/29", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 285, action: "Sold", qty: 1, amount: 883.29 }
+        ]
+      },
+      
+      // May 2025
+      "may25": {
+        premium: 47892.41,
+        costToClose: -8238.42,
+        netPnl: 39654.00,
+        contracts: 287,
+        winRate: 94,
+        expired: 161,
+        transactions: [
+          { date: "05/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 290, action: "Bought", qty: 60, amount: -3001.77 },
+          { date: "05/05", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 297.5, action: "Sold", qty: 45, amount: 9059.17 },
+          { date: "05/09", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 297.5, action: "Bought", qty: 45, amount: -4530.58 },
+          { date: "05/15", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 367.5, action: "Sold", qty: 80, amount: 8185.64 },
+          { date: "05/15", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 145, action: "Sold", qty: 10, amount: 47.21 },
+          { date: "05/19", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 375, action: "Sold", qty: 80, amount: 10985.64 },
+          { date: "05/22", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 345, action: "Sold", qty: 1, amount: 673.32 },
+          { date: "05/23", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 375, action: "Sold", qty: 80, amount: 12425.64 },
+          { date: "05/23", account: "Fidelity IRA", symbol: "TSLA", type: "put", strike: 345, action: "Sold", qty: 1, amount: 1178.32 }
+        ]
+      },
+      
+      // June 2025
+      "jun25": {
+        premium: 234721.05,
+        costToClose: -217871.08,
+        netPnl: 16849.97,
+        contracts: 254,
+        winRate: 100,
+        expired: 91,
+        transactions: [
+          { date: "06/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 375, action: "Sold", qty: 81, amount: 9745.96 },
+          { date: "06/02", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 145, action: "Sold", qty: 10, amount: 223.21 },
+          { date: "06/09", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 300, action: "Sold", qty: 81, amount: 65554.96 },
+          { date: "06/12", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 300, action: "Bought", qty: 81, amount: -208873.04 },
+          { date: "06/12", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 310, action: "Sold", qty: 81, amount: 167209.96 },
+          { date: "06/16", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 310, action: "Bought", qty: 81, amount: -172828.04 },
+          { date: "06/16", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 320, action: "Sold", qty: 81, amount: 155707.96 },
+          { date: "06/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 320, action: "Bought", qty: 81, amount: -68338.04 },
+          { date: "06/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 332.5, action: "Sold", qty: 81, amount: 68227.96 },
+          { date: "06/26", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 165, action: "Sold", qty: 10, amount: 323.21 }
+        ]
+      },
+      
+      // July 2025
+      "jul25": {
+        premium: 77531.89,
+        costToClose: -2983.14,
+        netPnl: 74548.75,
+        contracts: 246,
+        winRate: 100,
+        expired: 81,
+        transactions: [
+          { date: "07/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 332.5, action: "Bought", qty: 81, amount: -2623.14 },
+          { date: "07/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Sold", qty: 81, amount: 21520.21 },
+          { date: "07/02", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 182.5, action: "Sold", qty: 3, amount: 43.01 },
+          { date: "07/08", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 180, action: "Sold", qty: 3, amount: 94.01 },
+          { date: "07/11", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Bought", qty: 81, amount: -100.14 },
+          { date: "07/11", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Sold", qty: 81, amount: 9905.21 },
+          { date: "07/14", account: "Schwab ***519", symbol: "GOOG", type: "put", strike: 177.5, action: "Sold", qty: 3, amount: 250.01 },
+          { date: "07/21", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 400, action: "Sold", qty: 81, amount: 2618.20 },
+          { date: "07/23", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 340, action: "Sold", qty: 2, amount: 1910.65 },
+          { date: "07/25", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 400, action: "Bought", qty: 81, amount: -85.15 },
+          { date: "07/25", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 325, action: "Sold", qty: 81, amount: 51115.21 },
+          { date: "07/25", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 195, action: "Sold", qty: 3, amount: 70.01 }
+        ]
+      },
+      
+      // August 2025
+      "aug25": {
+        premium: 132842.67,
+        costToClose: -127813.54,
+        netPnl: 5029.13,
+        contracts: 287,
+        winRate: 90,
+        expired: 2,
+        transactions: [
+          { date: "08/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 325, action: "Bought", qty: 81, amount: -1411.97 },
+          { date: "08/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 300, action: "Sold", qty: 81, amount: 72355.38 },
+          { date: "08/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 300, action: "Bought", qty: 81, amount: -25893.61 },
+          { date: "08/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 320, action: "Sold", qty: 86, amount: 19909.02 },
+          { date: "08/01", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 310, action: "Sold", qty: 3, amount: 927.97 },
+          { date: "08/05", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 180, action: "Sold", qty: 10, amount: 1453.26 },
+          { date: "08/08", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 320, action: "Bought", qty: 86, amount: -95689.99 },
+          { date: "08/08", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 180, action: "Bought", qty: 10, amount: -2636.74 },
+          { date: "08/08", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 325, action: "Sold", qty: 86, amount: 98584.01 },
+          { date: "08/08", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 185, action: "Sold", qty: 10, amount: 1943.26 },
+          { date: "08/11-14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Sold", qty: 50, amount: 18886.50 },
+          { date: "08/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 330, action: "Sold", qty: 38, amount: 38126.38 },
+          { date: "08/15-21", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 330, action: "Bought", qty: 38, amount: -21015.61 },
+          { date: "08/18", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 190, action: "Sold", qty: 2, amount: 40.65 },
+          { date: "08/21", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Bought", qty: 50, amount: -3231.16 }
+        ]
+      },
+      
+      // September 2025
+      "sep25": {
+        premium: 429816.54,
+        costToClose: -362841.87,
+        netPnl: 66974.67,
+        contracts: 287,
+        winRate: 87,
+        expired: 46,
+        transactions: [
+          { date: "09/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 350, action: "Sold", qty: 25, amount: 1483.16 },
+          { date: "09/09", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 375, action: "Sold", qty: 50, amount: 1266.33 },
+          { date: "09/09", account: "Schwab ***519", symbol: "GOOG", type: "put", strike: 230, action: "Sold", qty: 2, amount: 72.67 },
+          { date: "09/10", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 245, action: "Sold", qty: 4, amount: 289.35 },
+          { date: "09/11", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 245, action: "Sold", qty: 5, amount: 116.69 },
+          { date: "09/12", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 375, action: "Bought", qty: 50, amount: -97283.68 },
+          { date: "09/12", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 380, action: "Sold", qty: 50, amount: 101716.33 },
+          { date: "09/15", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 380, action: "Bought", qty: 50, amount: -226033.67 },
+          { date: "09/15", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 420, action: "Sold", qty: 50, amount: 238266.33 },
+          { date: "09/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 30, amount: 227.30 },
+          { date: "09/22", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 260, action: "Sold", qty: 5, amount: 576.69 },
+          { date: "09/22", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 265, action: "Sold", qty: 6, amount: 266.01 },
+          { date: "09/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 420, action: "Bought", qty: 4, amount: -21994.69 },
+          { date: "09/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 4, amount: 22369.31 },
+          { date: "09/22", account: "Schwab ***692", symbol: "LMND", type: "put", strike: 60, action: "Sold", qty: 2, amount: 314.67 },
+          { date: "09/23", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 520, action: "Sold/Bought", qty: 40, amount: 1002.55 },
+          { date: "09/29", account: "Schwab ***692", symbol: "LMND", type: "call", strike: 58, action: "Sold", qty: 2, amount: 92.67 }
+        ]
+      },
+      
+      // October 2025
+      "oct25": {
+        premium: 98423.81,
+        costToClose: -96218.35,
+        netPnl: 2205.46,
+        contracts: 198,
+        winRate: 78,
+        expired: 24,
+        transactions: [
+          { date: "10/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 387.5, action: "Sold", qty: 10, amount: 56273.31 },
+          { date: "10/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 420, action: "Bought", qty: 10, amount: -52936.69 },
+          { date: "10/06", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 387.5, action: "Bought", qty: 10, amount: -61092.69 },
+          { date: "10/06", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 36, amount: 204599.93 },
+          { date: "10/06", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 420, action: "Bought", qty: 36, amount: -198060.07 },
+          { date: "10/13", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 255, action: "Sold", qty: 5, amount: 166.69 },
+          { date: "10/13", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 250, action: "Sold", qty: 6, amount: 548.01 },
+          { date: "10/15", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 490, action: "Sold", qty: 30, amount: 198.94 },
+          { date: "10/20", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 197.5, action: "Sold", qty: 10, amount: 143.31 },
+          { date: "10/20", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 505, action: "Sold", qty: 35, amount: 5961.60 },
+          { date: "10/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 505, action: "Bought", qty: 35, amount: -3353.40 },
+          { date: "10/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 8, amount: -35608.35 },
+          { date: "10/23", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 477.5, action: "Sold", qty: 45, amount: 469.41 },
+          { date: "10/24", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 477.5, action: "Bought", qty: 45, amount: -45.84 },
+          { date: "10/24", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 475, action: "Sold", qty: 45, amount: 9239.91 },
+          { date: "10/29-30", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 290, action: "Sold", qty: 6, amount: 14894.01 }
+        ]
+      },
+      
+      // November 2025
+      "nov25": {
+        premium: 98721.64,
+        costToClose: -71827.42,
+        netPnl: 26894.22,
+        contracts: 218,
+        winRate: 92,
+        expired: 54,
+        transactions: [
+          { date: "11/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 1, amount: -6144.67 },
+          { date: "11/06", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 1, amount: -4710.67 },
+          { date: "11/07", account: "Schwab ***384", symbol: "LMND", type: "call", strike: 65, action: "Sold", qty: 7, amount: 5770.35 },
+          { date: "11/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 47, amount: 2603.57 },
+          { date: "11/14", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 1, amount: -2107.67 },
+          { date: "11/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 40, amount: 189.26 },
+          { date: "11/17", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 445, action: "Sold", qty: 7, amount: 1360.32 },
+          { date: "11/17", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 190, action: "Sold", qty: 2, amount: 72.66 },
+          { date: "11/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 1, amount: -1895.67 },
+          { date: "11/24", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 452.5, action: "Sold", qty: 40, amount: 2093.25 },
+          { date: "11/25", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 330, action: "Sold", qty: 5, amount: 16531.69 },
+          { date: "11/25", account: "Schwab ***519", symbol: "GOOG", type: "call", strike: 330, action: "Sold", qty: 6, amount: 17265.01 },
+          { date: "11/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 452.5, action: "Bought", qty: 5, amount: -30.09 },
+          { date: "11/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 435, action: "Sold", qty: 5, amount: 366.66 },
+          { date: "11/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Bought", qty: 1, amount: -2140.67 }
+        ]
+      },
+      
+      // December 2025
+      "dec25": {
+        premium: 178943.21,
+        costToClose: -164782.14,
+        netPnl: 14161.07,
+        contracts: 312,
+        winRate: 88,
+        expired: 111,
+        transactions: [
+          { date: "12/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 40, amount: 8093.44 },
+          { date: "12/05", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 470, action: "Sold", qty: 40, amount: 19973.44 },
+          { date: "12/05", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Sold", qty: 10, amount: 27628.36 },
+          { date: "12/08", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 11, amount: 2199.70 },
+          { date: "12/08", account: "Schwab ***384", symbol: "ARKK", type: "call", strike: 85, action: "Sold", qty: 10, amount: 473.36 },
+          { date: "12/10", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 450, action: "Sold", qty: 1, amount: 1801.34 },
+          { date: "12/10", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 195, action: "Sold", qty: 10, amount: 143.36 },
+          { date: "12/10", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 200, action: "Sold", qty: 2, amount: 30.67 },
+          { date: "12/15", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 190, action: "Sold", qty: 10, amount: 213.36 },
+          { date: "12/15", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 1, amount: 1892.34 },
+          { date: "12/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Sold", qty: 17, amount: 88864.71 },
+          { date: "12/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 480, action: "Sold", qty: 5, amount: 34031.68 },
+          { date: "12/18", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 490, action: "Sold", qty: 5, amount: 22771.68 },
+          { date: "12/18", account: "Schwab ***384", symbol: "LMND", type: "call", strike: 82, action: "Sold", qty: 7, amount: 2760.35 },
+          { date: "12/19", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 40, amount: 189.44 },
+          { date: "12/19", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 200, action: "Sold", qty: 2, amount: 158.67 },
+          { date: "12/22", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 550, action: "Sold", qty: 40, amount: 813.44 },
+          { date: "12/22", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 190, action: "Sold", qty: 10, amount: 273.36 },
+          { date: "12/22", account: "Schwab ***384", symbol: "ARKK", type: "call", strike: 85, action: "Sold", qty: 16, amount: 162.38 },
+          { date: "12/22", account: "Schwab ***384", symbol: "MSFT", type: "call", strike: 495, action: "Sold", qty: 1, amount: 66.34 },
+          { date: "12/23", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Sold", qty: 1, amount: 1102.34 },
+          { date: "12/26", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 192.5, action: "Sold", qty: 10, amount: 2623.36 },
+          { date: "12/26", account: "Fidelity IRA", symbol: "NVDA", type: "call", strike: 190, action: "Bought", qty: 10, amount: -2056.64 },
+          { date: "12/26", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 200, action: "Bought", qty: 2, amount: -2.03 },
+          { date: "12/26", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Bought", qty: 1, amount: -2980.66 },
+          { date: "12/29", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 550, action: "Sold", qty: 40, amount: 265.45 },
+          { date: "12/29", account: "Fidelity Roth", symbol: "PLTR", type: "call", strike: 195, action: "Sold", qty: 2, amount: 60.67 },
+          { date: "12/29", account: "Schwab ***384", symbol: "ARKK", type: "call", strike: 80, action: "Sold", qty: 16, amount: 789.38 }
+        ]
+      },
+      
+      // January 2026 (Closed Month)
+      "jan26": {
+        premium: 8421.67,
+        costToClose: -3218.45,
+        netPnl: 5203.22,
+        contracts: 87,
+        winRate: 94,
+        expired: 40,
+        transactions: [
+          { date: "01/02", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 550, action: "Expired", qty: 40, amount: 0 },
+          { date: "01/02", account: "Schwab ***384", symbol: "ARKK", type: "call", strike: 80, action: "Expired", qty: 16, amount: 0 },
+          { date: "01/03", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 460, action: "Bought", qty: 1, amount: -3553.66 },
+          { date: "01/06", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 465, action: "Sold", qty: 1, amount: 77.00 },
+          { date: "01/09", account: "Fidelity IRA", symbol: "TSLA", type: "call", strike: 500, action: "Expired", qty: 1, amount: 0 },
+          { date: "01/13", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 335, action: "Sold", qty: 6, amount: 3618.00 },
+          { date: "01/15", account: "Schwab ***384", symbol: "GOOG", type: "call", strike: 340, action: "Sold", qty: 5, amount: 3115.00 },
+          { date: "01/20", account: "Schwab ***692", symbol: "LMND", type: "call", strike: 92, action: "Sold", qty: 7, amount: 8575.00 },
+          { date: "01/27", account: "Fidelity IRA", symbol: "AMZN", type: "put", strike: 230, action: "Sold", qty: 1, amount: 938.00 },
+          { date: "01/27", account: "Fidelity IRA", symbol: "AMZN", type: "put", strike: 200, action: "Sold", qty: 1, amount: 171.00 }
+        ]
+      },
+      
+      // All 2025
+      "all": {
+        premium: 1751517.97,
+        costToClose: -1512176.86,
+        netPnl: 239341.11,
+        contracts: 3223,
+        winRate: 87,
+        expired: 817,
+        transactions: []
+      }
+    };
+    
+    // Render functions
+    function formatCurrency(amount) {
+      const sign = amount >= 0 ? '+' : '';
+      return sign + '$' + Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+    
+    function renderMonth(monthKey) {
+      const data = TRANSACTIONS_DATA[monthKey];
+      if (!data) return '<div class="no-data">No data available</div>';
+      
+      let html = `
+        <div class="month-stats">
+          <div class="month-stat">
+            <div class="month-stat-label">Premium Collected</div>
+            <div class="month-stat-value positive">$${data.premium.toLocaleString()}</div>
+          </div>
+          <div class="month-stat">
+            <div class="month-stat-label">Cost to Close</div>
+            <div class="month-stat-value negative">-$${Math.abs(data.costToClose).toLocaleString()}</div>
+          </div>
+          <div class="month-stat">
+            <div class="month-stat-label">Net P/L</div>
+            <div class="month-stat-value ${data.netPnl >= 0 ? 'positive' : 'negative'}">${formatCurrency(data.netPnl)}</div>
+          </div>
+          <div class="month-stat">
+            <div class="month-stat-label">Contracts</div>
+            <div class="month-stat-value">${data.contracts}</div>
+          </div>
+          <div class="month-stat">
+            <div class="month-stat-label">Win Rate</div>
+            <div class="month-stat-value">${data.winRate}%</div>
+          </div>
+          <div class="month-stat">
+            <div class="month-stat-label">Expired Worthless</div>
+            <div class="month-stat-value">${data.expired}</div>
+          </div>
+        </div>
+      `;
+      
+      if (data.transactions && data.transactions.length > 0) {
+        html += `
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Account</th>
+                <th>Symbol</th>
+                <th>Type</th>
+                <th>Strike</th>
+                <th>Action</th>
+                <th>Qty</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        data.transactions.forEach(tx => {
+          const amountClass = tx.amount > 0 ? 'amount-positive' : (tx.amount < 0 ? 'amount-negative' : '');
+          const actionClass = tx.action.toLowerCase().includes('sold') ? 'sold' : 
+                              tx.action.toLowerCase().includes('bought') ? 'bought' :
+                              tx.action.toLowerCase().includes('expired') ? 'expired' : 'assigned';
+          const accountClass = tx.account.includes('Fidelity') ? 'fidelity' : 'schwab';
+          
+          html += `
+            <tr>
+              <td>${tx.date}</td>
+              <td><span class="account-badge ${accountClass}">${tx.account}</span></td>
+              <td class="symbol">${tx.symbol}</td>
+              <td><span class="option-type ${tx.type}">${tx.type.toUpperCase()}</span></td>
+              <td>$${tx.strike}</td>
+              <td class="action ${actionClass}">${tx.action}</td>
+              <td>${tx.qty}</td>
+              <td class="${amountClass}">${tx.amount !== 0 ? formatCurrency(tx.amount) : '-'}</td>
+            </tr>
+          `;
+        });
+        
+        html += '</tbody></table>';
+      } else if (monthKey === 'all') {
+        html += '<div class="no-data">Select a specific month to view transactions</div>';
+      }
+      
+      return html;
+    }
+    
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        const monthKey = tab.dataset.month;
+        document.getElementById('month-data').innerHTML = renderMonth(monthKey);
+      });
+    });
+    
+    // Initialize with December 2025
+    document.getElementById('month-data').innerHTML = renderMonth('dec25');
+  </script>
+</body>
+</html>
