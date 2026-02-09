@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Jamestown | Evolution of JAMES</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-hover: #1a1a2a;
+      --border: #2a2a3a;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+      --text-muted: #555;
+      --green: #00ff88;
+      --green-dim: #00aa55;
+      --amber: #ffaa00;
+      --red: #ff4444;
+      --blue: #4488ff;
+      --purple: #aa44ff;
+      --cyan: #00ddff;
+    }
+    body {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+      flex-wrap: wrap; gap: 16px;
+    }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--green); text-decoration: none; }
+    .logo:hover { opacity: 0.8; }
+    .subtitle { color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; }
+    nav a { color: var(--text-secondary); text-decoration: none; margin-left: 24px; transition: color 0.2s; }
+    nav a:hover { color: var(--green); }
+    nav a.active { color: var(--green); }
+
+    .stats-bar { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .stat {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 20px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px;
+    }
+    .stat-icon { font-size: 1.3rem; }
+    .stat-label { color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; }
+    .stat-value { font-size: 1.1rem; font-weight: 600; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.amber { color: var(--amber); }
+    .stat-value.cyan { color: var(--cyan); }
+
+    /* City Canvas */
+    .city-wrapper {
+      background: linear-gradient(180deg, #0a0a1a 0%, #0f1525 40%, #121a30 100%);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; position: relative; margin-bottom: 20px;
+    }
+    #city-canvas { width: 100%; display: block; }
+    .city-date-label {
+      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.7); padding: 8px 24px; border-radius: 20px;
+      font-size: 1.1rem; font-weight: 600; color: var(--green);
+      border: 1px solid var(--green); letter-spacing: 1px;
+    }
+    .city-population {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 12px;
+      font-size: 0.8rem; color: var(--amber);
+    }
+
+    /* Slider */
+    .slider-container {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 20px;
+    }
+    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .slider-title { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; }
+    .play-btn {
+      background: var(--green); color: #000; border: none; padding: 6px 16px;
+      border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .play-btn:hover { opacity: 0.8; }
+    .play-btn.playing { background: var(--amber); }
+    #timeline-slider {
+      width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
+      background: var(--border); border-radius: 3px; outline: none; cursor: pointer;
+    }
+    #timeline-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 20px; height: 20px; background: var(--green);
+      border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px rgba(0,255,136,0.5);
+    }
+    .slider-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.7rem; color: var(--text-muted); }
+
+    /* Event Log */
+    .event-panel {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 900px) { .event-panel { grid-template-columns: 1fr; } }
+    .event-log {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    }
+    .event-log h3 { color: var(--green); font-size: 0.9rem; margin-bottom: 12px; }
+    .event-item {
+      padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .event-item:last-child { border-bottom: none; }
+    .event-icon { font-size: 1rem; flex-shrink: 0; }
+    .event-text { color: var(--text-secondary); }
+    .event-text strong { color: var(--text-primary); }
+
+    .version-table { width: 100%; }
+    .version-table h3 { color: var(--green); font-size: 0.9rem; margin-bottom: 12px; }
+    .version-row {
+      display: flex; justify-content: space-between; padding: 8px 0;
+      border-bottom: 1px solid var(--border); font-size: 0.85rem;
+    }
+    .version-row:last-child { border-bottom: none; }
+    .version-row .ver { color: var(--cyan); font-weight: 600; }
+    .version-row .date { color: var(--text-secondary); }
+    .version-row .feature { color: var(--text-muted); font-size: 0.8rem; }
+    .version-row.current { background: rgba(0,255,136,0.05); border-radius: 6px; padding: 8px 6px; }
+
+    footer {
+      margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
+      text-align: center; color: var(--text-muted); font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <a href="index.html" class="logo">🌆 Jamestown</a>
+        <div class="subtitle">The Rise of JAMES — An AI City</div>
+      </div>
+      <nav>
+        <a href="index.html">Dashboard</a>
+        <a href="callworks.html">CallWorks</a>
+        <a href="evolution.html" class="active">Evolution</a>
+      </nav>
+    </header>
+
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <div class="city-wrapper">
+      <canvas id="city-canvas" width="1400" height="500"></canvas>
+      <div class="city-date-label" id="city-date">JAMESTOWN · Jan 30, 2026</div>
+      <div class="city-population" id="city-pop">🏗️ Population: 1</div>
+    </div>
+
+    <div class="slider-container">
+      <div class="slider-header">
+        <span class="slider-title">⏳ Timeline · Drag to explore history</span>
+        <button class="play-btn" id="play-btn" onclick="togglePlay()">▶ Play Evolution</button>
+      </div>
+      <input type="range" id="timeline-slider" min="0" max="10" value="10" step="0.1">
+      <div class="slider-labels">
+        <span>Jan 30</span><span>Jan 31</span><span>Feb 1</span><span>Feb 2</span><span>Feb 3</span>
+        <span>Feb 4</span><span>Feb 5</span><span>Feb 6</span><span>Feb 7</span><span>Feb 8</span><span>Feb 9</span>
+      </div>
+    </div>
+
+    <div class="event-panel">
+      <div class="event-log" id="event-log">
+        <h3>📜 What's New Today</h3>
+      </div>
+      <div class="event-log">
+        <div class="version-table">
+          <h3>📦 Version History</h3>
+          <div class="version-row current">
+            <span class="ver">2026.2.9</span><span class="date">Feb 9</span><span class="feature">Grok search, failover, iOS nodes</span>
+          </div>
+          <div class="version-row">
+            <span class="ver">2026.2.6-3</span><span class="date">Feb 7</span><span class="feature">Cron reliability, xAI provider</span>
+          </div>
+          <div class="version-row">
+            <span class="ver">2026.2.2-3</span><span class="date">Feb 5</span><span class="feature">Voice & hooks</span>
+          </div>
+          <div class="version-row">
+            <span class="ver">2026.2.1</span><span class="date">Feb 3</span><span class="feature">Early Feb release</span>
+          </div>
+          <div class="version-row">
+            <span class="ver">2026.1.30</span><span class="date">Jan 31</span><span class="feature">First full day</span>
+          </div>
+          <div class="version-row">
+            <span class="ver">2026.1.29</span><span class="date">Jan 30</span><span class="feature">🎂 JAMES is born</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Jamestown · The Evolution of JAMES · Born January 30, 2026</p>
+    </footer>
+  </div>
+
+<script>
+// ── Timeline Data ──
+const DAYS = [
+  { date: "Jan 30", label: "🎂 JAMES Is Born", buildings: [
+    { type: 'cityhall', name: 'OpenClaw', color: '#00ff88', x: 0.5, w: 80, h: 120 },
+    { type: 'road', name: 'Telegram', color: '#4488ff', x: 0.45 },
+  ], events: ['OpenClaw 2026.1.29 installed', 'Anthropic API key configured', 'Telegram bot connected'], stats: { skills: 0, integrations: 1, crons: 0, version: '2026.1.29' }},
+  { date: "Jan 31", label: "🏗️ First Integrations", buildings: [
+    { type: 'factory', name: 'Gmail', color: '#ff4444', x: 0.25, w: 50, h: 70 },
+    { type: 'factory', name: 'Powerwall', color: '#ffaa00', x: 0.7, w: 50, h: 65 },
+    { type: 'factory', name: 'Flume', color: '#00ddff', x: 0.8, w: 40, h: 50 },
+    { type: 'factory', name: 'Finnhub', color: '#aa44ff', x: 0.15, w: 45, h: 60 },
+    { type: 'factory', name: 'Coinbase', color: '#ffaa00', x: 0.35, w: 40, h: 55 },
+    { type: 'shop', name: 'covered-calls', color: '#00ff88', x: 0.6, w: 35, h: 40 },
+    { type: 'shop', name: 'moltbook', color: '#ff8800', x: 0.65, w: 35, h: 38 },
+    { type: 'house', name: 'stock-mon', color: '#888', x: 0.55, w: 25, h: 30 },
+  ], events: ['Gmail & Calendar connected (gog CLI)', 'Tesla Powerwall 3 monitoring', 'Flume water leak detection', 'Finnhub stock API ($50/mo Basic)', 'First cron jobs created'], stats: { skills: 3, integrations: 6, crons: 5, version: '2026.1.30' }},
+  { date: "Feb 1", label: "🌐 Website Launched", buildings: [
+    { type: 'monument', name: 'darrylbots.com', color: '#00ff88', x: 0.42, w: 55, h: 80 },
+    { type: 'shop', name: 'gallery', color: '#aa44ff', x: 0.3, w: 30, h: 35 },
+  ], events: ['darrylbots.com goes live', 'Robot gallery with AI images', 'About page with Darryl\'s bio'], stats: { skills: 5, integrations: 7, crons: 8, version: '2026.1.30' }},
+  { date: "Feb 2", label: "📷 Smart Home Expansion", buildings: [
+    { type: 'factory', name: 'Nest', color: '#00ddff', x: 0.1, w: 55, h: 75 },
+    { type: 'factory', name: 'iAqualink', color: '#4488ff', x: 0.85, w: 45, h: 55 },
+    { type: 'factory', name: 'Kasa', color: '#ffaa00', x: 0.9, w: 35, h: 45 },
+    { type: 'factory', name: 'SmartThings', color: '#aa44ff', x: 0.05, w: 50, h: 60 },
+  ], events: ['Nest: 9 cameras + doorbell + 2 thermostats', 'iAqualink pool/spa control', 'Kasa smart plugs (4 devices)', 'SmartThings (TVs, leak sensors, Sonos)'], stats: { skills: 8, integrations: 11, crons: 12, version: '2026.1.30' }},
+  { date: "Feb 3", label: "📱 Communication Hub", buildings: [
+    { type: 'road', name: 'WhatsApp', color: '#00ff88', x: 0.3 },
+    { type: 'road', name: 'X/Twitter', color: '#4488ff', x: 0.6 },
+    { type: 'road', name: 'iMessage', color: '#aa44ff', x: 0.7 },
+    { type: 'factory', name: 'Twilio SMS', color: '#ff4444', x: 0.2, w: 45, h: 55 },
+  ], events: ['WhatsApp connected (self-chat mode)', 'X/Twitter DM monitoring', 'iMessage read access', 'Twilio SMS integration'], stats: { skills: 10, integrations: 15, crons: 18, version: '2026.2.1' }},
+  { date: "Feb 4", label: "🗣️ JAMES Gets a Voice", buildings: [
+    { type: 'factory', name: 'ElevenLabs', color: '#ff8800', x: 0.75, w: 50, h: 65 },
+    { type: 'shop', name: 'linkedin', color: '#4488ff', x: 0.22, w: 35, h: 40 },
+    { type: 'house', name: 'moltbook-cron', color: '#ff8800', x: 0.58, w: 25, h: 28 },
+  ], events: ['ElevenLabs TTS — George voice (British)', 'LinkedIn messaging monitor', 'Moltbook social network posts'], stats: { skills: 12, integrations: 17, crons: 22, version: '2026.2.1' }},
+  { date: "Feb 5", label: "📞 Two-Way Voice Calls", buildings: [
+    { type: 'factory', name: 'Twilio Voice', color: '#ff4444', x: 0.18, w: 55, h: 70 },
+    { type: 'factory', name: 'Deepgram', color: '#00ddff', x: 0.82, w: 45, h: 55 },
+    { type: 'shop', name: 'ngrok tunnel', color: '#888', x: 0.12, w: 30, h: 35 },
+  ], events: ['Twilio voice calls (inbound + outbound)', 'Deepgram Aura TTS (Draco — British)', 'Voice server on ngrok tunnel'], stats: { skills: 14, integrations: 19, crons: 25, version: '2026.2.2-3' }},
+  { date: "Feb 6", label: "📄 Organization", buildings: [
+    { type: 'factory', name: 'Paperless', color: '#ffaa00', x: 0.38, w: 50, h: 60 },
+    { type: 'shop', name: 'Cloudflare', color: '#ff8800', x: 0.48, w: 35, h: 42 },
+    { type: 'house', name: 'Drive cleanup', color: '#4488ff', x: 0.32, w: 25, h: 30 },
+  ], events: ['Paperless document system (ScanSnap + Gemini)', 'Google Drive cleanup: 623 → 12 folders', 'Domain management on Cloudflare'], stats: { skills: 16, integrations: 20, crons: 30, version: '2026.2.2-3' }},
+  { date: "Feb 7", label: "📈 Trading Dashboards", buildings: [
+    { type: 'monument', name: 'CallWorks', color: '#00ff88', x: 0.55, w: 60, h: 85 },
+    { type: 'shop', name: 'Schwab', color: '#aa44ff', x: 0.62, w: 35, h: 42 },
+    { type: 'shop', name: 'VC Dash', color: '#ffaa00', x: 0.68, w: 30, h: 38 },
+  ], events: ['CallWorks options trading dashboards', 'Schwab multi-account integration', 'VC Portfolio dashboard', 'Mission Control (Convex)'], stats: { skills: 20, integrations: 22, crons: 35, version: '2026.2.6-3' }},
+  { date: "Feb 8", label: "🔧 Optimization Day", buildings: [
+    { type: 'factory', name: 'Tiller', color: '#00ff88', x: 0.28, w: 45, h: 55 },
+    { type: 'factory', name: 'iCloud FM', color: '#4488ff', x: 0.72, w: 45, h: 55 },
+    { type: 'house', name: 'cron-opt', color: '#ffaa00', x: 0.4, w: 25, h: 28 },
+    { type: 'house', name: 'security', color: '#ff4444', x: 0.52, w: 25, h: 28 },
+  ], events: ['Tiller financial integration', 'iCloud Find My (family devices)', 'Cron optimization (staggered, deduplicated)', 'Credential security hardening'], stats: { skills: 22, integrations: 24, crons: 40, version: '2026.2.6-3' }},
+  { date: "Feb 9", label: "🚀 Major Infrastructure", buildings: [
+    { type: 'monument', name: 'CF Pages', color: '#ff8800', x: 0.35, w: 50, h: 70 },
+    { type: 'factory', name: 'Grok Search', color: '#4488ff', x: 0.08, w: 45, h: 60 },
+    { type: 'shop', name: 'Gemini FB', color: '#aa44ff', x: 0.78, w: 35, h: 40 },
+    { type: 'house', name: 'failover', color: '#00ff88', x: 0.88, w: 28, h: 32 },
+  ], events: ['OpenClaw 2.9 upgrade', 'Cloudflare Pages migration (instant deploys)', 'CallWorks rewritten (data-driven + Greeks)', 'Grok search for X/Twitter content', 'Cross-provider failover added', '5 cron jobs migrated to free models', 'Skills cleanup: 26 → 22'], stats: { skills: 22, integrations: 25, crons: 43, version: '2026.2.9' }}
+];
+
+const canvas = document.getElementById('city-canvas');
+const ctx = canvas.getContext('2d');
+const slider = document.getElementById('timeline-slider');
+let isPlaying = false;
+let playInterval = null;
+
+// Responsive canvas
+function resizeCanvas() {
+  const w = canvas.parentElement.clientWidth;
+  canvas.width = w;
+  canvas.height = Math.min(500, w * 0.4);
+  drawCity(parseFloat(slider.value));
+}
+window.addEventListener('resize', resizeCanvas);
+
+// ── Drawing Functions ──
+function drawStars(count) {
+  ctx.fillStyle = '#ffffff';
+  for (let i = 0; i < count; i++) {
+    const x = (Math.sin(i * 127.1 + 311.7) * 0.5 + 0.5) * canvas.width;
+    const y = (Math.sin(i * 269.5 + 183.3) * 0.5 + 0.5) * canvas.height * 0.5;
+    const size = (Math.sin(i * 43.7) * 0.5 + 0.5) * 1.5 + 0.5;
+    ctx.globalAlpha = (Math.sin(i * 73.1 + Date.now() * 0.001) * 0.3 + 0.7);
+    ctx.fillRect(x, y, size, size);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawGround() {
+  const groundY = canvas.height * 0.75;
+  // Ground
+  ctx.fillStyle = '#0a1a0a';
+  ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+  // Road
+  ctx.fillStyle = '#1a1a2a';
+  ctx.fillRect(0, groundY - 2, canvas.width, 20);
+  // Road lines
+  ctx.strokeStyle = '#333';
+  ctx.setLineDash([15, 10]);
+  ctx.beginPath();
+  ctx.moveTo(0, groundY + 8);
+  ctx.lineTo(canvas.width, groundY + 8);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawBuilding(x, groundY, w, h, color, name, type, alpha) {
+  const bx = x - w / 2;
+  const by = groundY - h;
+  
+  ctx.globalAlpha = alpha;
+  
+  // Building body
+  const grad = ctx.createLinearGradient(bx, by, bx + w, by + h);
+  grad.addColorStop(0, color + '40');
+  grad.addColorStop(1, color + '20');
+  ctx.fillStyle = grad;
+  ctx.fillRect(bx, by, w, h);
+  
+  // Border
+  ctx.strokeStyle = color + '80';
+  ctx.lineWidth = type === 'cityhall' || type === 'monument' ? 2 : 1;
+  ctx.strokeRect(bx, by, w, h);
+  
+  // Windows (lit)
+  const windowRows = Math.floor(h / 18);
+  const windowCols = Math.floor(w / 16);
+  for (let r = 1; r < windowRows; r++) {
+    for (let c = 0; c < windowCols; c++) {
+      const wx = bx + 6 + c * 16;
+      const wy = by + 6 + r * 18;
+      const lit = Math.sin(r * 7.3 + c * 13.1 + x) > -0.2;
+      ctx.fillStyle = lit ? color + 'cc' : '#111';
+      ctx.fillRect(wx, wy, 8, 10);
+    }
+  }
+  
+  // Roof accent for special buildings
+  if (type === 'cityhall') {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx + w / 2, by - 20);
+    ctx.lineTo(bx + w, by);
+    ctx.fill();
+    // Flag
+    ctx.fillStyle = color;
+    ctx.fillRect(bx + w / 2 - 1, by - 35, 2, 20);
+    ctx.fillRect(bx + w / 2 + 1, by - 35, 12, 8);
+  }
+  
+  if (type === 'factory') {
+    // Smoke stack
+    ctx.fillStyle = color + '60';
+    ctx.fillRect(bx + w - 10, by - 15, 6, 15);
+    // Smoke puffs (animated)
+    const t = Date.now() * 0.002;
+    for (let i = 0; i < 3; i++) {
+      const sy = by - 20 - i * 12 - Math.sin(t + i) * 5;
+      const sx = bx + w - 7 + Math.sin(t * 0.7 + i * 2) * 8;
+      const sr = 4 + i * 2;
+      ctx.fillStyle = `rgba(150,150,150,${0.3 - i * 0.08})`;
+      ctx.beginPath();
+      ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  
+  if (type === 'monument') {
+    ctx.fillStyle = color;
+    ctx.fillRect(bx + w / 2 - 2, by - 12, 4, 12);
+    ctx.beginPath();
+    ctx.arc(bx + w / 2, by - 14, 6, 0, Math.PI * 2);
+    ctx.fillStyle = color + '80';
+    ctx.fill();
+  }
+  
+  // Name label
+  ctx.fillStyle = color;
+  ctx.font = `${Math.min(10, w / name.length * 1.5)}px monospace`;
+  ctx.textAlign = 'center';
+  ctx.fillText(name, bx + w / 2, groundY + 14);
+  
+  ctx.globalAlpha = 1;
+}
+
+function drawRoad(x, groundY, name, color, alpha) {
+  ctx.globalAlpha = alpha;
+  const rx = x * canvas.width;
+  ctx.strokeStyle = color + 'aa';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath();
+  ctx.moveTo(rx, groundY + 18);
+  ctx.lineTo(rx, groundY + 35);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = color;
+  ctx.font = '9px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(name, rx, groundY + 45);
+  ctx.globalAlpha = 1;
+}
+
+// ── Main Draw ──
+function drawCity(dayIndex) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  const currentDay = Math.floor(dayIndex);
+  const frac = dayIndex - currentDay;
+  const groundY = canvas.height * 0.75;
+  
+  drawStars(80);
+  drawGround();
+  
+  // Draw all buildings up to current day
+  for (let d = 0; d <= Math.min(currentDay, DAYS.length - 1); d++) {
+    const day = DAYS[d];
+    const isCurrentDay = d === currentDay;
+    
+    for (const b of day.buildings) {
+      const alpha = (isCurrentDay && d === Math.floor(dayIndex)) ? Math.min(frac * 3, 1) : 1;
+      if (d > currentDay) continue;
+      
+      if (b.type === 'road') {
+        drawRoad(b.x, groundY, b.name, b.color, alpha);
+      } else {
+        const bx = b.x * canvas.width;
+        drawBuilding(bx, groundY, b.w || 40, b.h || 50, b.color, b.name, b.type, alpha);
+      }
+    }
+  }
+  
+  // Update UI
+  const dayData = DAYS[Math.min(currentDay, DAYS.length - 1)];
+  document.getElementById('city-date').textContent = `JAMESTOWN · ${dayData.date}, 2026`;
+  
+  const totalBuildings = DAYS.slice(0, currentDay + 1).reduce((sum, d) => sum + d.buildings.length, 0);
+  document.getElementById('city-pop').textContent = `🏗️ Buildings: ${totalBuildings}`;
+  
+  // Stats
+  const s = dayData.stats;
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat"><span class="stat-icon">📦</span><div><div class="stat-label">Version</div><div class="stat-value cyan">${s.version}</div></div></div>
+    <div class="stat"><span class="stat-icon">🔧</span><div><div class="stat-label">Skills</div><div class="stat-value green">${s.skills}</div></div></div>
+    <div class="stat"><span class="stat-icon">🔌</span><div><div class="stat-label">Integrations</div><div class="stat-value amber">${s.integrations}</div></div></div>
+    <div class="stat"><span class="stat-icon">⏰</span><div><div class="stat-label">Cron Jobs</div><div class="stat-value green">${s.crons}</div></div></div>
+    <div class="stat"><span class="stat-icon">📅</span><div><div class="stat-label">Day</div><div class="stat-value">${currentDay + 1} of 11</div></div></div>
+    <div class="stat"><span class="stat-icon">🏛️</span><div><div class="stat-label">Buildings</div><div class="stat-value cyan">${totalBuildings}</div></div></div>
+  `;
+  
+  // Events
+  const el = document.getElementById('event-log');
+  el.innerHTML = `<h3>📜 ${dayData.label}</h3>` + dayData.events.map(e => 
+    `<div class="event-item"><span class="event-icon">▸</span><span class="event-text">${e}</span></div>`
+  ).join('');
+}
+
+// ── Slider & Play ──
+slider.addEventListener('input', () => {
+  drawCity(parseFloat(slider.value));
+});
+
+function togglePlay() {
+  const btn = document.getElementById('play-btn');
+  if (isPlaying) {
+    clearInterval(playInterval);
+    isPlaying = false;
+    btn.textContent = '▶ Play Evolution';
+    btn.classList.remove('playing');
+  } else {
+    slider.value = 0;
+    isPlaying = true;
+    btn.textContent = '⏸ Pause';
+    btn.classList.add('playing');
+    playInterval = setInterval(() => {
+      let v = parseFloat(slider.value) + 0.05;
+      if (v > 10) {
+        v = 10;
+        clearInterval(playInterval);
+        isPlaying = false;
+        btn.textContent = '▶ Play Evolution';
+        btn.classList.remove('playing');
+      }
+      slider.value = v;
+      drawCity(v);
+    }, 80);
+  }
+}
+
+// Animate smoke continuously
+function animate() {
+  drawCity(parseFloat(slider.value));
+  requestAnimationFrame(animate);
+}
+
+// Init
+resizeCanvas();
+animate();
+</script>
+</body>
+</html>
