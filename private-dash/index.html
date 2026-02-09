@@ -315,19 +315,35 @@
 
     <div class="dashboard-grid">
 
-      <!-- Featured: claw-dash (LIVE) -->
-      <a href="https://unconjectural-myrna-deeper.ngrok-free.dev" class="card featured" target="_blank">
-        <div class="card-icon">🦞</div>
+      <!-- Featured: Command Centre -->
+      <a href="command-centre.html" class="card featured">
+        <div class="card-icon">⚡</div>
+        <div class="card-content">
+          <span class="badge live"><span class="dot"></span> Ops Hub</span>
+          <div class="card-title">Command Centre</div>
+          <div class="card-desc">Port map, cron jobs, integrations, tunnels, and quick links to every dashboard. The ops overview.</div>
+          <div class="stats-row">
+            <span class="stat"><strong>46</strong> Cron Jobs</span>
+            <span class="stat"><strong>18</strong> Integrations</span>
+            <span class="stat"><strong>2</strong> Tunnels</span>
+          </div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <!-- claw-dash (LIVE) -->
+      <a href="https://unconjectural-myrna-deeper.ngrok-free.dev" class="card featured" target="_blank" style="background: rgba(0,255,136,0.03);">
+        <div class="card-icon">🖥️</div>
         <div class="card-content">
           <span class="badge live"><span class="dot"></span> Live</span>
-          <div class="card-title">claw-dash</div>
-          <div class="card-desc">System health, token usage, sessions, costs, cron jobs, and process insights. Auth required.</div>
+          <div class="card-title">Claw Dash</div>
+          <div class="card-desc">Real-time system health — CPU, RAM, disk, network, OpenClaw stats. Auth: darryl/Theta</div>
           <div class="stats-row">
             <span class="stat"><strong>Stats:</strong> CPU · RAM · Tokens · Cost</span>
             <span class="stat"><strong>Refresh:</strong> Live</span>
           </div>
         </div>
-        <div class="card-arrow">→</div>
+        <div class="card-arrow">↗</div>
       </a>
 
       <!-- CallWorks (formerly Theta Decay Central) -->
@@ -354,16 +370,16 @@
         <div class="card-desc">Current open positions with real-time P/L, expiration tracking, and action recommendations.</div>
       </a>
 
-      <!-- Theta Decay Central (Legacy) -->
-      <a href="theta-dashboard.html" class="card theta" style="opacity: 0.6;">
+      <!-- CallWorks History -->
+      <a href="callworks-history.html" class="card theta">
         <div class="card-header">
-          <div class="card-icon">📉</div>
+          <div class="card-icon">📊</div>
           <div>
-            <div class="card-title">Theta Decay Central</div>
-            <span class="badge static">Legacy</span>
+            <div class="card-title">CallWorks History</div>
+            <span class="badge static">Monthly</span>
           </div>
         </div>
-        <div class="card-desc">Original dashboard — kept for reference. See CallWorks for current data.</div>
+        <div class="card-desc">2025 full year: $254K net P/L, $1.67M premium collected, 2,762 contracts. Monthly breakdown.</div>
       </a>
 
       <!-- API Dashboard -->
