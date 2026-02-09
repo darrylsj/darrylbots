@@ -148,7 +148,14 @@
       </nav>
     </header>
 
-    <div class="stats-bar" id="stats-bar"></div>
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat"><span class="stat-icon">📦</span><div><div class="stat-label">Version</div><div class="stat-value cyan">2026.2.9</div></div></div>
+      <div class="stat"><span class="stat-icon">🔧</span><div><div class="stat-label">Skills</div><div class="stat-value green">22</div></div></div>
+      <div class="stat"><span class="stat-icon">🔌</span><div><div class="stat-label">Integrations</div><div class="stat-value amber">25</div></div></div>
+      <div class="stat"><span class="stat-icon">⏰</span><div><div class="stat-label">Cron Jobs</div><div class="stat-value green">43</div></div></div>
+      <div class="stat"><span class="stat-icon">📅</span><div><div class="stat-label">Day</div><div class="stat-value">11 of 11</div></div></div>
+      <div class="stat"><span class="stat-icon">🏛️</span><div><div class="stat-label">Buildings</div><div class="stat-value cyan">42</div></div></div>
+    </div>
 
     <div class="city-wrapper">
       <canvas id="city-canvas" width="1400" height="500"></canvas>
@@ -417,21 +424,21 @@ function drawRoad(x, groundY, name, color, alpha) {
 function drawCity(dayIndex) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  const currentDay = Math.floor(dayIndex);
-  const frac = dayIndex - currentDay;
+  const maxIdx = DAYS.length - 1;
+  const currentDay = Math.min(Math.floor(dayIndex), maxIdx);
+  const frac = dayIndex - Math.floor(dayIndex);
   const groundY = canvas.height * 0.75;
   
   drawStars(80);
   drawGround();
   
   // Draw all buildings up to current day
-  for (let d = 0; d <= Math.min(currentDay, DAYS.length - 1); d++) {
+  for (let d = 0; d <= currentDay; d++) {
     const day = DAYS[d];
-    const isCurrentDay = d === currentDay;
+    const isNewest = d === currentDay;
     
     for (const b of day.buildings) {
-      const alpha = (isCurrentDay && d === Math.floor(dayIndex)) ? Math.min(frac * 3, 1) : 1;
-      if (d > currentDay) continue;
+      const alpha = isNewest ? Math.min(frac * 3 + 0.3, 1) : 1;
       
       if (b.type === 'road') {
         drawRoad(b.x, groundY, b.name, b.color, alpha);
@@ -443,7 +450,7 @@ function drawCity(dayIndex) {
   }
   
   // Update UI
-  const dayData = DAYS[Math.min(currentDay, DAYS.length - 1)];
+  const dayData = DAYS[currentDay];
   document.getElementById('city-date').textContent = `JAMESTOWN · ${dayData.date}, 2026`;
   
   const totalBuildings = DAYS.slice(0, currentDay + 1).reduce((sum, d) => sum + d.buildings.length, 0);
