@@ -338,7 +338,7 @@ function getActionRec(pos, dte, price) {
   return { text: '🔄 HOLD — Theta decaying', cls: 'hold' };
 }
 
-function renderCard(pos, prices) {
+function renderCard(pos, prices, optionPrices) {
   const price = prices[pos.symbol] || 0;
   const dte = getDTE(pos.expiration);
   const cardClass = getCardClass(pos, dte, price);
@@ -347,6 +347,10 @@ function renderCard(pos, prices) {
   
   const contracts = Math.abs(pos.contracts);
   const totalPremium = pos.premiumCollected || (pos.entryPrice * contracts * 100);
+  
+  // Option price lookup
+  const optKey = `${pos.symbol}_${pos.strike}_${pos.expiration}_${pos.type}`;
+  const optData = (optionPrices || {})[optKey];
   
   // Distance from strike
   let distPct = 0, distLabel = '';
@@ -360,19 +364,50 @@ function renderCard(pos, prices) {
     }
   }
   
-  // Greeks (only for open positions with valid data)
+  // Current option price & P/L
+  let currentPriceHTML = '';
+  let plPerContractHTML = '';
+  if (optData) {
+    const mid = (optData.bid > 0 && optData.ask > 0) ? (optData.bid + optData.ask) / 2 : optData.last;
+    const currentPrice = mid || optData.last || 0;
+    const isProfit = currentPrice < pos.entryPrice;
+    const priceColor = currentPrice < pos.entryPrice ? 'positive' : (currentPrice > pos.entryPrice ? 'negative' : '');
+    currentPriceHTML = `<div class="detail-item"><span class="detail-label">Current Price</span><span class="detail-value ${priceColor}">$${currentPrice.toFixed(2)}</span></div>`;
+    
+    // P/L per contract for short positions (entry - current = profit)
+    const plPerContract = (pos.entryPrice - currentPrice) * 100;
+    const plTotal = plPerContract * contracts;
+    const plClass = plPerContract >= 0 ? 'positive' : 'negative';
+    plPerContractHTML = `<div class="detail-item"><span class="detail-label">P/L per Contract</span><span class="detail-value ${plClass}">${plPerContract >= 0 ? '+' : '-'}$${Math.abs(plPerContract).toFixed(2)}</span></div>`;
+  }
+
+  // Greeks — use real Finnhub data if available, else Black-Scholes
   let greeksHTML = '';
   const isOpen = !['rolled', 'closed', 'expiring_worthless', 'expired'].includes(pos.status) && dte > 0;
   if (isOpen && price > 0) {
-    const T = Math.max(dte, 0.01) / 365;
-    const iv = pos.iv || 0.35;
-    const g = calcGreeks(price, pos.strike, T, 0.05, iv, pos.type);
+    let g;
+    let greekSource = '';
+    if (optData && (optData.delta !== 0 || optData.theta !== 0)) {
+      // Real Greeks from Finnhub (negate for short positions)
+      g = { delta: -(optData.delta || 0), theta: -(optData.theta || 0), gamma: optData.gamma || 0 };
+      greekSource = ' · 🔴 Live';
+    } else {
+      const T = Math.max(dte, 0.01) / 365;
+      const iv = pos.iv || 0.35;
+      g = calcGreeks(price, pos.strike, T, 0.05, iv, pos.type);
+      greekSource = ' · Est';
+    }
+    const ivDisplay = optData && optData.iv ? `<div class="greek-item"><span class="greek-label">IV</span> <span class="greek-value">${optData.iv.toFixed(1)}%</span></div>` : '';
+    const volDisplay = optData && optData.volume ? `<div class="greek-item"><span class="greek-label">Vol</span> <span class="greek-value">${optData.volume.toLocaleString()}</span></div>` : '';
     greeksHTML = `
       <div class="greeks-row">
         <div class="greek-item"><span class="greek-label">Δ</span> <span class="greek-value">${g.delta.toFixed(3)}</span></div>
         <div class="greek-item"><span class="greek-label">Θ</span> <span class="greek-value">${g.theta > 0 ? '+' : ''}$${g.theta.toFixed(2)}/day</span></div>
+        ${ivDisplay}
+        ${volDisplay}
         <div class="greek-item"><span class="greek-label">DTE</span> <span class="greek-value">${dte}</span></div>
         <div class="greek-item"><span class="greek-label">Dist</span> <span class="greek-value ${distPct < 0 ? 'negative' : ''}">${distLabel}</span></div>
+        <span style="color: var(--text-muted); font-size: 0.75rem;">${greekSource}</span>
       </div>`;
   }
   
@@ -412,7 +447,9 @@ function renderCard(pos, prices) {
       <div class="position-details">
         <div class="detail-item"><span class="detail-label">Contracts</span><span class="detail-value">${contracts}</span></div>
         <div class="detail-item"><span class="detail-label">Entry Premium</span><span class="detail-value">$${pos.entryPrice.toFixed(2)}</span></div>
+        ${currentPriceHTML}
         <div class="detail-item"><span class="detail-label">Total Collected</span><span class="detail-value positive">${formatMoney(totalPremium)}</span></div>
+        ${plPerContractHTML}
         ${price > 0 ? `<div class="detail-item"><span class="detail-label">${pos.symbol} Price</span><span class="detail-value">$${price.toFixed(2)}</span></div>` : ''}
         ${plHTML}
         ${pos.closePrice ? `<div class="detail-item"><span class="detail-label">Close Price</span><span class="detail-value">$${pos.closePrice.toFixed(2)}</span></div>` : ''}
@@ -428,7 +465,7 @@ function renderDashboard() {
   if (!dataEl) return;
   
   const data = JSON.parse(dataEl.textContent);
-  const { positions, prices, lastUpdated } = data;
+  const { positions, prices, optionPrices, lastUpdated } = data;
   
   // Update time
   if (lastUpdated) {
@@ -478,19 +515,19 @@ function renderDashboard() {
   
   // Render active
   document.getElementById('active-positions').innerHTML = active.length > 0 
-    ? active.map(p => renderCard(p, prices)).join('')
+    ? active.map(p => renderCard(p, prices, optionPrices)).join('')
     : '<div style="color: var(--text-muted); text-align: center; padding: 40px;">No active positions</div>';
   
   // Render expiring/expired
   if (expiring.length > 0) {
     document.getElementById('expiring-section').classList.remove('hidden');
-    document.getElementById('expiring-grid').innerHTML = expiring.map(p => renderCard(p, prices)).join('');
+    document.getElementById('expiring-grid').innerHTML = expiring.map(p => renderCard(p, prices, optionPrices)).join('');
   }
   
   // Render closed/rolled
   if (closed.length > 0) {
     document.getElementById('closed-section').classList.remove('hidden');
-    document.getElementById('closed-grid').innerHTML = closed.map(p => renderCard(p, prices)).join('');
+    document.getElementById('closed-grid').innerHTML = closed.map(p => renderCard(p, prices, optionPrices)).join('');
   }
 }
 
@@ -512,7 +549,7 @@ document.addEventListener('DOMContentLoaded', renderDashboard);
 
 <!-- DATA BLOCK: Updated by callworks-update-active script -->
 <script id="positions-data" type="application/json">
-{"prices": {"AMZN": 210.64, "ARKK": 72.81, "GOOG": 318.09, "INTC": 48.82, "LMND": 73.07, "MSFT": 422.14, "NVDA": 188.82, "PLTR": 144.39, "TSLA": 420.31}, "positions": [{"symbol": "TSLA", "type": "call", "strike": 450, "expiration": "2026-02-13", "contracts": -11, "entryPrice": 0.44, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 484.0, "otmPct": 6.7, "dte": 3, "notes": "\u2705 6.7% OTM at $421.60, 3 DTE - let expire"}, {"symbol": "TSLA", "type": "call", "strike": 457.5, "expiration": "2026-02-13", "contracts": -75, "entryPrice": 0.25, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 1875.0, "otmPct": 8.5, "dte": 3, "notes": "\u2705 8.5% OTM at $421.60, 3 DTE - let expire"}, {"symbol": "NVDA", "type": "call", "strike": 200, "expiration": "2026-02-20", "contracts": -10, "entryPrice": 2.23, "entryDate": "2026-02-09", "status": "safe", "premiumCollected": 2230.0, "otmPct": 6.0, "dte": 10, "notes": "\u2705 6.0% OTM at $188.61, 10 DTE - comfortable buffer"}, {"symbol": "GOOG", "type": "call", "strike": 335, "expiration": "2026-04-17", "contracts": -6, "entryPrice": 6.03, "status": "hold", "otmPct": 6.3, "dte": 66, "notes": "\u2705 6.3% OTM at $315.18, 66 DTE - improved from 3.3%"}, {"symbol": "GOOG", "type": "call", "strike": 340, "expiration": "2026-06-18", "contracts": -5, "entryPrice": 6.23, "status": "hold", "otmPct": 7.9, "dte": 128, "notes": "\u2705 7.9% OTM at $315.18, 128 DTE - improved from 4.8%"}, {"symbol": "LMND", "type": "call", "strike": 92, "expiration": "2026-03-06", "contracts": -7, "entryPrice": 12.25, "status": "hold", "profitPct": 78.55, "otmPct": 27.7, "dte": 24, "notes": "\u2705 27.7% OTM at $72.07, 24 DTE"}, {"symbol": "LMND", "type": "call", "strike": 85, "expiration": "2026-02-13", "contracts": -2, "entryPrice": 0.45, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 90.0, "otmPct": 17.9, "dte": 3, "notes": "\u2705 17.9% OTM at $72.07, 3 DTE - let expire"}, {"symbol": "ARKK", "type": "call", "strike": 80, "expiration": "2026-02-20", "contracts": -16, "entryPrice": 0.16, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 256.0, "otmPct": 10.2, "dte": 10, "notes": "\u2705 10.2% OTM at $72.57, 10 DTE"}, {"symbol": "INTC", "type": "call", "strike": 55, "expiration": "2026-02-20", "contracts": -4, "entryPrice": 0.89, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 356.0, "otmPct": 13.5, "dte": 10, "notes": "\u2705 13.5% OTM at $48.44, 10 DTE - improved from 9.5%"}, {"symbol": "MSFT", "type": "call", "strike": 450, "expiration": "2026-02-20", "contracts": -1, "entryPrice": 0.48, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 48.0, "otmPct": 7.5, "dte": 10, "notes": "\u2705 7.5% OTM at $418.74, 10 DTE"}, {"symbol": "PLTR", "type": "call", "strike": 165, "expiration": "2026-02-13", "contracts": -2, "entryPrice": 0.08, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 16.0, "otmPct": 14.6, "dte": 3, "notes": "\u2705 14.6% OTM at $143.96, 3 DTE - let expire"}, {"symbol": "AMZN", "type": "put", "strike": 230, "expiration": "2026-03-20", "contracts": -1, "entryPrice": 21.74, "entryDate": "2026-02-09", "status": "danger", "premiumCollected": 2174.0, "otmPct": -10.2, "dte": 38, "notes": "\ud83d\udea8 ITM! -10.2% at $206.65, 38 DTE - assignment risk"}], "lastUpdated": "2026-02-10T07:05:33.555118"}
+{"prices": {"AMZN": 210.43, "ARKK": 73.1, "GOOG": 318.41, "INTC": 47.84, "LMND": 71.79, "MSFT": 420.6, "NVDA": 189.62, "PLTR": 141.22, "TSLA": 423.73}, "positions": [{"symbol": "TSLA", "type": "call", "strike": 450, "expiration": "2026-02-13", "contracts": -11, "entryPrice": 0.44, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 484.0, "otmPct": 6.1, "dte": 3, "notes": "\u2705 6.1% OTM at $424.25, 3 DTE - let expire"}, {"symbol": "TSLA", "type": "call", "strike": 457.5, "expiration": "2026-02-13", "contracts": -75, "entryPrice": 0.25, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 1875.0, "otmPct": 7.8, "dte": 3, "notes": "\u2705 7.8% OTM at $424.25, 3 DTE - let expire"}, {"symbol": "NVDA", "type": "call", "strike": 200, "expiration": "2026-02-20", "contracts": -10, "entryPrice": 2.23, "entryDate": "2026-02-09", "status": "safe", "premiumCollected": 2230.0, "otmPct": 5.2, "dte": 10, "notes": "\u2705 5.2% OTM at $190.05, 10 DTE - comfortable buffer"}, {"symbol": "GOOG", "type": "call", "strike": 335, "expiration": "2026-04-17", "contracts": -6, "entryPrice": 6.03, "status": "hold", "otmPct": 5.1, "dte": 66, "notes": "\u2705 5.1% OTM at $318.65, 66 DTE - rebounded from lows"}, {"symbol": "GOOG", "type": "call", "strike": 340, "expiration": "2026-06-18", "contracts": -5, "entryPrice": 6.23, "status": "hold", "otmPct": 6.7, "dte": 128, "notes": "\u2705 6.7% OTM at $318.65, 128 DTE - comfortable"}, {"symbol": "LMND", "type": "call", "strike": 92, "expiration": "2026-03-06", "contracts": -7, "entryPrice": 12.25, "status": "hold", "profitPct": 78.55, "otmPct": 27.4, "dte": 24, "notes": "\u2705 27.4% OTM at $72.22, 24 DTE - very safe"}, {"symbol": "LMND", "type": "call", "strike": 85, "expiration": "2026-02-13", "contracts": -2, "entryPrice": 0.45, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 90.0, "otmPct": 17.7, "dte": 3, "notes": "\u2705 17.7% OTM at $72.22, 3 DTE - let expire"}, {"symbol": "ARKK", "type": "call", "strike": 80, "expiration": "2026-02-20", "contracts": -16, "entryPrice": 0.16, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 256.0, "otmPct": 9.2, "dte": 10, "notes": "\u2705 9.2% OTM at $73.28, 10 DTE"}, {"symbol": "INTC", "type": "call", "strike": 55, "expiration": "2026-02-20", "contracts": -4, "entryPrice": 0.89, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 356.0, "otmPct": 14.2, "dte": 10, "notes": "\u2705 14.2% OTM at $48.18, 10 DTE - INTC down 4%, calls very safe"}, {"symbol": "MSFT", "type": "call", "strike": 450, "expiration": "2026-02-20", "contracts": -1, "entryPrice": 0.48, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 48.0, "otmPct": 6.5, "dte": 10, "notes": "\u2705 6.5% OTM at $422.53, 10 DTE - MSFT up 2.2% but still safe"}, {"symbol": "PLTR", "type": "call", "strike": 165, "expiration": "2026-02-13", "contracts": -2, "entryPrice": 0.08, "entryDate": "2026-02-09", "status": "hold", "premiumCollected": 16.0, "otmPct": 15.4, "dte": 3, "notes": "\u2705 15.4% OTM at $142.95, 3 DTE - let expire"}, {"symbol": "AMZN", "type": "put", "strike": 230, "expiration": "2026-03-20", "contracts": -1, "entryPrice": 21.74, "entryDate": "2026-02-09", "status": "warning", "premiumCollected": 2174.0, "otmPct": -8.2, "dte": 38, "notes": "\u26a0\ufe0f ITM by 8.2% at $211.11, 38 DTE - AMZN recovered +1.15%, improved from -10.2%"}], "optionPrices": {"TSLA_450_2026-02-13_call": {"bid": 0.46, "ask": 0.47, "last": 0.46, "iv": 4453.0, "delta": 0.0564, "gamma": 0.0058, "theta": -0.2784, "vega": 0.0496, "volume": 10084, "oi": 17825}, "TSLA_457.5_2026-02-13_call": {"bid": 0.21, "ask": 0.23, "last": 0.24, "iv": 4558.0, "delta": 0.0291, "gamma": 0.0033, "theta": -0.1664, "vega": 0.029, "volume": 3148, "oi": 478}, "NVDA_200_2026-02-20_call": {"bid": 1.78, "ask": 1.83, "last": 1.8, "iv": 3934.0, "delta": 0.2426, "gamma": 0.0241, "theta": -0.1889, "vega": 0.1032, "volume": 38491, "oi": 96934}, "GOOG_335_2026-04-17_call": {"bid": 13.35, "ask": 13.55, "last": 13.55, "iv": 3113.0, "delta": 0.4493, "gamma": 0.0091, "theta": -0.1401, "vega": 0.5497, "volume": 133, "oi": 2352}, "GOOG_340_2026-06-18_call": {"bid": 21, "ask": 21.25, "last": 20.91, "iv": 3391.0, "delta": 0.4708, "gamma": 0.0061, "theta": -0.1129, "vega": 0.7666, "volume": 135, "oi": 4411}, "LMND_92_2026-03-06_call": {"bid": 2.3, "ask": 4, "last": 3.14, "iv": 11565.0, "delta": 0.2696, "gamma": 0.015, "theta": -0.1473, "vega": 0.063, "volume": 1, "oi": 14}, "LMND_85_2026-02-13_call": {"bid": 0.1, "ask": 0.35, "last": 0.39, "iv": 9724.0, "delta": 0.0712, "gamma": 0.0183, "theta": -0.1265, "vega": 0.0104, "volume": 76, "oi": 130}, "ARKK_80_2026-02-20_call": {"bid": 0.1, "ask": 0.26, "last": 0.22, "iv": 4159.0, "delta": 0.0928, "gamma": 0.0318, "theta": -0.0402, "vega": 0.0209, "volume": 516, "oi": 10614}, "INTC_55_2026-02-20_call": {"bid": 0.72, "ask": 0.77, "last": 0.75, "iv": 6620.0, "delta": 0.2347, "gamma": 0.0532, "theta": -0.0814, "vega": 0.0268, "volume": 13617, "oi": 32172}, "MSFT_450_2026-02-20_call": {"bid": 0.44, "ask": 0.46, "last": 0.47, "iv": 2915.0, "delta": 0.0521, "gamma": 0.0051, "theta": -0.1029, "vega": 0.0765, "volume": 2828, "oi": 16105}, "PLTR_165_2026-02-13_call": {"bid": 0.05, "ask": 0.06, "last": 0.05, "iv": 6242.0, "delta": 0.0154, "gamma": 0.0041, "theta": -0.0453, "vega": 0.0058, "volume": 11047, "oi": 5244}, "AMZN_230_2026-03-20_put": {"bid": 22.25, "ask": 22.9, "last": 22.27, "iv": 2812.0, "delta": -0.8504, "gamma": 0.0126, "theta": -0.0451, "vega": 0.1558, "volume": 454, "oi": 7413}}, "lastUpdated": "2026-02-10T08:47:00.014605"}
 </script>
 
 </body>
