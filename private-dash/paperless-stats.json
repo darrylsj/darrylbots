@@ -1,7 +1,7 @@
 {
-  "totalProcessed": 36,
+  "totalProcessed": 39,
   "byType": {
-    "archive": 16,
+    "archive": 18,
     "financial/investments": 2,
     "legal/contracts": 1,
     "medical/darryl": 2,
@@ -13,10 +13,12 @@
     "tax/deductions": 1,
     "tax/income": 2,
     "receipt/2026": 2,
-    "financial/bills": 1
+    "financial/bills": 1,
+    "financial/banking": 1
   },
   "byDay": {
-    "2026-02-08": 36
+    "2026-02-08": 36,
+    "2026-02-09": 3
   },
   "byEntity": {
     "Unclassified": 11,
@@ -36,16 +38,43 @@
     "Vanguard": 1,
     "Internal Revenue Service": 1,
     "Staples": 1,
-    "ADT": 1
+    "ADT": 1,
+    "null": 1,
+    "unknown": 1,
+    "TECHNOLOGY CREDIT UNION": 1
   },
   "byProperty": {
-    "Edinburgh": 2,
+    "Edinburgh": 3,
     "1 King West, Toronto": 1,
     "Tamarac, FL": 1
   },
   "taxDocCount": 10,
   "hsaReimbursable": 5,
   "recentDocs": [
+    {
+      "name": "2026-02-05_financial-banking_technology-credit-union_nsf-notice",
+      "type": "financial/banking",
+      "entity": "TECHNOLOGY CREDIT UNION",
+      "summary": "Technology Credit Union NSF notice for Darryl Sladden's account.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T20:17:41.652132"
+    },
+    {
+      "name": "2026-02-09_unclassified_02092026_003_ocr.pdf",
+      "type": "archive",
+      "entity": "unknown",
+      "summary": "Unclassified document: 02092026_003_OCR.pdf",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T20:17:37.220325"
+    },
+    {
+      "name": "unknown-date_archive_unclassified_no-text",
+      "type": "archive",
+      "entity": null,
+      "summary": "Unclassified document due to no extracted text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T20:17:27.975374"
+    },
     {
       "name": "2026-01-04_financial-bills_adt_security-bill-edinburgh",
       "type": "financial/bills",
@@ -340,6 +369,6 @@
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-08T21:24:06.980378",
-  "lastScanRun": "2026-02-08T21:24:07.013259"
+  "lastProcessed": "2026-02-09T20:17:41.652118",
+  "lastScanRun": "2026-02-09T20:17:41.657407"
 }
