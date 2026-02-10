@@ -660,5 +660,255 @@
       "technology-credit-union",
       "edinburgh"
     ]
+  },
+  {
+    "id": "doc_0040",
+    "originalName": "02092026.pdf",
+    "filename": "2026-02-09_archive_unknown_no-text-content.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "unknown",
+    "person": "none",
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:02:46.424028+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Scanned document with no extractable text content.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0041",
+    "originalName": "02092026_001.pdf",
+    "filename": "2026-02-09_archive_unclassified.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": null,
+    "person": null,
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:02:51.684360+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Unclassified document with no extracted text.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0042",
+    "originalName": "02092026_001_OCR.pdf",
+    "filename": "2026-01-28_tax-deductions_st-raymond-catholic-church_charitable-giving-2025.pdf",
+    "path": "Tax/2025/Deductions",
+    "type": "tax/deductions",
+    "entity": "St. Raymond Catholic Church",
+    "person": "Family",
+    "property": "Edinburgh",
+    "date": "2026-01-28",
+    "scanned": "2026-02-10T05:02:56.616882+00:00",
+    "taxRelevant": true,
+    "taxCategory": "Charitable Contribution",
+    "summary": "Summary of parish giving for 2025 from St. Raymond Catholic Church.",
+    "tags": [
+      "tax-deductions",
+      "tax-2026",
+      "st.-raymond-catholic-church",
+      "edinburgh"
+    ]
+  },
+  {
+    "id": "doc_0043",
+    "originalName": "02092026_002.pdf",
+    "filename": "2026-02-09_archive_unclassified-document.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:03:00.352216+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Unclassified document with no extracted text available for analysis.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0044",
+    "originalName": "02092026_002_OCR.pdf",
+    "filename": "2025-01-01_tax-income_california-franchise-tax-board_1099-g-state-income-tax-refund.pdf",
+    "path": "Tax/2025/Income",
+    "type": "tax/income",
+    "entity": "California Franchise Tax Board",
+    "person": "Family",
+    "property": "none",
+    "date": "2025-01-01",
+    "scanned": "2026-02-10T05:03:07.811848+00:00",
+    "taxRelevant": true,
+    "taxCategory": "Taxable refunds of state and local income taxes",
+    "summary": "California Franchise Tax Board Form 1099-G for state income tax refund for tax year 2024.",
+    "tags": [
+      "tax-income",
+      "tax-2025",
+      "california-franchise-tax-board"
+    ]
+  },
+  {
+    "id": "doc_0045",
+    "originalName": "02092026_004.pdf",
+    "filename": "2026-02-09_archive_null_unreadable-document.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": null,
+    "person": null,
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:03:12.901447+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Unreadable document with no extracted text.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0046",
+    "originalName": "02092026_004_OCR.pdf",
+    "filename": "2025-12-31_tax-income_chevron-usa-inc_w2-wage-tax-statement-melissa.pdf",
+    "path": "Tax/2025/Income",
+    "type": "tax/income",
+    "entity": "Chevron USA Inc",
+    "person": "Melissa",
+    "property": "none",
+    "date": "2025-12-31",
+    "scanned": "2026-02-10T05:03:17.549248+00:00",
+    "taxRelevant": true,
+    "taxCategory": "Wages and Salaries",
+    "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc.",
+    "tags": [
+      "tax-income",
+      "tax-2025",
+      "chevron-usa-inc"
+    ]
+  },
+  {
+    "id": "doc_0047",
+    "originalName": "02092026_005.pdf",
+    "filename": "2026-02-09_archive_unknown_unclassified-document.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "unknown",
+    "person": "Family",
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:03:24.951301+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Unclassified document with no extracted text.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0048",
+    "originalName": "02092026_005_OCR.pdf",
+    "filename": "2025-12-31_tax-income_box-inc_w2-darryl-sladden.pdf",
+    "path": "Tax/2025/Income",
+    "type": "tax/income",
+    "entity": "BOX INC",
+    "person": "Darryl",
+    "property": "edinburgh",
+    "date": "2025-12-31",
+    "scanned": "2026-02-10T05:03:29.044225+00:00",
+    "taxRelevant": true,
+    "taxCategory": null,
+    "summary": "Darryl Sladden's 2025 W-2 from BOX INC",
+    "tags": [
+      "tax-income",
+      "tax-2025",
+      "box-inc",
+      "edinburgh"
+    ]
+  },
+  {
+    "id": "doc_0049",
+    "originalName": "02092026_006.pdf",
+    "filename": "2026-02-09_archive_unknown_empty-document.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": "unknown",
+    "person": null,
+    "property": "none",
+    "date": "2026-02-09",
+    "scanned": "2026-02-10T05:03:32.316770+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Empty document content, unable to classify.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0050",
+    "originalName": "02092026_006_OCR.pdf",
+    "filename": "2024-09-12_tax-rental-walnutcreek_contracostacounty_propertytaxbill.pdf",
+    "path": "Tax/2025/Rental \u2014 WalnutCreek",
+    "type": "tax/rental-walnutcreek",
+    "entity": "Contra Costa County Treasurer-Tax Collector",
+    "person": "Darryl|Melissa",
+    "property": "WalnutCreek",
+    "date": "2024-09-12",
+    "scanned": "2026-02-10T05:03:36.230241+00:00",
+    "taxRelevant": true,
+    "taxCategory": "Schedule E",
+    "summary": "Contra Costa County Secured Property Tax Bill for Walnut Creek rental property.",
+    "tags": [
+      "tax-rental-walnutcreek",
+      "tax-2024",
+      "contra-costa-county-treasurer-tax-collector",
+      "walnutcreek"
+    ]
+  },
+  {
+    "id": "doc_0051",
+    "originalName": "02092026_007.pdf",
+    "filename": "2026-02-09_archive_null_no-extractable-text.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": null,
+    "person": null,
+    "property": "none",
+    "date": null,
+    "scanned": "2026-02-10T05:03:40.718696+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Scanned document with no extractable text.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0052",
+    "originalName": "02092026_007_OCR.pdf",
+    "filename": "2024-09-12_property-edinburgh_contra-costa-county_secured-property-tax-bill.pdf",
+    "path": "Property/Edinburgh",
+    "type": "property/edinburgh",
+    "entity": "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR",
+    "person": "Family",
+    "property": "Edinburgh",
+    "date": "2024-09-12",
+    "scanned": "2026-02-10T05:03:46.230269+00:00",
+    "taxRelevant": true,
+    "taxCategory": "Property Tax",
+    "summary": "Contra Costa County Secured Property Tax Bill for 520 Edinburgh Circle",
+    "tags": [
+      "property-edinburgh",
+      "tax-2024",
+      "contra-costa-county-treasurer-tax-collector",
+      "edinburgh"
+    ]
   }
 ]

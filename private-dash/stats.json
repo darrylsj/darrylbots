@@ -1,7 +1,7 @@
 {
-  "totalProcessed": 39,
+  "totalProcessed": 52,
   "byType": {
-    "archive": 18,
+    "archive": 25,
     "financial/investments": 2,
     "legal/contracts": 1,
     "medical/darryl": 2,
@@ -10,15 +10,17 @@
     "tax/rental-florida": 1,
     "tax/rental-toronto": 1,
     "vet/domino": 1,
-    "tax/deductions": 1,
-    "tax/income": 2,
+    "tax/deductions": 2,
+    "tax/income": 5,
     "receipt/2026": 2,
     "financial/bills": 1,
-    "financial/banking": 1
+    "financial/banking": 1,
+    "tax/rental-walnutcreek": 1,
+    "property/edinburgh": 1
   },
   "byDay": {
     "2026-02-08": 36,
-    "2026-02-09": 3
+    "2026-02-09": 16
   },
   "byEntity": {
     "Unclassified": 11,
@@ -40,17 +42,131 @@
     "Staples": 1,
     "ADT": 1,
     "null": 1,
-    "unknown": 1,
-    "TECHNOLOGY CREDIT UNION": 1
+    "unknown": 4,
+    "TECHNOLOGY CREDIT UNION": 1,
+    "null": 3,
+    "St. Raymond Catholic Church": 1,
+    "": 1,
+    "California Franchise Tax Board": 1,
+    "Chevron USA Inc": 1,
+    "BOX INC": 1,
+    "Contra Costa County Treasurer-Tax Collector": 1,
+    "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR": 1
   },
   "byProperty": {
-    "Edinburgh": 3,
+    "Edinburgh": 5,
     "1 King West, Toronto": 1,
-    "Tamarac, FL": 1
+    "Tamarac, FL": 1,
+    "edinburgh": 1,
+    "WalnutCreek": 1
   },
-  "taxDocCount": 10,
+  "taxDocCount": 16,
   "hsaReimbursable": 5,
   "recentDocs": [
+    {
+      "name": "2024-09-12_property-edinburgh_contra-costa-county_secured-property-tax-bill",
+      "type": "property/edinburgh",
+      "entity": "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR",
+      "summary": "Contra Costa County Secured Property Tax Bill for 520 Edinburgh Circle",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:03:46.230358"
+    },
+    {
+      "name": "2026-02-09_archive_null_no-extractable-text",
+      "type": "archive",
+      "entity": null,
+      "summary": "Scanned document with no extractable text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:03:40.718904"
+    },
+    {
+      "name": "2024-09-12_tax-rental-walnutcreek_contracostacounty_propertytaxbill",
+      "type": "tax/rental-walnutcreek",
+      "entity": "Contra Costa County Treasurer-Tax Collector",
+      "summary": "Contra Costa County Secured Property Tax Bill for Walnut Creek rental property.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:03:36.745080"
+    },
+    {
+      "name": "2026-02-09_archive_unknown_empty-document",
+      "type": "archive",
+      "entity": "unknown",
+      "summary": "Empty document content, unable to classify.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:03:32.316879"
+    },
+    {
+      "name": "2025-12-31_tax-income_box-inc_w2-darryl-sladden",
+      "type": "tax/income",
+      "entity": "BOX INC",
+      "summary": "Darryl Sladden's 2025 W-2 from BOX INC",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:03:29.044454"
+    },
+    {
+      "name": "2026-02-09_archive_unknown_unclassified-document",
+      "type": "archive",
+      "entity": "unknown",
+      "summary": "Unclassified document with no extracted text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:03:24.951411"
+    },
+    {
+      "name": "2025-12-31_tax-income_chevron-usa-inc_w2-wage-tax-statement-melissa",
+      "type": "tax/income",
+      "entity": "Chevron USA Inc",
+      "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:03:17.549349"
+    },
+    {
+      "name": "2026-02-09_archive_null_unreadable-document",
+      "type": "archive",
+      "entity": null,
+      "summary": "Unreadable document with no extracted text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:03:12.901573"
+    },
+    {
+      "name": "2025-01-01_tax-income_california-franchise-tax-board_1099-g-state-income-tax-refund",
+      "type": "tax/income",
+      "entity": "California Franchise Tax Board",
+      "summary": "California Franchise Tax Board Form 1099-G for state income tax refund for tax year 2024.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:03:07.811950"
+    },
+    {
+      "name": "2026-02-09_archive_unclassified-document",
+      "type": "archive",
+      "entity": "",
+      "summary": "Unclassified document with no extracted text available for analysis.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:03:00.352270"
+    },
+    {
+      "name": "2026-01-28_tax-deductions_st-raymond-catholic-church_charitable-giving-2025",
+      "type": "tax/deductions",
+      "entity": "St. Raymond Catholic Church",
+      "summary": "Summary of parish giving for 2025 from St. Raymond Catholic Church.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:02:56.617033"
+    },
+    {
+      "name": "2026-02-09_archive_unclassified",
+      "type": "archive",
+      "entity": null,
+      "summary": "Unclassified document with no extracted text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:02:51.684513"
+    },
+    {
+      "name": "2026-02-09_archive_unknown_no-text-content",
+      "type": "archive",
+      "entity": "unknown",
+      "summary": "Scanned document with no extractable text content.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:02:46.424147"
+    },
     {
       "name": "2026-02-05_financial-banking_technology-credit-union_nsf-notice",
       "type": "financial/banking",
@@ -350,25 +466,9 @@
       "summary": "Blank Or Unreadable",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:57:05.932261"
-    },
-    {
-      "name": "undated_archive_language-assistance-notice.pdf",
-      "type": "archive",
-      "entity": "Language Assistance Notice",
-      "summary": "Undated_Archive_Language Assistance Notice",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:24:25.633663"
-    },
-    {
-      "name": "2026-02-08_unclassified_02082026_american-express-p.o.-box-981540-el-paso.tx-79998.pdf",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "American Express P.O. Box 981540 El Paso.Tx 79998",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:16:00.976546"
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-09T20:17:41.652118",
-  "lastScanRun": "2026-02-09T20:17:41.657407"
+  "lastProcessed": "2026-02-09T21:03:46.230347",
+  "lastScanRun": "2026-02-09T21:03:46.235993"
 }
