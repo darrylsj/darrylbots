@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="callworks-favicon.svg">
+  <title>Operations Centre | JAMES</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%); min-height: 100vh; padding: 24px; color: #e0e0e0; }
+    header { text-align: center; margin-bottom: 32px; }
+    header h1 { font-size: 2.2rem; color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.4); margin-bottom: 4px; }
+    header p { color: #888; font-size: 0.95rem; }
+    .section-title { font-size: 1.3rem; color: #fff; margin: 28px 0 14px 0; padding-bottom: 6px; border-bottom: 2px solid rgba(255, 215, 0, 0.3); }
+    .quick-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 8px; }
+    .quick-link { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: #e0e0e0; transition: transform 0.15s, box-shadow 0.15s; }
+    .quick-link:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); border-color: rgba(255,215,0,0.3); }
+    .quick-link .icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .quick-link .name { font-weight: 600; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    th { text-align: left; padding: 10px 12px; color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    td { padding: 8px 12px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    tr:hover { background: rgba(255,255,255,0.02); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .badge-active { background: rgba(0,255,136,0.2); color: #00ff88; }
+    .badge-internal { background: rgba(100,149,237,0.2); color: #6495ed; }
+    .badge-static { background: rgba(170,136,255,0.2); color: #aa88ff; }
+    .badge-idle { background: rgba(255,255,255,0.1); color: #888; }
+    .badge-ok { background: rgba(0,255,136,0.2); color: #00ff88; }
+    .badge-error { background: rgba(255,68,68,0.2); color: #ff4444; }
+    .integrations-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .int-badge { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 6px 12px; font-size: 0.8rem; }
+    .mono { font-family: 'SF Mono', Monaco, monospace; font-size: 0.8rem; color: #aaa; }
+    .infra-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #666; font-size: 0.85rem; }
+    footer a { color: #ffd700; text-decoration: none; }
+    @media (max-width: 768px) { body { padding: 14px; } .quick-links { grid-template-columns: repeat(2, 1fr); } header h1 { font-size: 1.6rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ Operations Centre</h1>
+    <p>JAMES Operations Dashboard &bull; Last updated: Feb 9, 2026 1:20 PM PST</p>
+  </header>
+
+  <h2 class="section-title">🔗 Dashboards</h2>
+  <div class="quick-links">
+    <a class="quick-link" href="callworks.html"><div class="icon">📈</div><div class="name">CallWorks</div></a>
+    <a class="quick-link" href="callworks-history.html"><div class="icon">📊</div><div class="name">History (2025)</div></a>
+    <a class="quick-link" href="callworks-active.html"><div class="icon">💹</div><div class="name">Active Positions</div></a>
+    <a class="quick-link" href="api-dashboard.html"><div class="icon">🔑</div><div class="name">API Dashboard</div></a>
+    <a class="quick-link" href="paperless-dashboard.html"><div class="icon">📄</div><div class="name">Paperless</div></a>
+    <a class="quick-link" href="https://unconjectural-myrna-deeper.ngrok-free.dev" target="_blank"><div class="icon">🖥️</div><div class="name">Claw Dash ↗</div></a>
+    <a class="quick-link" href="https://www.moltbook.com/u/JAMES_Sladden" target="_blank"><div class="icon">🦞</div><div class="name">Moltbook ↗</div></a>
+    <a class="quick-link" href="https://platform.claude.com/usage" target="_blank"><div class="icon">🧠</div><div class="name">Anthropic ↗</div></a>
+  </div>
+
+  <h2 class="section-title">🌐 Port Map &amp; Tunnels</h2>
+  <table>
+    <thead><tr><th>Service</th><th>Port</th><th>Remote URL</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>📞 Voice Server (Twilio + Deepgram Draco)</td><td class="mono">4100</td><td class="mono">james-dash.ngrok.app</td><td><span class="badge badge-active">Live</span></td></tr>
+      <tr><td>🖥️ Claw Dash Proxy</td><td class="mono">8890</td><td class="mono">unconjectural-myrna-deeper.ngrok-free.dev</td><td><span class="badge badge-active">Live</span></td></tr>
+      <tr><td>📊 Claw Dash API (Glances proxy)</td><td class="mono">8889</td><td>via proxy</td><td><span class="badge badge-internal">Internal</span></td></tr>
+      <tr><td>🌐 Claw Dash HTML</td><td class="mono">8888</td><td>via proxy</td><td><span class="badge badge-internal">Internal</span></td></tr>
+      <tr><td>📈 Glances (System Metrics)</td><td class="mono">61208</td><td>—</td><td><span class="badge badge-internal">Internal</span></td></tr>
+      <tr><td>🔑 Token API</td><td class="mono">4202</td><td>—</td><td><span class="badge badge-internal">Internal</span></td></tr>
+      <tr><td>🔧 ngrok Dashboard</td><td class="mono">4040</td><td>—</td><td><span class="badge badge-internal">Internal</span></td></tr>
+      <tr><td>📈 CallWorks (all 3 pages)</td><td>—</td><td class="mono">darrylbots.com/private-dash/</td><td><span class="badge badge-static">Cloudflare</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">⏰ Cron Jobs (42 active)</h2>
+  <div style="overflow-x: auto;">
+  <table>
+    <thead><tr><th>Name</th><th>Schedule</th><th>Model</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">🌙 NIGHTLY (2-3 AM)</td></tr>
+      <tr><td>📚 Fat Astronauts Book Writer</td><td class="mono">2 AM daily</td><td>DeepSeek R1</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>Self-Improvement Cycle</td><td class="mono">2 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📦 Daily Box.com Backup</td><td class="mono">2 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📜 Jamestown Logbook</td><td class="mono">2:30 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-idle">New</span></td></tr>
+      <tr><td>Daily Auto-Updates (Core)</td><td class="mono">3 AM daily</td><td>System</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📧 Email Archive Organizer</td><td class="mono">3 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">☀️ MORNING (6-10 AM)</td></tr>
+      <tr><td>☀️ Solar Production Logger</td><td class="mono">hourly 6a-8p</td><td>System</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📉 Theta Dashboard Update</td><td class="mono">*/15m 6a-1p M-F</td><td>Kimi K2.5</td><td><span class="badge badge-error">Error</span></td></tr>
+      <tr><td>📈 CallWorks Active Prices</td><td class="mono">*/5m 6a-1p M-F</td><td>Gemini Flash</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📈 TSLA Covered Call Scan</td><td class="mono">6:10a Mon/Wed</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>Daily Dashboard Audit</td><td class="mono">6 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>Robotics Industry Daily</td><td class="mono">6:20a daily</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>⚠️ Options Expiration Alert</td><td class="mono">6:30a Wed/Fri</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>☀️ Daily Morning Digest</td><td class="mono">6:30a daily</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>🚀 Daily Elon Summary</td><td class="mono">6:45a daily</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>Stock Monitor (GOOG/CVX/TSLA)</td><td class="mono">hourly 7a-1p M-F</td><td>System</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>📚 Grade Report (PowerSchool)</td><td class="mono">7:05a Mon</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🍽️ Lunch Reminder</td><td class="mono">7:10a Tu/We/Th</td><td>Kimi K2.5</td><td><span class="badge badge-error">WA Error</span></td></tr>
+      <tr><td>🍽️ Lunch Auto-Order</td><td class="mono">7:45a Tu/We/Th</td><td>Kimi K2.5</td><td><span class="badge badge-error">WA Error</span></td></tr>
+      <tr><td>🦞 Moltbook Heartbeat</td><td class="mono">8a/12p/4p/8p</td><td>Kimi K2.5</td><td><span class="badge badge-error">Timeout</span></td></tr>
+      <tr><td>💳 Subscription Tracker</td><td class="mono">8:20a Mon</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">🏢 MIDDAY (9 AM - 2 PM)</td></tr>
+      <tr><td>☁️ Cloudflare Domain Status</td><td class="mono">9 AM daily</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>WhatsApp Monitor</td><td class="mono">9:10a/6:10p</td><td>Kimi K2.5</td><td><span class="badge badge-error">Timeout</span></td></tr>
+      <tr><td>LinkedIn + PG&E Monitor</td><td class="mono">9:20a M-F ×4</td><td>Gemini Flash</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>Weekly Tech Spend Scan</td><td class="mono">9:30a Mon</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📊 Weekly Anthropic Usage</td><td class="mono">9:40a Mon</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📊 Weekly xAI Usage</td><td class="mono">9:50a Mon</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📚 Fat Astronauts Reminder</td><td class="mono">10 AM daily</td><td>DeepSeek</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📰 DarrylBots News Update</td><td class="mono">11 AM daily</td><td>DeepSeek R1</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📊 Options Portfolio Monitor</td><td class="mono">1:30p Tu-Fri</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">🌙 EVENING (5-10 PM)</td></tr>
+      <tr><td>📰 Daily Reddit Digest</td><td class="mono">5p M-F</td><td>Kimi K2.5</td><td><span class="badge badge-error">Timeout</span></td></tr>
+      <tr><td>🏠 Home Status Check</td><td class="mono">8p daily</td><td>System</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>Dashboard Update (API+Tasks)</td><td class="mono">every 2h</td><td>Kimi K2.5</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>🔌 Tesla Charging (Off-Peak)</td><td class="mono">9p daily</td><td>System</td><td><span class="badge badge-ok">OK</span></td></tr>
+      <tr><td>🦞 Moltbook Daily Reflection</td><td class="mono">9p daily</td><td>Kimi K2.5</td><td><span class="badge badge-error">Timeout</span></td></tr>
+      <tr><td>🤖 Robot Gallery Image Gen</td><td class="mono">daily</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">📅 WEEKLY & MONTHLY</td></tr>
+      <tr><td>🎪 Danville Family Events</td><td class="mono">Sun 9a</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📚 Fat Astronauts Editor</td><td class="mono">Sun 10a</td><td>DeepSeek R1</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🏠 Rental Expense Audit ×2</td><td class="mono">Sun 10a</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>📊 Weekly Earnings Preview</td><td class="mono">Sun 6p</td><td>Kimi K2.5</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🏫 St. Isidore Calendar Sync</td><td class="mono">1st of month 8a</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>Stessa Monthly Export</td><td class="mono">1st of month 9a</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr style="background:rgba(255,255,255,0.02);"><td colspan="4" style="color:#888;font-weight:600;font-size:0.75rem;letter-spacing:1px;">🎂 ONE-SHOTS & BIRTHDAYS</td></tr>
+      <tr><td>🚨 LMND Earnings — Close Positions</td><td class="mono">Feb 18</td><td>System</td><td><span class="badge badge-active">Pending</span></td></tr>
+      <tr><td>🎂 Darryl (Mar 14)</td><td class="mono">Mar 11</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🎂 Stuti Tandon (Mar 20)</td><td class="mono">Mar 20</td><td>Opus 4.6</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🎂 Nicholas (May 20)</td><td class="mono">May 17</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🎂 Olivia (Nov 26)</td><td class="mono">Nov 23</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+      <tr><td>🎂 Melissa (Dec 10)</td><td class="mono">Dec 7</td><td>System</td><td><span class="badge badge-idle">Idle</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="color: #666; font-size: 0.8rem; margin-top: -8px;">42 jobs total · 28 use FREE models (Kimi K2.5/DeepSeek) · 2 use Gemini Flash · 1 uses Opus · 11 use System events</p>
+
+  <h2 class="section-title">🔌 Active Integrations (22)</h2>
+  <div class="integrations-grid">
+    <div class="int-badge">🧠 Anthropic (Opus 4.6)</div>
+    <div class="int-badge">🟢 NVIDIA NIM (Kimi K2.5)</div>
+    <div class="int-badge">💎 Gemini Flash</div>
+    <div class="int-badge">🌊 DeepSeek R1</div>
+    <div class="int-badge">🎙️ Deepgram (Draco TTS)</div>
+    <div class="int-badge">🔊 ElevenLabs (George)</div>
+    <div class="int-badge">📞 Twilio (Voice+SMS)</div>
+    <div class="int-badge">📈 Finnhub ($50/mo)</div>
+    <div class="int-badge">📧 Google Workspace</div>
+    <div class="int-badge">🌡️ Nest (12 devices)</div>
+    <div class="int-badge">🔋 Powerwall 3</div>
+    <div class="int-badge">💧 Flume Water</div>
+    <div class="int-badge" style="border-color: rgba(255,170,0,0.4); color: #ffaa00;">📺 SmartThings (OAuth needed)</div>
+    <div class="int-badge">🚗 Tessie (Blu)</div>
+    <div class="int-badge">🏊 iAqualink</div>
+    <div class="int-badge">🅧 X/Twitter</div>
+    <div class="int-badge">💬 WhatsApp</div>
+    <div class="int-badge">🔍 Brave Search</div>
+    <div class="int-badge">🅧 Grok (X search)</div>
+    <div class="int-badge">📍 iCloud Find My</div>
+    <div class="int-badge">📧 AgentMail</div>
+    <div class="int-badge">📚 PowerSchool</div>
+    <div class="int-badge">🔄 OpenRouter</div>
+  </div>
+
+  <h2 class="section-title">🏗️ Infrastructure Stack</h2>
+  <div class="infra-card">
+    <table style="border: none;">
+      <tr><td style="color: #aa88ff; font-weight: 600; border: none;">☁️ Cloudflare</td><td style="border: none;">→ darrylbots.com — CallWorks, API Dashboard, Paperless, Operations Centre (static HTML)</td></tr>
+      <tr><td style="color: #00ff88; font-weight: 600; border: none;">🔒 ngrok (2 tunnels)</td><td style="border: none;">→ james-dash.ngrok.app (voice:4100) + free tunnel (claw-dash:8890, auth: darryl/Theta)</td></tr>
+      <tr><td style="color: #ffd700; font-weight: 600; border: none;">⚙️ LaunchD Services</td><td style="border: none;">→ Voice server, Glances, ngrok (auto-start on boot)</td></tr>
+      <tr><td style="color: #60a5fa; font-weight: 600; border: none;">🖥️ Local Stack</td><td style="border: none;">→ Glances (61208) → API Server (8889) → Proxy (8890) → ngrok</td></tr>
+      <tr><td style="color: #f472b6; font-weight: 600; border: none;">🤖 OpenClaw</td><td style="border: none;">→ v2026.2.9 • Opus 4.6 main + Gemini Pro fallback • 46 crons • 22 skills • Heartbeat every 30m</td></tr>
+    </table>
+  </div>
+
+  <footer>
+    <nav style="margin-bottom: 16px; font-size: 0.85rem;">
+      <a href="index.html" style="color: #888; text-decoration: none; margin-right: 16px;">🏠 Command Centre</a>
+      <span style="color: #ffd700; font-weight: 600; margin-right: 16px;">📊 Operations</span>
+      <a href="callworks.html" style="color: #888; text-decoration: none; margin-right: 16px;">📞 CallWorks</a>
+      <a href="evolution.html" style="color: #888; text-decoration: none; margin-right: 16px;">🌆 Jamestown</a>
+      <a href="logbook.html" style="color: #888; text-decoration: none; margin-right: 16px;">📜 Logbook</a>
+      <a href="vc-dashboard.html" style="color: #888; text-decoration: none; margin-right: 16px;">💼 VC Portfolio</a>
+      <a href="api-dashboard.html" style="color: #888; text-decoration: none;">📈 API Costs</a>
+    </nav>
+    <p>Built by JAMES ⚡ | <a href="../">DarrylBots.com</a></p>
+    <p style="margin-top: 6px; font-size: 0.75rem;">Replaced Mission Control (Next.js/Convex) — static HTML, zero maintenance</p>
+  </footer>
+</body>
+</html>
