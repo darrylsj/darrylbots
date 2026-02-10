@@ -164,6 +164,53 @@
       margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
       text-align: center; color: var(--text-muted); font-size: 0.8rem;
     }
+
+    /* ── Mobile Responsive ── */
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      header { gap: 10px; margin-bottom: 14px; padding-bottom: 14px; }
+      .logo { font-size: 1.2rem; }
+      .subtitle { font-size: 0.7rem; }
+      nav { display: flex; flex-wrap: wrap; gap: 6px 0; width: 100%; }
+      nav a { margin-left: 0; margin-right: 14px; font-size: 0.78rem; padding: 4px 0; }
+      .theme-toggle { padding: 8px 14px; font-size: 0.8rem; }
+
+      .stats-bar { gap: 8px; }
+      .stat { padding: 8px 12px; gap: 6px; min-width: 100px; flex: 1 1 calc(33% - 8px); }
+      .stat-icon { font-size: 1.1rem; }
+      .stat-label { font-size: 0.6rem; }
+      .stat-value { font-size: 0.9rem; }
+
+      .city-wrapper { border-radius: 10px; margin-bottom: 14px; }
+      .city-date-label { font-size: 0.8rem; padding: 6px 14px; top: 10px; }
+      .city-population { font-size: 0.65rem; padding: 5px 10px; top: 10px; right: 8px; }
+
+      .slider-container { padding: 14px 16px; margin-bottom: 14px; border-radius: 10px; }
+      .slider-header { margin-bottom: 10px; }
+      .slider-title { font-size: 0.7rem; }
+      .play-btn { padding: 10px 20px; font-size: 0.85rem; min-height: 44px; border-radius: 8px; }
+      #timeline-slider { height: 10px; }
+      #timeline-slider::-webkit-slider-thumb { width: 28px; height: 28px; }
+      .slider-labels { font-size: 0.55rem; margin-top: 6px; }
+
+      .event-panel { gap: 14px; }
+      .event-log { padding: 14px; border-radius: 10px; }
+      .event-log h3 { font-size: 0.85rem; }
+      .event-item { font-size: 0.8rem; padding: 6px 0; }
+
+      .version-table h3 { font-size: 0.85rem; }
+      .version-row { grid-template-columns: 85px 55px 1fr; gap: 8px; font-size: 0.75rem; }
+      .version-row .feature { font-size: 0.7rem; }
+
+      footer { margin-top: 20px; padding-top: 14px; font-size: 0.7rem; }
+    }
+
+    @media (max-width: 430px) {
+      .stat { flex: 1 1 calc(50% - 8px); }
+      .slider-labels span { font-size: 0.48rem; }
+      nav a { font-size: 0.72rem; margin-right: 10px; }
+      .city-date-label { font-size: 0.7rem; padding: 5px 10px; }
+    }
   </style>
 </head>
 <body>
