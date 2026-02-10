@@ -910,5 +910,65 @@
       "contra-costa-county-treasurer-tax-collector",
       "edinburgh"
     ]
+  },
+  {
+    "id": "doc_0053",
+    "originalName": "02092026_003.pdf",
+    "filename": "2026-02-09_archive_unclassified_no-text.pdf",
+    "path": "Archive",
+    "type": "archive",
+    "entity": null,
+    "person": null,
+    "property": "none",
+    "date": null,
+    "scanned": "2026-02-10T05:04:18.305309+00:00",
+    "taxRelevant": false,
+    "taxCategory": null,
+    "summary": "Unclassified document due to no extracted text.",
+    "tags": [
+      "archive"
+    ]
+  },
+  {
+    "id": "doc_0054",
+    "originalName": "02092026_003_OCR.pdf",
+    "filename": "2025-12-31_tax-income_chevron-usa-inc_w2-melissa-sladden.pdf",
+    "path": "Tax/2025/Income",
+    "type": "tax/income",
+    "entity": "Chevron USA Inc",
+    "person": "Melissa",
+    "property": "Edinburgh",
+    "date": "2025-12-31",
+    "scanned": "2026-02-10T05:04:24.253586+00:00",
+    "taxRelevant": true,
+    "taxCategory": null,
+    "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc for 2025.",
+    "tags": [
+      "tax-income",
+      "tax-2025",
+      "chevron-usa-inc",
+      "edinburgh"
+    ]
+  },
+  {
+    "id": "doc_0055",
+    "originalName": "02092026_OCR.pdf",
+    "filename": "2025-12-01_tax-deductions_the-links-foundation_charitable-donation-melissa.pdf",
+    "path": "Tax/2025/Deductions",
+    "type": "tax/deductions",
+    "entity": "The Links Foundation, Incorporated",
+    "person": "Melissa",
+    "property": "Edinburgh",
+    "date": "2025-12-01",
+    "scanned": "2026-02-10T05:04:29.178408+00:00",
+    "taxRelevant": true,
+    "taxCategory": "charitable",
+    "summary": "Acknowledgment of $1,500 charitable donation from Melissa Sladden to The Links Foundation, Incorporated.",
+    "tags": [
+      "tax-deductions",
+      "tax-2025",
+      "the-links-foundation,-incorporated",
+      "edinburgh"
+    ]
   }
 ]

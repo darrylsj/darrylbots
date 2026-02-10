@@ -1,7 +1,7 @@
 {
-  "totalProcessed": 52,
+  "totalProcessed": 55,
   "byType": {
-    "archive": 25,
+    "archive": 26,
     "financial/investments": 2,
     "legal/contracts": 1,
     "medical/darryl": 2,
@@ -10,8 +10,8 @@
     "tax/rental-florida": 1,
     "tax/rental-toronto": 1,
     "vet/domino": 1,
-    "tax/deductions": 2,
-    "tax/income": 5,
+    "tax/deductions": 3,
+    "tax/income": 6,
     "receipt/2026": 2,
     "financial/bills": 1,
     "financial/banking": 1,
@@ -20,7 +20,7 @@
   },
   "byDay": {
     "2026-02-08": 36,
-    "2026-02-09": 16
+    "2026-02-09": 19
   },
   "byEntity": {
     "Unclassified": 11,
@@ -41,28 +41,53 @@
     "Internal Revenue Service": 1,
     "Staples": 1,
     "ADT": 1,
-    "null": 1,
+    "null": 3,
     "unknown": 4,
     "TECHNOLOGY CREDIT UNION": 1,
-    "null": 3,
     "St. Raymond Catholic Church": 1,
     "": 1,
     "California Franchise Tax Board": 1,
-    "Chevron USA Inc": 1,
+    "Chevron USA Inc": 2,
     "BOX INC": 1,
     "Contra Costa County Treasurer-Tax Collector": 1,
-    "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR": 1
+    "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR": 1,
+    "null": 1,
+    "The Links Foundation, Incorporated": 1
   },
   "byProperty": {
-    "Edinburgh": 5,
+    "Edinburgh": 7,
     "1 King West, Toronto": 1,
     "Tamarac, FL": 1,
     "edinburgh": 1,
     "WalnutCreek": 1
   },
-  "taxDocCount": 16,
+  "taxDocCount": 18,
   "hsaReimbursable": 5,
   "recentDocs": [
+    {
+      "name": "2025-12-01_tax-deductions_the-links-foundation_charitable-donation-melissa",
+      "type": "tax/deductions",
+      "entity": "The Links Foundation, Incorporated",
+      "summary": "Acknowledgment of $1,500 charitable donation from Melissa Sladden to The Links Foundation, Incorporated.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:04:29.178505"
+    },
+    {
+      "name": "2025-12-31_tax-income_chevron-usa-inc_w2-melissa-sladden",
+      "type": "tax/income",
+      "entity": "Chevron USA Inc",
+      "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc for 2025.",
+      "taxRelevant": true,
+      "processedAt": "2026-02-09T21:04:24.253651"
+    },
+    {
+      "name": "2026-02-09_archive_unclassified_no-text",
+      "type": "archive",
+      "entity": null,
+      "summary": "Unclassified document due to no extracted text.",
+      "taxRelevant": false,
+      "processedAt": "2026-02-09T21:04:18.305402"
+    },
     {
       "name": "2024-09-12_property-edinburgh_contra-costa-county_secured-property-tax-bill",
       "type": "property/edinburgh",
@@ -442,33 +467,9 @@
       "summary": "2026 02 08_Archive_Unreadable",
       "taxRelevant": false,
       "processedAt": "2026-02-08T11:57:08.735906"
-    },
-    {
-      "name": "2026-02-08_archive_unclassified-document.pdf",
-      "type": "archive",
-      "entity": "Unclassified Document",
-      "summary": "2026 02 08_Archive_Unclassified Document",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:06.724969"
-    },
-    {
-      "name": "2026-02-08_archive_unknown_unclassifiable-document.pdf",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Unclassifiable Document",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:05.968245"
-    },
-    {
-      "name": "2026-02-08_archive_null_blank-or-unreadable.pdf",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Blank Or Unreadable",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:05.932261"
     }
   ],
   "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-09T21:03:46.230347",
-  "lastScanRun": "2026-02-09T21:03:46.235993"
+  "lastProcessed": "2026-02-09T21:04:29.178484",
+  "lastScanRun": "2026-02-09T21:04:29.184431"
 }
