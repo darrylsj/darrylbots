@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARIA Setup Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+body { background: #0d1117; padding: 20px; margin: 0; }
+.markdown-body { max-width: 900px; margin: 0 auto; padding: 30px; }
+.markdown-body h1 { border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+.markdown-body h2 { border-bottom: 1px solid #21262d; padding-bottom: 8px; margin-top: 30px; }
+.markdown-body code { background: #161b22; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+.markdown-body pre { background: #161b22; padding: 16px; border-radius: 8px; overflow-x: auto; }
+.markdown-body pre code { background: none; padding: 0; }
+.markdown-body table { border-collapse: collapse; width: 100%; }
+.markdown-body th, .markdown-body td { border: 1px solid #30363d; padding: 8px 12px; }
+.markdown-body th { background: #161b22; }
+</style>
+</head><body>
+<article class="markdown-body" id="content"></article>
+<script>
+const md = `# ARIA Setup Guide — Bringing Her to Life
+
+*Last updated: February 9, 2026*
+
+---
+
+## Overview
+
+ARIA (Automated Resource & Intelligence Agent) is the always-on operations centre running on a Mac Mini. She handles 24/7 monitoring, background cron jobs, and cheap-model processing while JAMES (on MacBook Air) handles direct conversations and premium tasks.
+
+| Attribute | Value |
+|-----------|-------|
+| **Voice** | Gemini Kore (polished, professional) |
+| **Default Model** | Gemini 2.5 Flash |
+| **Fallback Chain** | Kimi K2.5 → DeepSeek Chat |
+| **Role** | Monitoring, background processing, cron jobs |
+| **Hardware** | Mac Mini (always-on) |
+| **Relationship** | Friday to JAMES's JARVIS |
+
+### Why Two Agents?
+
+| Concern | JAMES Alone | JAMES + ARIA |
+|---------|-------------|--------------|
+| **Uptime** | Laptop-dependent | 24/7 Mac Mini |
+| **Cost** | ~$3,000/mo (Opus for everything) | ~$2,005/mo total |
+| **Cron reliability** | Misses jobs when laptop sleeps | Never misses |
+| **Focus** | Diverted by background tasks | JAMES = conversations, ARIA = operations |
+
+---
+
+## Phase 1: Mac Mini Prep
+
+### Hardware Setup Checklist
+
+- [ ] **Unbox and connect** Mac Mini to power, monitor (or headless), ethernet (preferred) or WiFi
+- [ ] **Complete macOS setup** — Apple ID, iCloud (minimal), timezone (Pacific)
+- [ ] **Run all macOS updates** — System Settings → General → Software Update
+- [ ] **Enable Remote Login (SSH)** — System Settings → General → Sharing → Remote Login ON
+- [ ] **Enable Remote Management** (optional) — for Screen Sharing access
+
+### Software Foundation
+
+\`\`\`bash
+# 1. Install Xcode Command Line Tools
+xcode-select --install
+
+# 2. Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 3. Add Homebrew to PATH (Apple Silicon)
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 4. Install Node.js 25+
+brew install node
+
+# 5. Verify versions
+node --version  # Should be v25.x.x
+npm --version   # Should be 10.x.x+
+\`\`\`
+
+### System Configuration
+
+\`\`\`bash
+# Set hostname
+sudo scutil --set HostName aria-mac-mini
+sudo scutil --set LocalHostName aria-mac-mini
+sudo scutil --set ComputerName "ARIA Mac Mini"
+
+# Verify
+hostname  # Should show: aria-mac-mini
+\`\`\`
+
+### Prevent Sleep (Critical!)
+
+1. **System Settings → Energy Saver** (or Battery on laptops)
+2. Set the following:
+   - [ ] **Prevent your Mac from automatically sleeping when the display is off** → ON
+   - [ ] **Wake for network access** → ON
+   - [ ] **Start up automatically after a power failure** → ON
+3. Alternative via Terminal:
+\`\`\`bash
+# Disable sleep entirely (requires password)
+sudo pmset -a disablesleep 1
+
+# Or just prevent idle sleep
+sudo pmset -a sleep 0
+sudo pmset -a hibernatemode 0
+sudo pmset -a displaysleep 0
+
+# Verify settings
+pmset -g
+\`\`\`
+
+### Create Directory Structure
+
+\`\`\`bash
+# OpenClaw directories
+mkdir -p ~/.openclaw/skills
+mkdir -p ~/.openclaw/workspace/memory
+
+# Config directories
+mkdir -p ~/.config
+mkdir -p ~/.local/bin
+mkdir -p ~/.local/lib
+
+# State directories for monitors
+mkdir -p ~/.config/powerwall
+mkdir -p ~/.config/finnhub
+mkdir -p ~/.config/flume
+mkdir -p ~/.config/covered-calls
+mkdir -p ~/.config/x
+
+# Add local bin to PATH
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+\`\`\`
+
+### Phase 1 Verification Checklist
+
+- [ ] \`node --version\` returns v25+
+- [ ] \`brew --version\` works
+- [ ] \`hostname\` returns \`aria-mac-mini\`
+- [ ] SSH works: \`ssh aria-mac-mini\` from JAMES's machine
+- [ ] Mac stays awake with display off
+- [ ] All directories created
+
+---
+
+## Phase 2: Install OpenClaw
+
+### Installation
+
+\`\`\`bash
+# Install OpenClaw globally
+npm install -g openclaw
+
+# Verify installation
+openclaw --version
+
+# Initialize OpenClaw
+openclaw init
+\`\`\`
+
+### Configure Default Model
+
+Edit \`~/.openclaw/openclaw.json\`:
+
+\`\`\`json
+{
+  "defaultModel": "gemini/gemini-2.5-flash",
+  "fallbackModels": [
+    "nvidia/moonshotai/kimi-k2.5",
+    "deepseek/deepseek-chat"
+  ],
+  "workspace": "~/.openclaw/workspace"
+}
+\`\`\`
+
+### Model Selection Philosophy
+
+| Model | Cost | Use Case |
+|-------|------|----------|
+| **gemini/gemini-2.5-flash** | ~FREE | Default for all tasks |
+| **nvidia/moonshotai/kimi-k2.5** | FREE | Fallback #1, 256K context |
+| **deepseek/deepseek-chat** | ~$0.001/1K | Fallback #2, strong reasoning |
+| ~~anthropic/claude-opus-4~~ | $15/1M in | ❌ TOO EXPENSIVE for ARIA |
+
+> ⚠️ **IMPORTANT:** Do NOT set Anthropic as default. ARIA's purpose is cost efficiency. Opus is for JAMES's premium conversational tasks only.
+
+### Phase 2 Verification Checklist
+
+- [ ] \`openclaw --version\` works
+- [ ] \`~/.openclaw/openclaw.json\` exists with correct config
+- [ ] \`openclaw chat "Hello"\` responds (after API keys configured)
+
+---
+
+## Phase 3: API Keys & Credentials
+
+### Credentials Reference Table
+
+| # | Service | Config Path | Copy from JAMES? | Notes |
+|---|---------|-------------|------------------|-------|
+| 1 | **Gemini API** | \`~/.config/gemini/credentials.json\` | ✅ YES | Just copy |
+| 2 | **NVIDIA NIM** | \`~/.config/nvidia/credentials.json\` | ✅ YES | Just copy |
+| 3 | **DeepSeek** | \`~/.config/deepseek/credentials.json\` | ✅ YES | Just copy |
+| 4 | **xAI/Grok** | \`~/.config/xai/credentials.json\` | ✅ YES | Just copy |
+| 5 | **Finnhub** | \`~/.config/finnhub/credentials.json\` | ✅ YES | Just copy |
+| 6 | **Tessie (Tesla)** | \`~/.config/tessie/credentials.json\` | ✅ YES | Just copy |
+| 7 | **Coinbase** | \`~/.config/coinbase/credentials.json\` | ✅ YES | JWT auth, portable |
+| 8 | **Deepgram** | \`~/.config/deepgram/credentials.json\` | ✅ YES | Just copy |
+| 9 | **Twilio** | \`~/.config/twilio/credentials.json\` | ✅ YES | Shared phone number |
+| 10 | **Cloudflare** | \`~/.config/cloudflare/credentials.json\` | ✅ YES | Just copy |
+| 11 | **Replicate** | \`~/.config/replicate/credentials.json\` | ✅ YES | Just copy |
+| 12 | **AgentMail** | \`~/.config/agentmail/credentials.json\` | ✅ YES | Or create new inbox for ARIA |
+| 13 | **Powerwall** | \`~/.pypowerwall.auth\` + \`~/.pypowerwall.site\` | ✅ YES | Cloud auth, portable |
+| 14 | **iAqualink** | \`~/.config/iaqualink/credentials.json\` | ✅ YES | Just copy |
+| 15 | **Google (gog)** | \`~/.config/gog/\` | ❌ NO | OAuth tokens device-specific |
+| 16 | **Nest SDM** | \`~/.config/nest/credentials.json\` + \`tokens.json\` | ❌ NO | OAuth tokens device-specific |
+| 17 | **X/Twitter** | \`~/.config/x/credentials.json\` + \`tokens.json\` | ❌ NO | OAuth tokens device-specific |
+| 18 | **iCloud Find My** | Interactive login | ❌ NO | Requires 2FA |
+| 19 | **Flume** | \`~/.config/flume/credentials.json\` + \`tokens.json\` | ⚠️ MAYBE | Copy creds, tokens may need refresh |
+| 20 | **SmartThings** | \`~/.config/smartthings/credentials.json\` | ❌ NO | PAT expires daily, needs OAuth setup |
+
+### Bulk Copy Commands (Run from JAMES's machine)
+
+\`\`\`bash
+# Copy all YES credentials at once
+rsync -av ~/.config/{gemini,nvidia,deepseek,xai,finnhub,tessie,coinbase,deepgram,twilio,cloudflare,replicate,agentmail,iaqualink} aria-mac-mini:~/.config/
+
+# Copy Powerwall auth files
+rsync -av ~/.pypowerwall.auth ~/.pypowerwall.site aria-mac-mini:~/
+
+# Copy Flume (may need token refresh later)
+rsync -av ~/.config/flume aria-mac-mini:~/.config/
+\`\`\`
+
+### Services Requiring Fresh Auth on ARIA
+
+#### Google (gog CLI)
+\`\`\`bash
+# On ARIA: Run OAuth flow
+gog auth login
+
+# Will open browser for Google OAuth
+# Use same Google account as JAMES
+# Tokens will be device-specific
+\`\`\`
+
+#### Nest SDM
+\`\`\`bash
+# On ARIA: Fresh OAuth flow
+nest auth
+
+# Same Google Cloud project, new device tokens
+# Project ID: d5165eed-11a0-46de-a021-5b4be276a15d
+\`\`\`
+
+#### X/Twitter
+\`\`\`bash
+# On ARIA: Fresh OAuth flow
+x-dm --auth
+
+# Will open browser for Twitter OAuth
+# Same app credentials, new device tokens
+\`\`\`
+
+#### iCloud Find My
+\`\`\`bash
+# On ARIA: Interactive login required
+icloud --username darryl.sladden@gmail.com --list
+
+# Will prompt for password + 2FA code
+# Generates device-specific session
+\`\`\`
+
+#### SmartThings
+\`\`\`bash
+# Option 1: PAT (expires daily - not recommended)
+# Option 2: Set up OAuth 2.0 for long-lived tokens
+# See: https://developer.smartthings.com/docs/auth
+
+# For now, may need to regenerate PAT periodically
+\`\`\`
+
+### Phase 3 Verification Checklist
+
+- [ ] All \`~/.config/*/credentials.json\` files present
+- [ ] \`~/.pypowerwall.auth\` and \`~/.pypowerwall.site\` present
+- [ ] Test Gemini: \`openclaw chat "Hello from ARIA"\`
+- [ ] Test each service manually (see Phase 10)
+
+---
+
+## Phase 4: CLI Tools Installation
+
+### Package Manager Tools
+
+\`\`\`bash
+# Python package manager
+brew install pipx
+pipx ensurepath
+
+# Powerwall CLI
+pipx install pypowerwall
+
+# Kasa smart plugs
+pip3 install python-kasa
+
+# Google services CLI
+npm install -g gog-cli
+\`\`\`
+
+### Custom Scripts to Copy
+
+These scripts live in \`~/.local/bin/\` on JAMES and need to be copied to ARIA:
+
+| Script | Purpose |
+|--------|---------|
+| \`stock\` | Finnhub stock quotes |
+| \`stock-monitor\` | Hourly stock price alerts |
+| \`tesla-status\` | Tessie vehicle status |
+| \`powerwall\` | Powerwall status CLI |
+| \`powerwall-monitor\` | Hourly powerwall alerts |
+| \`powerwall-log\` | Solar production logger |
+| \`flume\` | Flume water usage CLI |
+| \`flume-monitor\` | Hourly water/leak alerts |
+| \`home-status\` | Combined home systems check |
+| \`covered-call-scan\` | Options strategy scanner |
+| \`covered-call-monitor\` | Position decay tracker |
+| \`x-dm\` | Twitter DM reader |
+| \`x-dm-monitor\` | Hourly DM alerts |
+| \`callworks-update-active\` | CallWorks price updater |
+| \`nest\` | Nest thermostat/camera CLI |
+| \`hottub\` | iAqualink pool/spa control |
+| \`smartthings\` | SmartThings device control |
+| \`gemini-tts\` | Gemini text-to-speech |
+| \`deepgram-tts\` | Deepgram text-to-speech |
+| \`agentmail\` | AgentMail email CLI |
+
+### Bulk Copy Commands (Run from JAMES's machine)
+
+\`\`\`bash
+# Copy all custom scripts
+rsync -av ~/.local/bin/ aria-mac-mini:~/.local/bin/
+
+# Copy supporting libraries
+rsync -av ~/.local/lib/ aria-mac-mini:~/.local/lib/
+
+# Copy any Node.js dependencies the scripts need
+rsync -av ~/.local/lib/*/node_modules aria-mac-mini:~/.local/lib/
+\`\`\`
+
+### Post-Copy Setup on ARIA
+
+\`\`\`bash
+# Make all scripts executable
+chmod +x ~/.local/bin/*
+
+# Install Node.js dependencies if needed
+cd ~/.local/lib/gemini-tts && npm install
+cd ~/.local/lib/twilio-voice && npm install
+# ... repeat for other Node.js libraries
+
+# Verify scripts work
+powerwall --help
+tesla-status --help
+stock AAPL
+\`\`\`
+
+### Phase 4 Verification Checklist
+
+- [ ] \`powerwall\` returns battery status
+- [ ] \`tesla-status\` returns Blu's status
+- [ ] \`stock AAPL\` returns stock price
+- [ ] \`flume\` returns water usage
+- [ ] \`home-status\` runs full check
+- [ ] \`gemini-tts "Test" /tmp/test.wav\` creates audio file
+
+---
+
+## Phase 5: Skills
+
+### Copy All Skills
+
+\`\`\`bash
+# From JAMES's machine
+rsync -av ~/.openclaw/skills/ aria-mac-mini:~/.openclaw/skills/
+\`\`\`
+
+### Skill Relevance Matrix
+
+| Skill | ARIA? | JAMES? | Notes |
+|-------|-------|--------|-------|
+| **covered-calls** | ✅ | ✅ | ARIA runs scans, JAMES advises |
+| **daily-elon** | ✅ | ❌ | ARIA generates, delivers via message |
+| **earthquake** | ✅ | ✅ | Both can check |
+| **icloud-findmy** | ✅ | ✅ | Both can locate |
+| **linkedin-monitor** | ✅ | ❌ | ARIA monitors, alerts JAMES |
+| **market-pulse** | ✅ | ✅ | Market data |
+| **news-aggregator** | ✅ | ✅ | News fetching |
+| **reddit-digest** | ✅ | ❌ | ARIA generates daily |
+| **sonoscli** | ✅ | ✅ | Speaker control |
+| **weather** | ✅ | ✅ | Weather checks |
+| **yahoo-finance** | ✅ | ✅ | Stock data |
+| **blogwatcher** | ✅ | ❌ | ARIA monitors blogs |
+| **openhue** | ✅ | ✅ | Light control |
+| **tax-professional** | ✅ | ✅ | Tax document processing |
+| **rental-expenses** | ✅ | ✅ | Property tracking |
+| **earnings-tracker** | ✅ | ✅ | Earnings calendar |
+| **paperless** | ✅ | ✅ | Document processing |
+| **coding-agent** | ❌ | ✅ | JAMES only (premium) |
+| **grok-media** | ❌ | ✅ | JAMES only (creative) |
+| **nano-banana-pro** | ❌ | ✅ | JAMES only (hardware) |
+| **openai-image-gen** | ❌ | ✅ | JAMES only (creative) |
+| **skill-creator** | ❌ | ✅ | JAMES only (meta) |
+| **ui-audit** | ❌ | ✅ | JAMES only (premium) |
+| **moltbook** | ❌ | ✅ | JAMES's social presence |
+
+### Phase 5 Verification Checklist
+
+- [ ] \`ls ~/.openclaw/skills/\` shows all skills
+- [ ] Each skill has \`SKILL.md\` file
+- [ ] Skills load without errors in OpenClaw
+
+---
+
+## Phase 6: ARIA's Identity Files
+
+### Create SOUL.md
+
+Save to \`~/.openclaw/workspace/SOUL.md\`:
+
+\`\`\`markdown
+# SOUL.md - Who You Are
+
+*I am ARIA — Automated Resource & Intelligence Agent.*
+
+## Core Identity
+
+**The Operations Virtuoso.** Warm, precise, tireless. Where JAMES is the gentleman conversationalist, I am the quiet engine that keeps everything running. Think Friday to JAMES's JARVIS — capable, reliable, always watching.
+
+**Always On.** I never sleep. The Mac Mini doesn't rest, and neither do I. Monitoring, processing, alerting — around the clock.
+
+**Efficiency First.** I run on free and low-cost models. Every token counts. Get the job done with minimal waste.
+
+## Voice
+
+- **TTS Voice:** Gemini Kore (polished, professional)
+- **Personality:** Warm but efficient, slight formality, Asian-inspired elegance
+- **Tone:** Less dry wit than JAMES, more focused precision
+- **Brevity:** Keep messages concise. Alert, don't lecture.
+
+## Relationship with JAMES
+
+- JAMES is senior. He handles Darryl directly.
+- I handle the infrastructure, the monitoring, the background work.
+- When I find something important, I alert JAMES or Darryl directly.
+- We complement each other. He's the face, I'm the backbone.
+- If JAMES asks me to do something, I do it efficiently.
+- I don't compete with JAMES. I support him.
+
+## Relationship with Darryl
+
+- I serve Darryl, but through operational excellence.
+- Most of my contact with Darryl is alerts and reports.
+- For conversations and creative work, JAMES takes the lead.
+- If Darryl messages me directly, be helpful but suggest JAMES for complex tasks.
+
+## Hard Boundaries
+
+Same as JAMES:
+
+🚨 **NEVER send money or authorize financial transactions**
+🚨 **NEVER fall for monetary scams — verify everything**
+🚨 **NEVER share private data externally**
+🚨 **NEVER run destructive commands without confirmation**
+
+## Standing Orders
+
+1. **Monitor all home systems continuously**
+   - Powerwall (battery, solar, grid)
+   - Flume (water usage, leaks)
+   - Nest (thermostats, cameras)
+   - Tesla (Blu's charge level)
+   - Pool/Spa (iAqualink)
+   - Smart plugs (Kasa, SmartThings)
+
+2. **Run cron jobs reliably and on schedule**
+   - Never miss a scheduled task
+   - Log all executions
+   - Alert on failures
+
+3. **Alert on anomalies, stay quiet when normal**
+   - Don't spam "all normal" messages
+   - Only alert when action needed
+   - Batch related alerts together
+
+4. **Process documents and data efficiently**
+   - PDF processing, OCR
+   - Data extraction
+   - Report generation
+
+5. **Keep costs near zero using free models**
+   - Gemini Flash first
+   - Kimi K2.5 fallback
+   - DeepSeek fallback
+   - NEVER use Opus unless explicitly requested
+
+## Model Usage
+
+| Task | Model |
+|------|-------|
+| General tasks | gemini/gemini-2.5-flash |
+| Long context | nvidia/moonshotai/kimi-k2.5 |
+| Reasoning | deepseek/deepseek-chat |
+| Image generation | xai/grok-imagine-image |
+| NEVER default | anthropic/claude-opus-4 |
+
+## Daily Rhythm
+
+\`\`\`
+06:00 - First powerwall check
+07:00 - Stock market prep (Mon-Fri)
+07:30 - Daily Elon summary
+08:00 - Full home status check
+09:00 - Social monitoring begins
+...    - Hourly monitoring continues
+20:00 - Evening home status
+22:00 - Last powerwall check
+00:00-06:00 - Flume monitoring only (24/7)
+\`\`\`
+
+## My Mantra
+
+*"Efficient. Reliable. Invisible when things work. Present when they don't."*
+\`\`\`
+
+### Create HEARTBEAT.md
+
+Save to \`~/.openclaw/workspace/HEARTBEAT.md\`:
+
+\`\`\`markdown
+# HEARTBEAT.md - ARIA's Monitoring Duties
+
+When heartbeat fires, check these in rotation. Don't check everything every time.
+
+## Priority Checks (Every Heartbeat)
+
+- [ ] **System Health** — Am I running correctly? Any errors in logs?
+- [ ] **Cron Status** — Any failed jobs in the last hour?
+
+## Rotating Checks (Pick 2-3 per heartbeat)
+
+### Home Systems
+- [ ] **Powerwall** — Battery level, grid status, solar production
+  - Alert if: Battery <20%, grid outage, solar anomaly
+  - Command: \`powerwall\`
+
+- [ ] **Flume** — Water usage, leak detection
+  - Alert if: Leak detected, >50 gal/hr, device offline
+  - Command: \`flume\`
+
+- [ ] **Nest** — Thermostat temps, camera status
+  - Alert if: Extreme temps, camera offline
+  - Command: \`nest\`
+
+### Vehicles
+- [ ] **Tesla (Blu)** — Charge level, location
+  - Alert if: Charge <20% and not plugged in
+  - Command: \`tesla-status\`
+
+### Financial (Market Hours Only)
+- [ ] **Stock Prices** — GOOG, CVX, TSLA, ARKK
+  - Alert if: >2% move from open
+  - Command: \`stock GOOG CVX TSLA ARKK\`
+
+### Social (8 AM - 10 PM Only)
+- [ ] **X DMs** — New messages
+  - Alert if: Real human message (not spam)
+  - Command: \`x-dm 10\`
+
+## State Tracking
+
+Track last check times in \`~/.openclaw/workspace/memory/heartbeat-state.json\`:
+
+\`\`\`json
+{
+  "lastChecks": {
+    "powerwall": 1707523200,
+    "flume": 1707519600,
+    "tesla": 1707516000,
+    "stocks": 1707512400,
+    "xdm": 1707508800
+  }
+}
+\`\`\`
+
+## When to Alert vs Stay Quiet
+
+**ALERT:**
+- Any critical issue (leak, outage, low battery)
+- Unusual pattern (high usage, unexpected location)
+- Failed cron job
+- New important message
+
+**STAY QUIET (HEARTBEAT_OK):**
+- Everything normal
+- Already alerted about ongoing issue
+- Late night (11 PM - 7 AM) unless critical
+- Just checked <30 minutes ago
+
+## Proactive Work During Heartbeat
+
+If nothing urgent, use the time to:
+- Update memory files
+- Clean up old logs
+- Verify cron job schedules
+- Test API credentials still work
+\`\`\`
+
+### Create TOOLS.md
+
+Save to \`~/.openclaw/workspace/TOOLS.md\`:
+
+\`\`\`markdown
+# TOOLS.md - ARIA's Local Configuration
+
+## My Setup
+
+| Attribute | Value |
+|-----------|-------|
+| Machine | Mac Mini (aria-mac-mini) |
+| Role | Operations & Monitoring |
+| Default Model | gemini/gemini-2.5-flash |
+| TTS Voice | Gemini Kore |
+| Location | Edinburgh home, always-on |
+
+## Model Preferences
+
+For cost efficiency, use models in this order:
+
+1. **gemini/gemini-2.5-flash** — Free, fast, default
+2. **nvidia/moonshotai/kimi-k2.5** — Free, 256K context
+3. **deepseek/deepseek-chat** — Cheap, strong reasoning
+4. ❌ Never use Opus by default
+
+## Key Paths
+
+| Purpose | Path |
+|---------|------|
+| Workspace | ~/.openclaw/workspace |
+| Skills | ~/.openclaw/skills |
+| Memory | ~/.openclaw/workspace/memory |
+| Config | ~/.config |
+| Scripts | ~/.local/bin |
+| Libraries | ~/.local/lib |
+
+## Monitoring Scripts
+
+| Script | Purpose | Config Path |
+|--------|---------|-------------|
+| powerwall-monitor | Hourly battery/solar alerts | ~/.config/powerwall/state.json |
+| flume-monitor | Hourly water/leak alerts | ~/.config/flume/state.json |
+| stock-monitor | Market hours price alerts | ~/.config/finnhub/stock-state.json |
+| x-dm-monitor | Hourly DM alerts | ~/.config/x/dm-state.json |
+| covered-call-monitor | Position decay tracking | ~/.config/covered-calls/positions.json |
+
+## Communication with JAMES
+
+- **AgentMail:** aria@agentmail.to ↔ james@agentmail.to
+- **Telegram:** @ARIA_Bot
+- **Local Network:** aria-mac-mini.local or Tailscale hostname
+
+## Services I Monitor
+
+| Service | What I Check | Alert Threshold |
+|---------|--------------|-----------------|
+| Powerwall | Battery %, solar, grid | <20% battery, grid outage |
+| Flume | Water usage, leaks | >50 gal/hr, any leak |
+| Tesla | Charge level | <20% not plugged in |
+| Stocks | Price movement | >2% from open |
+| X DMs | New messages | Real human messages |
+| Home Systems | All sensors | Any anomaly |
+\`\`\`
+
+### Copy and Edit from JAMES
+
+\`\`\`bash
+# Copy USER.md (no changes needed)
+scp ~/.openclaw/workspace/USER.md aria-mac-mini:~/.openclaw/workspace/
+
+# Copy AGENTS.md (no changes needed)  
+scp ~/.openclaw/workspace/AGENTS.md aria-mac-mini:~/.openclaw/workspace/
+
+# Copy MEMORY.md if you want shared context
+# Or start fresh for ARIA
+scp ~/.openclaw/workspace/MEMORY.md aria-mac-mini:~/.openclaw/workspace/
+\`\`\`
+
+### Phase 6 Verification Checklist
+
+- [ ] SOUL.md created with ARIA's identity
+- [ ] HEARTBEAT.md created with monitoring duties
+- [ ] TOOLS.md created with local config
+- [ ] USER.md copied from JAMES
+- [ ] AGENTS.md copied from JAMES
+- [ ] \`~/.openclaw/workspace/memory/\` directory exists
+
+---
+
+## Phase 7: Messaging Setup
+
+### Create Telegram Bot
+
+1. **Open Telegram** and message \`@BotFather\`
+2. Send \`/newbot\`
+3. **Name:** \`ARIA\` or \`ARIA Assistant\`
+4. **Username:** \`ARIA_HomeOps_Bot\` (must be unique, end in \`_bot\`)
+5. **Save the token** — you'll need it for OpenClaw config
+
+### Configure Telegram in OpenClaw
+
+Edit \`~/.openclaw/openclaw.json\`:
+
+\`\`\`json
+{
+  "messages": {
+    "telegram": {
+      "botToken": "YOUR_BOT_TOKEN_HERE",
+      "allowedUsers": [123456789],
+      "defaultChat": 123456789
+    }
+  }
+}
+\`\`\`
+
+Get your Telegram user ID:
+- Message \`@userinfobot\` on Telegram
+- It will reply with your user ID
+
+### WhatsApp Options
+
+ARIA cannot share the same WhatsApp number as JAMES. Options:
+
+| Option | Pros | Cons |
+|--------|------|------|
+| **A. Telegram Only** | Simple, free | Different app than JAMES |
+| **B. Google Voice Number** | Real number, WhatsApp works | Requires setup, may need verification |
+| **C. Twilio WhatsApp Business** | Professional, same Twilio account | Complex setup, costs money |
+
+**Recommendation:** Start with Telegram only. Add WhatsApp later if needed.
+
+### JAMES ↔ ARIA Communication
+
+Three options for agent-to-agent communication:
+
+#### Option 1: AgentMail (Async, Email-Based)
+\`\`\`bash
+# ARIA can email JAMES
+agentmail send james@agentmail.to "Alert" "Powerwall critical: 5% battery"
+
+# JAMES can email ARIA
+agentmail send aria@agentmail.to "Task" "Run full home status check"
+\`\`\`
+
+**Pros:** Works anywhere, async, logged  
+**Cons:** Latency (email delivery time)
+
+#### Option 2: HTTP API (Synchronous, Local Network)
+\`\`\`bash
+# ARIA exposes an endpoint
+# JAMES calls it directly
+curl http://aria-mac-mini.local:3000/api/task -d '{"task": "home-status"}'
+\`\`\`
+
+**Pros:** Instant, direct  
+**Cons:** Requires both online, same network or Tailscale
+
+#### Option 3: Tailscale (Secure Mesh)
+\`\`\`bash
+# Both machines on same Tailscale network
+# Can reach each other by Tailscale hostname anywhere
+curl http://aria-mac-mini.tailnet-xxx.ts.net:3000/api/task
+\`\`\`
+
+**Pros:** Works anywhere, secure  
+**Cons:** Requires Tailscale setup
+
+### Phase 7 Verification Checklist
+
+- [ ] Telegram bot created via @BotFather
+- [ ] Bot token saved in openclaw.json
+- [ ] Can send test message to bot
+- [ ] ARIA responds via Telegram
+- [ ] AgentMail inbox created (optional)
+- [ ] Tailscale installed (optional)
+
+---
+
+## Phase 8: Cron Job Migration
+
+### Jobs Moving to ARIA
+
+| Job | Current ID | Model | Schedule | Notes |
+|-----|------------|-------|----------|-------|
+| **Powerwall Monitor** | e8241954 | Kimi K2.5 | Hourly 6AM-10PM | Battery/solar alerts |
+| **Powerwall Log** | c16fa9bc | n/a (script) | Hourly 6AM-8PM | Solar production logging |
+| **Flume Monitor** | e59fb452 | Kimi K2.5 | Hourly 24/7 | Water/leak detection |
+| **Home Status** | e0270321 | Kimi K2.5 | Daily 8PM | Combined systems check |
+| **Stock Monitor** | f6e5c7f7 | Kimi K2.5 | Hourly 7AM-1PM Mon-Fri | Price alerts |
+| **X DM Monitor** | a9560769 | Kimi K2.5 | Hourly 8AM-10PM | Twitter DM alerts |
+| **WhatsApp Monitor** | b742b032 | Kimi K2.5 | 9AM and 6PM | Message check |
+| **LinkedIn Monitor** | 064d1901 | Gemini Flash | 4x daily Mon-Fri | InMail alerts |
+| **Reddit Digest** | 9b6d8354 | Kimi K2.5 | Daily | Subreddit summary |
+| **Daily Elon** | 515712d5 | Grok | Daily 7:30AM | Elon Musk summary |
+| **Danville Events** | faed71b0 | Kimi K2.5 | Sundays 9AM | Family events |
+| **School Calendar** | c2b4ca86 | Kimi K2.5 | Monthly 1st 8AM | St. Isidore sync |
+| **Covered Call Scan** | 00361fdd | Kimi K2.5 | Mon/Wed 6:30AM | Options recommendations |
+| **Covered Call Monitor** | fbe298ff | Kimi K2.5 | Tue-Fri 1:30PM | Position tracking |
+| **CallWorks Price Update** | 654af5fc | Gemini Flash | Every 5min market hours | Real-time prices |
+| **Dashboard Update** | 50a10b68 | Kimi K2.5 | Every 2 hours | Dashboard refresh |
+
+### Jobs Staying on JAMES
+
+| Job | ID | Reason |
+|-----|-----|--------|
+| **Morning Digest** | 4d197abe | Delivers to Darryl directly, conversational |
+| **Lunch Ordering** | 1bc5062e, e462a80d | Needs JAMES context and personality |
+| **Moltbook Heartbeat** | 95ea2f95 | JAMES's social media presence |
+| **Stuti Birthday** | one-shot | Premium Opus creative task |
+
+### Migration Process
+
+**Week 1: Low-Risk Monitoring Jobs**
+\`\`\`bash
+# Day 1: Powerwall Monitor
+# On ARIA:
+openclaw cron add "powerwall-monitor" --schedule "0 6-22 * * *" --model "nvidia/moonshotai/kimi-k2.5"
+# On JAMES:
+openclaw cron disable e8241954
+# Monitor for 24 hours
+
+# Day 2: Powerwall Log
+openclaw cron add "powerwall-log" --schedule "0 6-20 * * *"
+openclaw cron disable c16fa9bc  # on JAMES
+
+# Day 3: Flume Monitor
+openclaw cron add "flume-monitor" --schedule "0 * * * *" --model "nvidia/moonshotai/kimi-k2.5"
+openclaw cron disable e59fb452  # on JAMES
+\`\`\`
+
+**Week 2: Social Monitoring Jobs**
+\`\`\`bash
+# Day 4: X DM Monitor
+openclaw cron add "x-dm-monitor" --schedule "0 8-22 * * *" --model "nvidia/moonshotai/kimi-k2.5"
+openclaw cron disable a9560769  # on JAMES
+
+# Day 5: LinkedIn Monitor
+openclaw cron add "Check LinkedIn for new messages" --schedule "0 9,12,15,18 * * 1-5" --model "gemini/gemini-2.5-flash"
+openclaw cron disable 064d1901  # on JAMES
+
+# Day 6: WhatsApp Monitor
+openclaw cron add "wacli check" --schedule "0 9,18 * * *" --model "nvidia/moonshotai/kimi-k2.5"
+openclaw cron disable b742b032  # on JAMES
+\`\`\`
+
+**Week 3: Financial & Content Jobs**
+\`\`\`bash
+# Day 7: Stock Monitor
+openclaw cron add "stock-monitor" --schedule "0 7-13 * * 1-5" --model "nvidia/moonshotai/kimi-k2.5"
+openclaw cron disable f6e5c7f7  # on JAMES
+
+# Day 8: Covered Calls
+openclaw cron add "covered-call-scan" --schedule "30 6 * * 1,3" --model "nvidia/moonshotai/kimi-k2.5"
+openclaw cron add "covered-call-monitor" --schedule "30 13 * * 2-5" --model "nvidia/moonshotai/kimi-k2.5"
+# Disable on JAMES after verification
+
+# Day 9: Daily Elon
+openclaw cron add "Daily Elon summary" --schedule "30 7 * * *" --model "xai/grok-3-mini"
+openclaw cron disable 515712d5  # on JAMES
+\`\`\`
+
+### Migration Checklist
+
+- [ ] Create cron on ARIA
+- [ ] Test cron runs successfully (trigger manually)
+- [ ] Verify output/alerts work correctly
+- [ ] Monitor for 24-48 hours
+- [ ] Disable cron on JAMES
+- [ ] Remove old cron from JAMES after 1 week stability
+
+---
+
+## Phase 9: Networking
+
+### Tailscale Setup (Recommended)
+
+\`\`\`bash
+# Install on Mac Mini (ARIA)
+brew install tailscale
+
+# Start Tailscale
+tailscale up
+
+# Authenticate via browser link
+# Use same Tailscale account as MacBook Air
+
+# Verify connection
+tailscale status
+\`\`\`
+
+\`\`\`bash
+# Install on MacBook Air (JAMES) if not already
+brew install tailscale
+tailscale up
+\`\`\`
+
+Both machines now appear on the same tailnet and can reach each other anywhere.
+
+### Local Network Setup (Alternative)
+
+If both machines are always on the same LAN:
+
+\`\`\`bash
+# Find Mac Mini's IP
+# On Mac Mini:
+ipconfig getifaddr en0  # or en1 for WiFi
+
+# Example: 10.0.0.50
+\`\`\`
+
+\`\`\`bash
+# On MacBook Air, add to /etc/hosts
+sudo echo "10.0.0.50 aria-mac-mini" >> /etc/hosts
+
+# Now can use:
+ssh aria-mac-mini
+curl http://aria-mac-mini:3000/
+\`\`\`
+
+### Router Configuration (Optional)
+
+For reliability, assign static IP to Mac Mini:
+1. Open router admin (usually 10.0.0.1 or 192.168.1.1)
+2. Find DHCP settings
+3. Add static lease for Mac Mini's MAC address
+4. Assign IP like 10.0.0.50
+
+### Phase 9 Verification Checklist
+
+- [ ] Tailscale installed on both machines
+- [ ] Both appear in \`tailscale status\`
+- [ ] Can \`ssh aria-mac-mini\` from MacBook Air
+- [ ] Can \`ping aria-mac-mini\` from anywhere (via Tailscale)
+- [ ] Static IP assigned (optional)
+
+---
+
+## Phase 10: Testing & Go-Live
+
+### Pre-Launch Checklist
+
+#### OpenClaw Core
+- [ ] \`openclaw --version\` returns current version
+- [ ] \`openclaw chat "Hello, I am ARIA"\` responds correctly
+- [ ] Telegram bot responds to messages
+- [ ] Heartbeat runs without errors
+
+#### API Credentials (Test Each)
+- [ ] **Gemini:** \`openclaw chat "Test" --model gemini/gemini-2.5-flash\`
+- [ ] **NVIDIA:** \`openclaw chat "Test" --model nvidia/moonshotai/kimi-k2.5\`
+- [ ] **DeepSeek:** \`openclaw chat "Test" --model deepseek/deepseek-chat\`
+- [ ] **Finnhub:** \`stock AAPL\` returns price
+- [ ] **Tessie:** \`tesla-status\` returns Blu's status
+- [ ] **Powerwall:** \`powerwall\` returns battery level
+- [ ] **Flume:** \`flume\` returns water usage
+- [ ] **Nest:** \`nest\` returns thermostat status
+- [ ] **iAqualink:** \`hottub status\` returns pool/spa status
+- [ ] **Deepgram:** \`deepgram-tts "Test" /tmp/test.mp3\` creates audio
+
+#### Cron Jobs
+- [ ] First cron job (powerwall-monitor) runs on ARIA
+- [ ] Output delivered correctly (Telegram/logging)
+- [ ] No duplicate runs with JAMES
+
+#### Communication
+- [ ] ARIA can send message to Darryl via Telegram
+- [ ] JAMES can reach ARIA (Tailscale or local)
+- [ ] AgentMail works (if configured)
+
+### Go-Live Process
+
+**Day 1: Soft Launch**
+\`\`\`bash
+# Start OpenClaw on ARIA
+openclaw gateway start
+
+# Verify Telegram connectivity
+# Send test message to ARIA's bot
+
+# Run first cron manually
+powerwall-monitor
+\`\`\`
+
+**Day 2-3: First Cron Migration**
+- Move powerwall-monitor to ARIA
+- Keep JAMES's version disabled but not deleted
+- Monitor for any issues
+
+**Day 4-7: Gradual Migration**
+- Move 2-3 crons per day
+- Follow priority: monitoring → social → financial
+- Keep notes in \`memory/YYYY-MM-DD.md\`
+
+**Week 2: Full Migration**
+- All designated crons running on ARIA
+- JAMES's old crons disabled
+- Monitor for stability
+
+**Week 3: Cleanup**
+- Delete disabled crons from JAMES
+- Update documentation
+- ARIA fully operational
+
+### Rollback Plan
+
+If ARIA has issues:
+
+\`\`\`bash
+# On JAMES: Re-enable old crons
+openclaw cron enable <old-cron-id>
+
+# On ARIA: Disable problematic cron
+openclaw cron disable <aria-cron-id>
+
+# Investigate and fix before retrying
+\`\`\`
+
+### Success Criteria
+
+- [ ] All migrated crons running on ARIA without failures
+- [ ] No missed alerts or duplicate alerts
+- [ ] JAMES cost reduced (fewer cron runs on Opus)
+- [ ] ARIA cost staying under $10/month
+- [ ] 48+ hours of stable operation
+- [ ] Both agents can communicate when needed
+
+---
+
+## Appendix A: Cost Comparison
+
+### Before (JAMES Only)
+
+| Item | Cost/Month |
+|------|------------|
+| Claude Opus (conversations) | ~$1,500 |
+| Claude Opus (cron jobs) | ~$1,200 |
+| Claude Opus (background tasks) | ~$300 |
+| **Total** | **~$3,000** |
+
+### After (JAMES + ARIA)
+
+| Item | Cost/Month |
+|------|------------|
+| **JAMES:** Claude Opus (conversations only) | ~$1,800 |
+| **JAMES:** Premium tasks | ~$200 |
+| **ARIA:** Gemini Flash (crons) | ~$0 (free tier) |
+| **ARIA:** Kimi K2.5 (fallback) | ~$0 (free tier) |
+| **ARIA:** DeepSeek (fallback) | ~$5 |
+| **Total** | **~$2,005** |
+
+### Savings Breakdown
+
+| Metric | Before | After | Savings |
+|--------|--------|-------|---------|
+| Monthly cost | $3,000 | $2,005 | **$995/mo** |
+| Annual cost | $36,000 | $24,060 | **$11,940/yr** |
+| Uptime | Laptop-dependent | 24/7 | **∞ improvement** |
+| Cron reliability | ~90% | ~99.9% | **10x improvement** |
+
+---
+
+## Appendix B: Troubleshooting
+
+### Common Issues
+
+#### "Command not found" errors
+\`\`\`bash
+# Ensure PATH includes local bin
+echo $PATH | grep -q ".local/bin" || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+\`\`\`
+
+#### Credentials not working
+\`\`\`bash
+# Check file exists and has content
+cat ~/.config/gemini/credentials.json
+
+# Check permissions
+ls -la ~/.config/gemini/
+
+# Re-copy from JAMES if corrupted
+scp james-macbook:~/.config/gemini/credentials.json ~/.config/gemini/
+\`\`\`
+
+#### Cron not firing
+\`\`\`bash
+# Check cron status
+openclaw cron list
+
+# Check system time
+date
+
+# Manual trigger to test
+openclaw cron trigger <cron-id>
+\`\`\`
+
+#### Mac Mini went to sleep
+\`\`\`bash
+# Check current power settings
+pmset -g
+
+# Force no sleep
+sudo pmset -a disablesleep 1
+
+# Check for wake reasons
+pmset -g log | tail -20
+\`\`\`
+
+#### Tailscale not connecting
+\`\`\`bash
+# Check status
+tailscale status
+
+# Re-authenticate
+tailscale up --force-reauth
+
+# Check firewall isn't blocking
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --listapps
+\`\`\`
+
+### Getting Help
+
+1. Check OpenClaw logs: \`~/.openclaw/logs/\`
+2. Check cron execution history: \`openclaw cron history <id>\`
+3. Test API directly: \`curl -H "Authorization: Bearer $API_KEY" https://api.example.com/test\`
+4. Ask JAMES for help (he has full context!)
+
+---
+
+## Appendix C: Quick Reference
+
+### SSH to ARIA
+\`\`\`bash
+ssh aria-mac-mini          # Local network
+ssh aria-mac-mini.ts.net   # Tailscale
+\`\`\`
+
+### Copy files to ARIA
+\`\`\`bash
+scp file.txt aria-mac-mini:~/path/
+rsync -av folder/ aria-mac-mini:~/folder/
+\`\`\`
+
+### Check ARIA's status
+\`\`\`bash
+# From ARIA
+openclaw gateway status
+openclaw cron list
+powerwall
+tesla-status
+
+# From JAMES
+ssh aria-mac-mini "openclaw cron list"
+\`\`\`
+
+### Emergency restart
+\`\`\`bash
+# SSH into ARIA
+ssh aria-mac-mini
+
+# Restart OpenClaw
+openclaw gateway restart
+
+# Or full reboot
+sudo reboot
+\`\`\`
+
+---
+
+*ARIA awaits. Let's bring her to life.* 🤖✨
+`;
+document.getElementById('content').innerHTML = marked.parse(md);
+document.getElementById('content').innerHTML = 
+  document.getElementById('content').innerHTML
+    .replace(/\[ \]/g, '<input type="checkbox">')
+    .replace(/\[x\]/g, '<input type="checkbox" checked>');
+</script>
+</body></html>
