@@ -1,475 +1,68 @@
 {
-  "totalProcessed": 55,
+  "totalProcessed": 50,
+  "taxDocCount": 7,
+  "hsaReimbursable": 8,
+  "lastProcessed": "2026-02-11T09:16:00Z",
+  "lastScanRun": "2026-02-11T09:16:00Z",
   "byType": {
-    "archive": 26,
-    "financial/investments": 2,
-    "legal/contracts": 1,
-    "medical/darryl": 2,
-    "dental": 5,
-    "receipt/2025": 1,
-    "tax/rental-florida": 1,
-    "tax/rental-toronto": 1,
-    "vet/domino": 1,
-    "tax/deductions": 3,
-    "tax/income": 6,
-    "receipt/2026": 2,
-    "financial/bills": 1,
-    "financial/banking": 1,
-    "tax/rental-walnutcreek": 1,
-    "property/edinburgh": 1
-  },
-  "byDay": {
-    "2026-02-08": 36,
-    "2026-02-09": 19
-  },
-  "byEntity": {
-    "Unclassified": 11,
-    "Unclassified Document": 1,
-    "Unreadable": 1,
-    "Language Assistance Notice": 1,
-    "Rocketdollar": 1,
-    "California State": 1,
-    "Quest Diagnostics": 2,
-    "Delta Dental": 5,
-    "Target": 2,
-    "Certified Property Managers": 1,
-    "Td": 1,
-    "Blackhawk Veterinary Hospital": 1,
-    "PATELCO CREDIT UNION": 1,
-    "IRS": 1,
-    "Vanguard": 1,
-    "Internal Revenue Service": 1,
-    "Staples": 1,
-    "ADT": 1,
-    "null": 3,
-    "unknown": 4,
-    "TECHNOLOGY CREDIT UNION": 1,
-    "St. Raymond Catholic Church": 1,
-    "": 1,
-    "California Franchise Tax Board": 1,
-    "Chevron USA Inc": 2,
-    "BOX INC": 1,
-    "Contra Costa County Treasurer-Tax Collector": 1,
-    "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR": 1,
-    "null": 1,
-    "The Links Foundation, Incorporated": 1
+    "medical": 20,
+    "tax": 7,
+    "property": 7,
+    "insurance": 5,
+    "financial": 3,
+    "other": 7
   },
   "byProperty": {
-    "Edinburgh": 7,
-    "1 King West, Toronto": 1,
-    "Tamarac, FL": 1,
-    "edinburgh": 1,
-    "WalnutCreek": 1
+    "Edinburgh (Danville)": 3,
+    "360 N Civic (WC)": 6,
+    "Tamarac (FL)": 3,
+    "Personal": 38
   },
-  "taxDocCount": 18,
-  "hsaReimbursable": 5,
+  "byDay": {
+    "2026-02-11": 50,
+    "2026-02-08": 5
+  },
+  "byEntity": {
+    "San Ramon Medical": 3,
+    "Pleasanton Nursing": 9,
+    "Aflac": 5,
+    "Keys COA": 4,
+    "Contra Costa County": 2,
+    "John Muir Health": 3,
+    "Broward County": 2,
+    "Sigma Pi Phi": 7,
+    "Optum Financial": 2,
+    "Smithsonian": 1,
+    "TD Canada Trust": 1,
+    "Luna Care PT": 1,
+    "Sutter Health": 1,
+    "Canyon Pediatric": 2,
+    "AMEX": 1,
+    "CA DMV": 1,
+    "IRS": 1,
+    "TridentCare": 2,
+    "Collective Health": 1
+  },
   "recentDocs": [
-    {
-      "name": "2025-12-01_tax-deductions_the-links-foundation_charitable-donation-melissa",
-      "type": "tax/deductions",
-      "entity": "The Links Foundation, Incorporated",
-      "summary": "Acknowledgment of $1,500 charitable donation from Melissa Sladden to The Links Foundation, Incorporated.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:04:29.178505"
-    },
-    {
-      "name": "2025-12-31_tax-income_chevron-usa-inc_w2-melissa-sladden",
-      "type": "tax/income",
-      "entity": "Chevron USA Inc",
-      "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc for 2025.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:04:24.253651"
-    },
-    {
-      "name": "2026-02-09_archive_unclassified_no-text",
-      "type": "archive",
-      "entity": null,
-      "summary": "Unclassified document due to no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:04:18.305402"
-    },
-    {
-      "name": "2024-09-12_property-edinburgh_contra-costa-county_secured-property-tax-bill",
-      "type": "property/edinburgh",
-      "entity": "CONTRA COSTA COUNTY TREASURER-TAX COLLECTOR",
-      "summary": "Contra Costa County Secured Property Tax Bill for 520 Edinburgh Circle",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:03:46.230358"
-    },
-    {
-      "name": "2026-02-09_archive_null_no-extractable-text",
-      "type": "archive",
-      "entity": null,
-      "summary": "Scanned document with no extractable text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:03:40.718904"
-    },
-    {
-      "name": "2024-09-12_tax-rental-walnutcreek_contracostacounty_propertytaxbill",
-      "type": "tax/rental-walnutcreek",
-      "entity": "Contra Costa County Treasurer-Tax Collector",
-      "summary": "Contra Costa County Secured Property Tax Bill for Walnut Creek rental property.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:03:36.745080"
-    },
-    {
-      "name": "2026-02-09_archive_unknown_empty-document",
-      "type": "archive",
-      "entity": "unknown",
-      "summary": "Empty document content, unable to classify.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:03:32.316879"
-    },
-    {
-      "name": "2025-12-31_tax-income_box-inc_w2-darryl-sladden",
-      "type": "tax/income",
-      "entity": "BOX INC",
-      "summary": "Darryl Sladden's 2025 W-2 from BOX INC",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:03:29.044454"
-    },
-    {
-      "name": "2026-02-09_archive_unknown_unclassified-document",
-      "type": "archive",
-      "entity": "unknown",
-      "summary": "Unclassified document with no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:03:24.951411"
-    },
-    {
-      "name": "2025-12-31_tax-income_chevron-usa-inc_w2-wage-tax-statement-melissa",
-      "type": "tax/income",
-      "entity": "Chevron USA Inc",
-      "summary": "W-2 Wage and Tax Statement for Melissa K Brown Sladden from Chevron USA Inc.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:03:17.549349"
-    },
-    {
-      "name": "2026-02-09_archive_null_unreadable-document",
-      "type": "archive",
-      "entity": null,
-      "summary": "Unreadable document with no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:03:12.901573"
-    },
-    {
-      "name": "2025-01-01_tax-income_california-franchise-tax-board_1099-g-state-income-tax-refund",
-      "type": "tax/income",
-      "entity": "California Franchise Tax Board",
-      "summary": "California Franchise Tax Board Form 1099-G for state income tax refund for tax year 2024.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:03:07.811950"
-    },
-    {
-      "name": "2026-02-09_archive_unclassified-document",
-      "type": "archive",
-      "entity": "",
-      "summary": "Unclassified document with no extracted text available for analysis.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:03:00.352270"
-    },
-    {
-      "name": "2026-01-28_tax-deductions_st-raymond-catholic-church_charitable-giving-2025",
-      "type": "tax/deductions",
-      "entity": "St. Raymond Catholic Church",
-      "summary": "Summary of parish giving for 2025 from St. Raymond Catholic Church.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-09T21:02:56.617033"
-    },
-    {
-      "name": "2026-02-09_archive_unclassified",
-      "type": "archive",
-      "entity": null,
-      "summary": "Unclassified document with no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:02:51.684513"
-    },
-    {
-      "name": "2026-02-09_archive_unknown_no-text-content",
-      "type": "archive",
-      "entity": "unknown",
-      "summary": "Scanned document with no extractable text content.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T21:02:46.424147"
-    },
-    {
-      "name": "2026-02-05_financial-banking_technology-credit-union_nsf-notice",
-      "type": "financial/banking",
-      "entity": "TECHNOLOGY CREDIT UNION",
-      "summary": "Technology Credit Union NSF notice for Darryl Sladden's account.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T20:17:41.652132"
-    },
-    {
-      "name": "2026-02-09_unclassified_02092026_003_ocr.pdf",
-      "type": "archive",
-      "entity": "unknown",
-      "summary": "Unclassified document: 02092026_003_OCR.pdf",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T20:17:37.220325"
-    },
-    {
-      "name": "unknown-date_archive_unclassified_no-text",
-      "type": "archive",
-      "entity": null,
-      "summary": "Unclassified document due to no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-09T20:17:27.975374"
-    },
-    {
-      "name": "2026-01-04_financial-bills_adt_security-bill-edinburgh",
-      "type": "financial/bills",
-      "entity": "ADT",
-      "summary": "ADT security system bill for 520 Edinburgh Cir.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:24:06.980400",
-      "property": "Edinburgh"
-    },
-    {
-      "name": "2026-01-06_receipt_target_stationery-office-supplies",
-      "type": "receipt/2026",
-      "entity": "Target",
-      "summary": "Target receipt for stationery and office supplies.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:57.113273"
-    },
-    {
-      "name": "2026-01-06_receipt-2026_staples_envelopes-office-supplies",
-      "type": "receipt/2026",
-      "entity": "Staples",
-      "summary": "Staples receipt for envelopes and office supplies.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:47.091181"
-    },
-    {
-      "name": "2025-12-30_medical-darryl_quest-diagnostics_laboratory-bill",
-      "type": "medical/darryl",
-      "entity": "Quest Diagnostics",
-      "summary": "Quest Diagnostics laboratory bill for Darryl Sladden for services on 2025-12-12.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:35.989372"
-    },
-    {
-      "name": "2026-01-01_tax-income_irs_1099-int-interest-income-2025",
-      "type": "tax/income",
-      "entity": "Internal Revenue Service",
-      "summary": "Form 1099-INT from IRS showing interest income for calendar year 2025.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:23.463647"
-    },
-    {
-      "name": "2025-12-31_financial-investments_vanguard_401k-statement",
-      "type": "financial/investments",
-      "entity": "Vanguard",
-      "summary": "Vanguard 401(k) savings plan statement for Google LLC.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:11.554753"
-    },
-    {
-      "name": "2020-12-31_tax-income_irs_1099-div-instructions",
-      "type": "tax/income",
-      "entity": "IRS",
-      "summary": "Instructions for Form 1099-DIV, detailing ordinary dividends, capital gains, and reporting requirements for tax year 2020.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:23:03.555882"
-    },
-    {
-      "name": "2025-12-31_tax-deductions_patelco-credit-union_mortgage-interest-edinburgh",
-      "type": "tax/deductions",
-      "entity": "Patelco Credit Union",
-      "summary": "Form 1098 for mortgage interest paid to Patelco Credit Union for the Edinburgh property.",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T21:22:48.952873",
-      "property": "Edinburgh"
-    },
-    {
-      "name": "2026-02-08_legal-contracts_california-state_medical-debt-disclosure.pdf",
-      "type": "legal/contracts",
-      "entity": "California State",
-      "summary": "Medical Debt Disclosure",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:39.238344"
-    },
-    {
-      "name": "2026-02-03_medical-darryl_quest-diagnostics_laboratory-bill.pdf",
-      "type": "medical/darryl",
-      "entity": "Quest Diagnostics",
-      "summary": "Laboratory Bill",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:37.561643"
-    },
-    {
-      "name": "2026-02-08_dental_delta-dental_benefits-usage-summary-darryl.pdf",
-      "type": "dental",
-      "entity": "Delta Dental",
-      "summary": "Benefits Usage Summary Darryl",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:26.661234"
-    },
-    {
-      "name": "2026-01-29_dental_deltadental_claim-payment-darryl-sladden.pdf",
-      "type": "dental",
-      "entity": "Delta Dental",
-      "summary": "Claim Payment Darryl Sladden",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:16.996703"
-    },
-    {
-      "name": "2026-02-08_dental_delta-dental_benefits-usage-summary.pdf",
-      "type": "dental",
-      "entity": "Delta Dental",
-      "summary": "Benefits Usage Summary",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:24:22.085219"
-    },
-    {
-      "name": "2026-01-29_dental_deltadental_claim-payment.pdf",
-      "type": "dental",
-      "entity": "Delta Dental",
-      "summary": "Claim Payment",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:24:13.779189"
-    },
-    {
-      "name": "2026-01-29_dental_delta-dental_claim-summary.pdf",
-      "type": "dental",
-      "entity": "Delta Dental",
-      "summary": "Claim Summary",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:24:10.002569"
-    },
-    {
-      "name": "2026-01-23_tax-rental-toronto_td_mortgage-payoff-notification.pdf",
-      "type": "tax/rental-toronto",
-      "entity": "TD Bank",
-      "summary": "Mortgage Payoff Notification",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:08.333202",
-      "property": "1 King West, Toronto"
-    },
-    {
-      "name": "2025-12-31_tax-rental-florida_certified-property-managers_1099-misc-rental-income.pdf",
-      "type": "tax/rental-florida",
-      "entity": "Certified Property Managers",
-      "summary": "1099 Misc Rental Income",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T11:24:05.621724",
-      "property": "Tamarac, FL"
-    },
-    {
-      "name": "2026-02-03_vet_blackhawk-veterinary-hospital_invoice-domino.pdf",
-      "type": "vet/domino",
-      "entity": "Blackhawk Veterinary Hospital",
-      "summary": "Invoice Domino",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:23:51.987428"
-    },
-    {
-      "name": "2026-01-21_financial-investments_rocketdollar_ira-summary-5498.pdf",
-      "type": "financial/investments",
-      "entity": "Rocketdollar",
-      "summary": "Ira Summary 5498",
-      "taxRelevant": true,
-      "processedAt": "2026-02-08T11:16:47.564627"
-    },
-    {
-      "name": "2025-12-14_receipt-2025_target_household-items.pdf",
-      "type": "receipt/2025",
-      "entity": "Target",
-      "summary": "Household Items",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T10:57:31.422537"
-    },
-    {
-      "name": "2026-02-08_archive_blank_document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Blank or unreadable document",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:24:02.059058"
-    },
-    {
-      "name": "2026-02-08_archive_unknown_no-extracted-text",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Scanned document with no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:23:52.617603"
-    },
-    {
-      "name": "2026-02-08_archive_null_blank-document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Blank document or OCR failed to extract text",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:23:40.830405"
-    },
-    {
-      "name": "2026-02-08_archive_unreadable-document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Unreadable document or no text extracted.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:23:31.172093"
-    },
-    {
-      "name": "2026-02-08_archive_empty_document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Empty or unclassifiable document",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:23:15.763523"
-    },
-    {
-      "name": "2026-02-08_archive_unclassified_document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Unclassified document with no extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:23:07.283690"
-    },
-    {
-      "name": "null_archive_null_unclassifiable",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Unclassifiable document due to empty extracted text.",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:22:55.769036"
-    },
-    {
-      "name": "2026-02-08_archive_unknown_blank-or-unreadable-document",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Blank or unreadable document",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T21:22:44.840057"
-    },
-    {
-      "name": "2026-02-08_unclassified_02082026_003_ocr.pdf",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "Ocr",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:30.684138"
-    },
-    {
-      "name": "2026-02-08_archive_unknown_no-text-extracted.pdf",
-      "type": "archive",
-      "entity": "Unclassified",
-      "summary": "No Text Extracted",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:08.753438"
-    },
-    {
-      "name": "2026-02-08_archive_unreadable.pdf",
-      "type": "archive",
-      "entity": "Unreadable",
-      "summary": "2026 02 08_Archive_Unreadable",
-      "taxRelevant": false,
-      "processedAt": "2026-02-08T11:57:08.735906"
-    }
-  ],
-  "firstProcessed": "2026-02-08",
-  "lastProcessed": "2026-02-09T21:04:29.178484",
-  "lastScanRun": "2026-02-09T21:04:29.184431"
+    {"name": "049_OCR", "type": "tax", "entity": "IRS", "summary": "W-2 Wage & Tax (2022)", "processedAt": "2026-02-11T09:16:00Z", "taxRelevant": true},
+    {"name": "048_OCR", "type": "property", "entity": "CA DMV", "summary": "Vehicle registration $567", "processedAt": "2026-02-11T09:16:00Z"},
+    {"name": "047_OCR", "type": "tax", "entity": "Contra Costa", "summary": "Edinburgh property tax $22,654", "processedAt": "2026-02-11T09:15:00Z", "taxRelevant": true},
+    {"name": "046_OCR", "type": "medical", "entity": "San Ramon Medical", "summary": "Hospital bill $430K / $1,858 patient", "processedAt": "2026-02-11T09:15:00Z"},
+    {"name": "045_OCR", "type": "medical", "entity": "San Ramon Medical", "summary": "Payment due $1,858.45", "processedAt": "2026-02-11T09:15:00Z"},
+    {"name": "044_OCR", "type": "tax", "entity": "Smithsonian", "summary": "Donation $83.30 deductible", "processedAt": "2026-02-11T09:15:00Z", "taxRelevant": true},
+    {"name": "043_OCR", "type": "medical", "entity": "TriStar", "summary": "Reasonable accommodation — physician", "processedAt": "2026-02-11T09:15:00Z"},
+    {"name": "042_OCR", "type": "medical", "entity": "TriStar", "summary": "Work limitations — 60 day temp", "processedAt": "2026-02-11T09:14:00Z"},
+    {"name": "041_OCR", "type": "medical", "entity": "TriStar", "summary": "Disability certification 7/19-11/12", "processedAt": "2026-02-11T09:14:00Z"},
+    {"name": "040_OCR", "type": "property", "entity": "TD Canada Trust", "summary": "Toronto mortgage $829/mo 4.69%", "processedAt": "2026-02-11T09:14:00Z", "taxRelevant": true},
+    {"name": "039_OCR", "type": "tax", "entity": "Broward County", "summary": "Homestead exemption denied (rental)", "processedAt": "2026-02-11T09:13:00Z", "taxRelevant": true},
+    {"name": "038_OCR", "type": "medical", "entity": "Luna Care PT", "summary": "Physical therapy $90", "processedAt": "2026-02-11T09:13:00Z"},
+    {"name": "037_OCR", "type": "tax", "entity": "Broward County", "summary": "Tamarac property tax $7,150", "processedAt": "2026-02-11T09:13:00Z", "taxRelevant": true},
+    {"name": "036_OCR", "type": "medical", "entity": "Canyon Pediatric", "summary": "Family dental history 2025", "processedAt": "2026-02-11T09:12:00Z"},
+    {"name": "035_OCR", "type": "medical", "entity": "Canyon Pediatric", "summary": "Nicholas dental — Delta Dental", "processedAt": "2026-02-11T09:12:00Z"},
+    {"name": "034_OCR", "type": "financial", "entity": "Optum Financial", "summary": "FSA statement — DC $2,500 / HC $1,000", "processedAt": "2026-02-11T09:12:00Z", "taxRelevant": true},
+    {"name": "033_OCR", "type": "tax", "entity": "IRS", "summary": "⚠️ IP PIN: 663437 (2025)", "processedAt": "2026-02-11T09:12:00Z", "taxRelevant": true},
+    {"name": "017_OCR", "type": "tax", "entity": "Contra Costa", "summary": "WC property tax $5,381", "processedAt": "2026-02-11T08:52:00Z", "taxRelevant": true},
+    {"name": "015_OCR", "type": "insurance", "entity": "Aflac", "summary": "Short-term disability $1,113.74", "processedAt": "2026-02-11T08:51:00Z"},
+    {"name": "010_OCR", "type": "financial", "entity": "AMEX", "summary": "Personal loan $7,928 bal / $610 mo", "processedAt": "2026-02-11T08:50:00Z"}
+  ]
 }
