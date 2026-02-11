@@ -70,8 +70,8 @@
             margin-top: 0.5rem;
         }
         
-        .summary-card.warning .amount {
-            color: #ff6b6b;
+        .summary-card.success .amount {
+            color: #4ade80;
         }
         
         .category {
@@ -170,16 +170,6 @@
             color: #00d4ff;
         }
         
-        .status-review {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-        }
-        
-        .status-failed {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-        }
-        
         .status-olivia {
             background: rgba(255, 105, 180, 0.2);
             color: #ff69b4;
@@ -236,19 +226,19 @@
         
         <div class="summary-cards">
             <div class="summary-card">
-                <div class="amount" id="total-monthly">$487</div>
+                <div class="amount">$543</div>
                 <div class="label">Monthly Total</div>
             </div>
             <div class="summary-card">
-                <div class="amount" id="total-annual">$5,844</div>
+                <div class="amount">$5,615</div>
                 <div class="label">Annual Projection</div>
             </div>
             <div class="summary-card">
-                <div class="amount" id="sub-count">12</div>
+                <div class="amount">15</div>
                 <div class="label">Active Subscriptions</div>
             </div>
-            <div class="summary-card warning">
-                <div class="amount" id="needs-review">1</div>
+            <div class="summary-card success">
+                <div class="amount">0</div>
                 <div class="label">Needs Attention</div>
             </div>
         </div>
@@ -258,7 +248,7 @@
             <div class="category-header">
                 <span>💻</span>
                 <h2>Tech & API</h2>
-                <span class="category-total">~$350/mo</span>
+                <span class="category-total">~$490/mo</span>
             </div>
             <div class="subscription-grid">
                 <div class="subscription-card">
@@ -270,7 +260,46 @@
                     <div class="sub-frequency">Variable</div>
                     <div class="sub-date">
                         <div class="label">Last charge</div>
-                        <div>Feb 3, 2026</div>
+                        <div>Feb 9, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>X Developer Platform</h3>
+                        <div class="description">Twitter/X API access - Basic tier</div>
+                    </div>
+                    <div class="sub-amount">$100</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 9, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Finnhub Basic</h3>
+                        <div class="description">Stock API - Real-time quotes, options data</div>
+                    </div>
+                    <div class="sub-amount">$50</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 6, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Twilio</h3>
+                        <div class="description">SMS/voice API for alerts</div>
+                    </div>
+                    <div class="sub-amount">~$25</div>
+                    <div class="sub-frequency">Variable</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 5, 2026</div>
                         <span class="status-badge status-active">Active</span>
                     </div>
                 </div>
@@ -289,6 +318,19 @@
                 </div>
                 <div class="subscription-card">
                     <div class="sub-info">
+                        <h3>Cloudflare</h3>
+                        <div class="description">Domain hosting & CDN</div>
+                    </div>
+                    <div class="sub-amount">$15</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 9, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
                         <h3>Replicate</h3>
                         <div class="description">AI image/video generation</div>
                     </div>
@@ -302,27 +344,27 @@
                 </div>
                 <div class="subscription-card">
                     <div class="sub-info">
-                        <h3>X Developer Platform</h3>
-                        <div class="description">Twitter/X API access</div>
+                        <h3>ngrok Personal</h3>
+                        <div class="description">Secure tunnels - JAMES dashboards</div>
                     </div>
-                    <div class="sub-amount">$100</div>
+                    <div class="sub-amount">$8</div>
                     <div class="sub-frequency">Monthly</div>
                     <div class="sub-date">
                         <div class="label">Last charge</div>
-                        <div>Jan 31, 2026</div>
+                        <div>Feb 7, 2026</div>
                         <span class="status-badge status-active">Active</span>
                     </div>
                 </div>
                 <div class="subscription-card">
                     <div class="sub-info">
-                        <h3>Cloudflare</h3>
-                        <div class="description">Domain hosting & CDN</div>
+                        <h3>DeepSeek</h3>
+                        <div class="description">AI model API access</div>
                     </div>
-                    <div class="sub-amount">$5</div>
-                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-amount">~$5</div>
+                    <div class="sub-frequency">Variable</div>
                     <div class="sub-date">
                         <div class="label">Last charge</div>
-                        <div>Feb 2, 2026</div>
+                        <div>Feb 5, 2026</div>
                         <span class="status-badge status-active">Active</span>
                     </div>
                 </div>
@@ -336,6 +378,67 @@
                     <div class="sub-date">
                         <div class="label">Last charge</div>
                         <div>Jan 31, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Home & Insurance -->
+        <div class="category">
+            <div class="category-header">
+                <span>🏠</span>
+                <h2>Home & Insurance</h2>
+                <span class="category-total">$110/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Tesla Insurance</h3>
+                        <div class="description">Auto insurance - Model Y (Blu)</div>
+                    </div>
+                    <div class="sub-amount">$95</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 5, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Google Home Premium</h3>
+                        <div class="description">Nest Aware - Edinburgh cameras</div>
+                    </div>
+                    <div class="sub-amount">$15</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 1, 2026</div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Financial -->
+        <div class="category">
+            <div class="category-header">
+                <span>💰</span>
+                <h2>Financial Services</h2>
+                <span class="category-total">$15/mo</span>
+            </div>
+            <div class="subscription-grid">
+                <div class="subscription-card">
+                    <div class="sub-info">
+                        <h3>Rocket Dollar</h3>
+                        <div class="description">Self-directed IRA custodian</div>
+                    </div>
+                    <div class="sub-amount">$15</div>
+                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-date">
+                        <div class="label">Last charge</div>
+                        <div>Feb 3, 2026</div>
                         <span class="status-badge status-active">Active</span>
                     </div>
                 </div>
@@ -392,72 +495,25 @@
             </div>
         </div>
         
-        <!-- Home & Utilities -->
+        <!-- Health -->
         <div class="category">
             <div class="category-header">
-                <span>🏠</span>
-                <h2>Home & Utilities</h2>
-                <span class="category-total">$15/mo</span>
+                <span>🏥</span>
+                <h2>Health</h2>
+                <span class="category-total">~$50/mo</span>
             </div>
             <div class="subscription-grid">
                 <div class="subscription-card">
                     <div class="sub-info">
-                        <h3>Google Home Premium</h3>
-                        <div class="description">Nest Aware - Edinburgh cameras</div>
+                        <h3>Luna Physical Therapy</h3>
+                        <div class="description">PT sessions - femur recovery</div>
                     </div>
-                    <div class="sub-amount">$15</div>
-                    <div class="sub-frequency">Monthly</div>
+                    <div class="sub-amount">~$50</div>
+                    <div class="sub-frequency">Variable</div>
                     <div class="sub-date">
                         <div class="label">Last charge</div>
-                        <div>Jan 25, 2026</div>
+                        <div>Feb 2, 2026</div>
                         <span class="status-badge status-active">Active</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Financial -->
-        <div class="category">
-            <div class="category-header">
-                <span>💰</span>
-                <h2>Financial Services</h2>
-                <span class="category-total">$15/mo</span>
-            </div>
-            <div class="subscription-grid">
-                <div class="subscription-card">
-                    <div class="sub-info">
-                        <h3>Rocket Dollar</h3>
-                        <div class="description">Self-directed IRA custodian</div>
-                    </div>
-                    <div class="sub-amount">$15</div>
-                    <div class="sub-frequency">Monthly</div>
-                    <div class="sub-date">
-                        <div class="label">Last charge</div>
-                        <div>Feb 3, 2026</div>
-                        <span class="status-badge status-active">Active</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Needs Attention -->
-        <div class="category">
-            <div class="category-header">
-                <span>⚠️</span>
-                <h2>Needs Attention</h2>
-            </div>
-            <div class="subscription-grid">
-                <div class="subscription-card" style="border-color: rgba(255, 107, 107, 0.3);">
-                    <div class="sub-info">
-                        <h3>ROLI Learn</h3>
-                        <div class="description">Music learning platform - payment failing</div>
-                    </div>
-                    <div class="sub-amount">$79</div>
-                    <div class="sub-frequency">Annual</div>
-                    <div class="sub-date">
-                        <div class="label">Failed</div>
-                        <div>Jan 30, 2026</div>
-                        <span class="status-badge status-failed">Payment Failed</span>
                     </div>
                 </div>
             </div>
@@ -467,21 +523,9 @@
             <p>Tracked automatically by JAMES from Gmail receipts</p>
             <div class="update-info">
                 <span class="pulse"></span>
-                <span>Last updated: <span id="last-update">Feb 4, 2026 12:15 AM</span></span>
+                <span>Last updated: Feb 10, 2026 8:08 PM PST</span>
             </div>
         </footer>
     </div>
-    
-    <script>
-        // Update timestamp
-        document.getElementById('last-update').textContent = new Date().toLocaleString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        });
-    </script>
 </body>
 </html>

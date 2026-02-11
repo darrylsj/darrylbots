@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-02-07T17:53:00Z",
+  "lastUpdated": "2026-02-10T20:08:00Z",
   "summary": {
-    "monthlyTotal": 625,
-    "annualProjection": 7500,
-    "activeCount": 16,
-    "needsAttention": 1
+    "monthlyTotal": 543,
+    "annualProjection": 5615,
+    "activeCount": 15,
+    "needsAttention": 0
   },
   "subscriptions": [
     {
@@ -14,7 +14,7 @@
       "category": "tech",
       "amount": 300,
       "frequency": "variable",
-      "lastCharge": "2026-02-02",
+      "lastCharge": "2026-02-09",
       "status": "active",
       "notes": "Pay-as-you-go API usage, multiple charges daily"
     },
@@ -43,22 +43,22 @@
       "name": "X Developer Platform",
       "description": "Twitter/X API access - Basic tier",
       "category": "tech",
-      "amount": 25,
+      "amount": 100,
       "frequency": "monthly",
-      "lastCharge": "2026-01-31",
+      "lastCharge": "2026-02-09",
       "status": "active",
-      "notes": "Credit-based ($25/mo)"
+      "notes": "Credit-based ($25/mo auto-recharge shown in receipts, but actual usage ~$100/mo)"
     },
     {
       "id": "cloudflare",
       "name": "Cloudflare",
       "description": "Domain hosting & CDN",
       "category": "tech",
-      "amount": 10,
+      "amount": 15,
       "frequency": "monthly",
-      "lastCharge": "2026-02-02",
+      "lastCharge": "2026-02-09",
       "status": "active",
-      "notes": "Multiple domains"
+      "notes": "Multiple domains, paid via PayPal"
     },
     {
       "id": "1password",
@@ -136,7 +136,7 @@
     {
       "id": "ngrok",
       "name": "ngrok Personal",
-      "description": "Secure tunnels - Theta, Token, Voice dashboards",
+      "description": "Secure tunnels - JAMES dashboards",
       "category": "tech",
       "amount": 8,
       "frequency": "monthly",
@@ -174,40 +174,29 @@
       "frequency": "annual",
       "lastCharge": "2026-02-05",
       "status": "active",
-      "notes": "Renewal invoice received - check amount"
+      "notes": "Annual renewal, invoice received"
     },
     {
-      "id": "roli-learn",
-      "name": "ROLI Learn",
-      "description": "Music learning platform",
-      "category": "attention",
-      "amount": 79,
-      "frequency": "annual",
-      "lastCharge": "2026-01-30",
-      "status": "cancelling",
-      "notes": "Cancellation request sent 2026-02-05"
-    },
-    {
-      "id": "manus",
-      "name": "Manus AI",
-      "description": "AI agent platform",
+      "id": "twilio",
+      "name": "Twilio",
+      "description": "SMS/voice API for alerts",
       "category": "tech",
-      "amount": 39,
-      "frequency": "monthly",
-      "lastCharge": "2026-01-02",
-      "status": "expired",
-      "notes": "Subscription expired 2026-02-02 - not renewed"
+      "amount": 25,
+      "frequency": "variable",
+      "lastCharge": "2026-02-05",
+      "status": "active",
+      "notes": "Pay-as-you-go, $25 top-up via PayPal"
     },
     {
-      "id": "squarespace",
-      "name": "Squarespace",
-      "description": "Website builder",
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "description": "AI model API access",
       "category": "tech",
-      "amount": 16,
-      "frequency": "monthly",
-      "lastCharge": "2026-01-01",
-      "status": "cancelled",
-      "notes": "Won't renew - cancelled"
+      "amount": 5,
+      "frequency": "variable",
+      "lastCharge": "2026-02-05",
+      "status": "active",
+      "notes": "PayPal payment to 杭州深度求索"
     }
   ]
 }
