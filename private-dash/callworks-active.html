@@ -549,7 +549,7 @@ function renderDashboard() {
   const monthName = now.toLocaleString('default', { month: 'short' });
 
   // Closed positions this month: net profit = premiumCollected - closeCost
-  const closedThisMonth = POSITIONS_DATA.positions.filter(p => {
+  const closedThisMonth = data.positions.filter(p => {
     if (!['closed', 'rolled'].includes(p.status)) return false;
     const closeDate = p.closeDate ? new Date(p.closeDate + 'T00:00:00') : null;
     return closeDate && closeDate >= monthStart;
@@ -561,7 +561,7 @@ function renderDashboard() {
   }, 0);
 
   // Expired positions this month: full premium kept
-  const expiredThisMonth = [...expiring, ...POSITIONS_DATA.positions.filter(p => 
+  const expiredThisMonth = [...expiring, ...data.positions.filter(p => 
     ['expired', 'expiring_worthless'].includes(p.status)
   )].filter(p => {
     const exp = new Date(p.expiration + 'T00:00:00');
