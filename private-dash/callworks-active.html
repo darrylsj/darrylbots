@@ -542,8 +542,41 @@ function renderDashboard() {
     const price = prices[p.symbol] || 0;
     return p.type === 'call' ? price >= p.strike : price <= p.strike;
   }).length;
+
+  // Monthly P/L calculation
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthName = now.toLocaleString('default', { month: 'short' });
+
+  // Closed positions this month: net profit = premiumCollected - closeCost
+  const closedThisMonth = POSITIONS_DATA.positions.filter(p => {
+    if (!['closed', 'rolled'].includes(p.status)) return false;
+    const closeDate = p.closeDate ? new Date(p.closeDate + 'T00:00:00') : null;
+    return closeDate && closeDate >= monthStart;
+  });
+  const closedPL = closedThisMonth.reduce((sum, p) => {
+    const premium = p.premiumCollected || (p.entryPrice * Math.abs(p.contracts) * 100);
+    const cost = p.closeCost || 0;
+    return sum + (premium - cost);
+  }, 0);
+
+  // Expired positions this month: full premium kept
+  const expiredThisMonth = [...expiring, ...POSITIONS_DATA.positions.filter(p => 
+    ['expired', 'expiring_worthless'].includes(p.status)
+  )].filter(p => {
+    const exp = new Date(p.expiration + 'T00:00:00');
+    return exp >= monthStart && exp <= now;
+  });
+  const expiredPL = expiredThisMonth.reduce((sum, p) => {
+    return sum + (p.premiumCollected || (p.entryPrice * Math.abs(p.contracts) * 100));
+  }, 0);
+
+  const monthlyPL = closedPL + expiredPL;
+  const plClass = monthlyPL >= 0 ? 'positive' : 'negative';
+  const plSign = monthlyPL >= 0 ? '+' : '';
   
   document.getElementById('summary-bar').innerHTML = `
+    <div class="summary-item"><span class="summary-icon">📈</span><div class="summary-text"><span class="summary-label">${monthName} P/L (Realized)</span><span class="summary-value ${plClass}">${plSign}${formatMoney(monthlyPL)}</span></div></div>
     <div class="summary-item"><span class="summary-icon">📊</span><div class="summary-text"><span class="summary-label">Active Positions</span><span class="summary-value">${active.length}</span></div></div>
     <div class="summary-item"><span class="summary-icon">💰</span><div class="summary-text"><span class="summary-label">Premium at Risk</span><span class="summary-value positive">${formatMoney(totalPremium)}</span></div></div>
     <div class="summary-item"><span class="summary-icon">⏰</span><div class="summary-text"><span class="summary-label">Expiring ≤7 Days</span><span class="summary-value ${expiringThisWeek > 0 ? 'warning' : ''}">${expiringThisWeek}</span></div></div>
