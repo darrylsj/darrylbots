@@ -23,9 +23,9 @@ window.DARRYLBOTS_DEBUG = true;
 // Business Information
 window.BUSINESS_CONFIG = {
   name: 'DarrylBots',
-  address: '520 Edinburgh Circle, Danville, CA 94526',
-  phone: '(408) 219-8485',
-  email: 'darrylsj@gmail.com',
+  address: 'East Bay Area, CA',
+  phone: '',
+  email: 'hello@darrylbots.com',
   serviceArea: 'East Bay Area, San Francisco Bay Area',
   openingYear: 2027,
   tagline: 'Your neighborhood robot specialists'
@@ -33,7 +33,7 @@ window.BUSINESS_CONFIG = {
 
 console.log('🤖 DarrylBots configuration loaded');
 if (window.DARRYLBOTS_DEBUG) {
-  console.log('📍 Business location:', window.BUSINESS_CONFIG.address);
+  console.log('📍 Service area:', window.BUSINESS_CONFIG.serviceArea);
   console.log('🔑 Google API key configured:', 
     window.GOOGLE_API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE' ? '✅ Yes' : '❌ No - Please set your API key');
 }
