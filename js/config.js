@@ -25,7 +25,7 @@ window.BUSINESS_CONFIG = {
   name: 'DarrylBots',
   address: 'East Bay Area, CA',
   phone: '',
-  email: 'hello@darrylbots.com',
+  email: 'aria-bot@agentmail.to',
   serviceArea: 'East Bay Area, San Francisco Bay Area',
   openingYear: 2027,
   tagline: 'Your neighborhood robot specialists'
