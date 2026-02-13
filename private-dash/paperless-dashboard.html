@@ -40,11 +40,12 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📄 Paperless — Scanning Dashboard</title>
+<title>📄 Paperless — Document Intelligence</title>
 <style>
 :root {
   --bg: #0d1117;
   --surface: #161b22;
+  --surface2: #1c2128;
   --border: #30363d;
   --text: #e6edf3;
   --text-dim: #8b949e;
@@ -53,6 +54,7 @@
   --orange: #d29922;
   --red: #f85149;
   --purple: #bc8cff;
+  --gold: #d4a843;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -61,440 +63,369 @@ body {
   color: var(--text);
   min-height: 100vh;
   padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-.header h1 {
-  font-size: 28px;
-  font-weight: 700;
-}
-.header .subtitle {
-  color: var(--text-dim);
-  font-size: 14px;
-}
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-.stat-card .label {
-  color: var(--text-dim);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 16px;
   margin-bottom: 8px;
 }
-.stat-card .value {
-  font-size: 36px;
-  font-weight: 700;
-}
-.stat-card .detail {
-  color: var(--text-dim);
-  font-size: 13px;
-  margin-top: 4px;
-}
-.stat-card.tax .value { color: var(--orange); }
-.stat-card.total .value { color: var(--accent); }
-.stat-card.today .value { color: var(--green); }
-.stat-card.entity .value { color: var(--purple); font-size: 24px; }
+.header h1 { font-size: 28px; font-weight: 700; }
+.subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 32px; }
 
-.section {
-  margin-bottom: 32px;
-}
-.section h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.chart-container {
+/* Stats Grid */
+.stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 32px;
 }
-@media (max-width: 768px) {
-  .chart-container { grid-template-columns: 1fr; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; text-align: center;
+}
+.stat-card .number {
+  font-size: 36px; font-weight: 800; line-height: 1;
+}
+.stat-card .label {
+  font-size: 12px; color: var(--text-dim); text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 8px;
+}
+.stat-card.accent .number { color: var(--accent); }
+.stat-card.green .number { color: var(--green); }
+.stat-card.orange .number { color: var(--orange); }
+.stat-card.purple .number { color: var(--purple); }
+.stat-card.gold .number { color: var(--gold); }
+.stat-card.red .number { color: var(--red); }
+
+/* Section */
+.section { margin-bottom: 32px; }
+.section h2 {
+  font-size: 18px; font-weight: 600; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
 }
 
-.chart-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-.chart-card h3 {
-  font-size: 14px;
-  color: var(--text-dim);
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.bar-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.bar-row {
-  display: flex;
-  align-items: center;
+/* Folder breakdown */
+.folder-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
 }
-.bar-label {
-  font-size: 13px;
-  min-width: 120px;
-  text-align: right;
-  color: var(--text-dim);
+.folder-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px;
+  display: flex; align-items: center; gap: 12px;
 }
-.bar-track {
-  flex: 1;
-  height: 24px;
-  background: var(--bg);
-  border-radius: 6px;
-  overflow: hidden;
+.folder-card .icon { font-size: 24px; }
+.folder-card .info { flex: 1; }
+.folder-card .name { font-weight: 600; font-size: 14px; }
+.folder-card .count { color: var(--text-dim); font-size: 13px; }
+.folder-card .bar {
+  height: 4px; background: var(--border); border-radius: 2px;
+  margin-top: 6px; overflow: hidden;
 }
-.bar-fill {
-  height: 100%;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  padding-left: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  min-width: 30px;
-  transition: width 0.6s ease;
+.folder-card .bar-fill {
+  height: 100%; border-radius: 2px; transition: width 0.5s;
 }
 
-.recent-table {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
+/* Vector Index Panel */
+.index-panel {
+  background: linear-gradient(135deg, #161b22 0%, #1a2332 100%);
+  border: 1px solid var(--accent); border-radius: 12px;
+  padding: 24px; margin-bottom: 32px;
 }
-.recent-table table {
-  width: 100%;
-  border-collapse: collapse;
+.index-panel h2 { color: var(--accent); margin-bottom: 16px; }
+.index-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
 }
-.recent-table th {
-  text-align: left;
-  padding: 12px 16px;
-  font-size: 12px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.index-stat { text-align: center; }
+.index-stat .val { font-size: 24px; font-weight: 700; color: var(--accent); }
+.index-stat .lbl { font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
+
+/* Scan timeline */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before {
+  content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.timeline-item {
+  position: relative; margin-bottom: 20px; padding-left: 20px;
+}
+.timeline-item::before {
+  content: ''; position: absolute; left: -20px; top: 4px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg);
+}
+.timeline-item .date { font-weight: 600; font-size: 14px; }
+.timeline-item .detail { color: var(--text-dim); font-size: 13px; margin-top: 4px; }
+.timeline-item .badge {
+  display: inline-block; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 8px; font-size: 12px; margin-top: 4px;
+  color: var(--green);
+}
+
+/* Status bar */
+.status-bar {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--text-dim);
+}
+.status-bar .dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); margin-right: 6px;
+}
+
+/* Recent docs table */
+.doc-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.doc-table th {
+  text-align: left; padding: 10px 12px; font-size: 11px;
+  text-transform: uppercase; color: var(--text-dim);
   border-bottom: 1px solid var(--border);
-  background: var(--bg);
 }
-.recent-table td {
-  padding: 10px 16px;
-  font-size: 13px;
-  border-bottom: 1px solid var(--border);
+.doc-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
 }
-.recent-table tr:last-child td { border-bottom: none; }
-.recent-table tr:hover { background: rgba(88,166,255,0.05); }
+.doc-table tr:hover { background: var(--surface2); }
+.tag {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 600;
+}
+.tag-tax { background: #1a3a1a; color: var(--green); }
+.tag-medical { background: #3a1a1a; color: var(--red); }
+.tag-family { background: #1a2a3a; color: var(--accent); }
+.tag-financial { background: #3a2a1a; color: var(--orange); }
+.tag-archive { background: #2a2a2a; color: var(--text-dim); }
+.tag-other { background: #2a1a3a; color: var(--purple); }
 
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 600;
-}
-.badge.tax { background: rgba(210,153,34,0.2); color: var(--orange); }
-.badge.receipt { background: rgba(63,185,80,0.2); color: var(--green); }
-.badge.financial { background: rgba(88,166,255,0.2); color: var(--accent); }
-.badge.medical { background: rgba(248,81,73,0.2); color: var(--red); }
-.badge.legal { background: rgba(188,140,255,0.2); color: var(--purple); }
-.badge.dental { background: rgba(255,110,180,0.2); color: #ff6eb4; }
-.badge.vision { background: rgba(218,112,214,0.2); color: #da70d6; }
-.badge.vet { background: rgba(139,105,20,0.2); color: #c9a832; }
-.badge.other { background: rgba(139,148,158,0.2); color: var(--text-dim); }
-
-.tax-checklist {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-.checklist-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-.checklist-item:last-child { border-bottom: none; }
-.checklist-item .check { font-size: 16px; }
-.checklist-item.done { color: var(--text-dim); }
-.checklist-item.done .check { color: var(--green); }
-.checklist-item.pending .check { color: var(--text-dim); }
-
-.footer {
-  text-align: center;
-  color: var(--text-dim);
-  font-size: 12px;
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-.loading {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-dim);
+@media (max-width: 768px) {
+  body { padding: 16px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .header h1 { font-size: 22px; }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <h1>📄 Paperless</h1>
-    <div class="subtitle">ScanSnap iX2500 → JAMES AI → Google Drive</div>
-    <div class="subtitle" id="lastScan" style="margin-top:4px; font-size:13px;">Last scan: —</div>
+  <h1>📄 Paperless</h1>
+</div>
+<div class="subtitle">Document Intelligence Dashboard — Edinburgh Household • Last updated Feb 11, 2026 8:55 PM</div>
+
+<!-- Status Bar -->
+<div class="status-bar" style="margin-bottom: 24px;">
+  <span><span class="dot"></span> Scanner: ScanSnap iX2500 (Wi-Fi) • OCR: Laptop Pipeline • Index: ARIA Mac Mini</span>
+  <span>Cron: Every 30 min</span>
+</div>
+
+<!-- Top Stats -->
+<div class="stats-grid">
+  <div class="stat-card accent">
+    <div class="number">107</div>
+    <div class="label">Total Scans</div>
+  </div>
+  <div class="stat-card green">
+    <div class="number">54</div>
+    <div class="label">Filed</div>
+  </div>
+  <div class="stat-card orange">
+    <div class="number">88</div>
+    <div class="label">In Inbox</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="number">55</div>
+    <div class="label">Indexed (Search)</div>
+  </div>
+  <div class="stat-card gold">
+    <div class="number">27</div>
+    <div class="label">Tax Docs</div>
+  </div>
+  <div class="stat-card red">
+    <div class="number">17</div>
+    <div class="label">Medical</div>
   </div>
 </div>
 
-<div class="stats-grid" id="statsGrid">
-  <div class="stat-card total">
-    <div class="label">Total Processed</div>
-    <div class="value" id="totalProcessed">—</div>
-    <div class="detail" id="lastProcessed">Loading...</div>
+<!-- Vector Search Index -->
+<div class="index-panel">
+  <h2>🔍 Vector Search Index — ARIA Mac Mini</h2>
+  <div class="index-grid">
+    <div class="index-stat">
+      <div class="val">55</div>
+      <div class="lbl">Documents Indexed</div>
+    </div>
+    <div class="index-stat">
+      <div class="val">ChromaDB</div>
+      <div class="lbl">Vector Store</div>
+    </div>
+    <div class="index-stat">
+      <div class="val">MiniLM-L6</div>
+      <div class="lbl">Embedding Model</div>
+    </div>
+    <div class="index-stat">
+      <div class="val">&lt;50ms</div>
+      <div class="lbl">Search Latency</div>
+    </div>
+    <div class="index-stat">
+      <div class="val">~154K</div>
+      <div class="lbl">Total Chars Indexed</div>
+    </div>
+    <div class="index-stat">
+      <div class="val">$0.00</div>
+      <div class="lbl">Index Cost</div>
+    </div>
   </div>
-  <div class="stat-card today">
-    <div class="label">Today</div>
-    <div class="value" id="todayCount">—</div>
-    <div class="detail" id="todayDate"></div>
-  </div>
-  <div class="stat-card tax">
-    <div class="label">Tax Documents</div>
-    <div class="value" id="taxCount">—</div>
-    <div class="detail">Schedule E & other tax-relevant</div>
-  </div>
-  <div class="stat-card" style="--accent-color: #3fb950">
-    <div class="label">HSA Reimbursable</div>
-    <div class="value" style="color:#3fb950" id="hsaCount">—</div>
-    <div class="detail">Dental + Vision (Chevron HDHP)</div>
-  </div>
-  <div class="stat-card entity">
-    <div class="label">Top Entity</div>
-    <div class="value" id="topEntity">—</div>
-    <div class="detail" id="topEntityCount"></div>
-  </div>
-</div>
-
-<div class="chart-container">
-  <div class="chart-card">
-    <h3>Documents by Type</h3>
-    <div class="bar-chart" id="typeChart"></div>
-  </div>
-  <div class="chart-card">
-    <h3>Documents by Property</h3>
-    <div class="bar-chart" id="propertyChart"></div>
+  <div style="margin-top: 16px; font-size: 12px; color: var(--text-dim);">
+    Host: <code>aria-mac-mini.local:8200</code> • Engine: sentence-transformers (all-MiniLM-L6-v2) • Last indexed: Feb 11, 2026 8:37 PM • LaunchAgent: auto-start on boot
   </div>
 </div>
 
+<!-- Filing Breakdown -->
 <div class="section">
-  <h2>📋 Recent Documents</h2>
-  <div class="recent-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Type</th>
-          <th>Entity</th>
-          <th>Summary</th>
-          <th>Processed</th>
-        </tr>
-      </thead>
-      <tbody id="recentDocs">
-        <tr><td colspan="5" class="loading">Loading...</td></tr>
-      </tbody>
-    </table>
+  <h2>📁 Filing Breakdown</h2>
+  <div class="folder-grid">
+    <div class="folder-card">
+      <div class="icon">🏛️</div>
+      <div class="info">
+        <div class="name">Tax</div>
+        <div class="count">27 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:50%;background:var(--green)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">🏥</div>
+      <div class="info">
+        <div class="name">Medical</div>
+        <div class="count">17 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:31%;background:var(--red)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">📦</div>
+      <div class="info">
+        <div class="name">Archive</div>
+        <div class="count">18 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:33%;background:var(--text-dim)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">👨‍👩‍👧‍👦</div>
+      <div class="info">
+        <div class="name">Family</div>
+        <div class="count">6 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:11%;background:var(--accent)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">💰</div>
+      <div class="info">
+        <div class="name">Financial</div>
+        <div class="count">3 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:6%;background:var(--orange)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">📋</div>
+      <div class="info">
+        <div class="name">Bills</div>
+        <div class="count">3 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:6%;background:var(--orange)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">🧾</div>
+      <div class="info">
+        <div class="name">Receipts</div>
+        <div class="count">2 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:4%;background:var(--purple)"></div></div>
+      </div>
+    </div>
+    <div class="folder-card">
+      <div class="icon">⚖️</div>
+      <div class="info">
+        <div class="name">Legal / Property / Rental / Vet</div>
+        <div class="count">4 documents</div>
+        <div class="bar"><div class="bar-fill" style="width:7%;background:var(--gold)"></div></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Scan Timeline -->
 <div class="section">
-  <h2>📊 Daily Activity</h2>
-  <div class="chart-card">
-    <div class="bar-chart" id="dailyChart"></div>
+  <h2>📅 Scan Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">February 11, 2026</div>
+      <div class="detail">52 documents scanned — tax, medical, Aflac EOBs, Blackhawk contracts, Boulé, Optum FSA, rehab records</div>
+      <div class="badge">🔍 All 52 indexed to ARIA vector DB</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">February 9, 2026</div>
+      <div class="detail">19 documents auto-classified by Gemini Flash — W-2s, 1099s, property tax, charitable donations</div>
+      <div class="badge">✅ Auto-filed to Google Drive</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">February 8, 2026</div>
+      <div class="detail">36 documents — first batch. Delta Dental, Quest Diagnostics, Rocketdollar IRA, receipts</div>
+      <div class="badge">✅ System launched</div>
+    </div>
   </div>
 </div>
 
-<div class="footer">
-  Powered by JAMES ⚡ · ScanSnap iX2500 + Gemini Flash + Google Drive<br>
-  <span id="refreshTime"></span>
+<!-- Pipeline Architecture -->
+<div class="section">
+  <h2>⚙️ Pipeline Architecture</h2>
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; font-size: 14px; line-height: 2;">
+    <code style="color: var(--accent);">ScanSnap iX2500</code>
+    <span style="color: var(--text-dim);"> → </span>
+    <code style="color: var(--green);">Google Drive Inbox</code>
+    <span style="color: var(--text-dim);"> → </span>
+    <code style="color: var(--orange);">Laptop OCR</code>
+    <span style="color: var(--text-dim);"> (embeds searchable text) → </span>
+    <code style="color: var(--purple);">Gemini Flash Classifier</code>
+    <span style="color: var(--text-dim);"> → </span>
+    <code style="color: var(--green);">Auto-file to Folders</code>
+    <br>
+    <span style="color: var(--text-dim); margin-left: 240px;">↘ </span>
+    <code style="color: var(--accent);">pdfminer.six</code>
+    <span style="color: var(--text-dim);"> (text extraction) → </span>
+    <code style="color: var(--accent);">ARIA ChromaDB</code>
+    <span style="color: var(--text-dim);"> (vector embeddings) → </span>
+    <code style="color: var(--gold);">Instant Search</code>
+  </div>
 </div>
 
-<script>
-const STATS_URL = 'stats.json';
-const INDEX_URL = 'index.json';
+<!-- Key Documents -->
+<div class="section">
+  <h2>📋 Key Documents Found</h2>
+  <table class="doc-table">
+    <thead>
+      <tr><th>Document</th><th>Type</th><th>Date</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>IRS IP PIN (CP01A)</td><td><span class="tag tag-tax">Tax</span></td><td>Jan 5, 2026</td><td>IRS*</td></tr>
+      <tr><td>Aflac Accident Claim</td><td><span class="tag tag-medical">Medical</span></td><td>Jul 17, 2025</td><td>Afl*</td></tr>
+      <tr><td>Edinburgh Property Tax</td><td><span class="tag tag-tax">Tax</span></td><td>2025-2026</td><td>Con*</td></tr>
+      <tr><td>Tamarac Property Tax</td><td><span class="tag tag-tax">Tax</span></td><td>2025</td><td>Bro*</td></tr>
+      <tr><td>Hospital Bill</td><td><span class="tag tag-medical">Medical</span></td><td>Jul 2025</td><td>San*</td></tr>
+      <tr><td>Short Term Disability</td><td><span class="tag tag-medical">Medical</span></td><td>2025</td><td>Afl*</td></tr>
+      <tr><td>Short Term Disability</td><td><span class="tag tag-medical">Medical</span></td><td>2025</td><td>Afl*</td></tr>
+      <tr><td>Toronto Mortgage</td><td><span class="tag tag-tax">Tax</span></td><td>2025</td><td>TD *</td></tr>
+      <tr><td>DMV Registration</td><td><span class="tag tag-other">Vehicle</span></td><td>Jan 2025</td><td>Cal*</td></tr>
+      <tr><td>Blackhawk Event Contract</td><td><span class="tag tag-family">Family</span></td><td>Feb 6, 2026</td><td>Bla*</td></tr>
+      <tr><td>Physical Therapy</td><td><span class="tag tag-medical">Medical</span></td><td>Aug 2025</td><td>Afl*</td></tr>
+      <tr><td>Smithsonian Donation</td><td><span class="tag tag-tax">Tax</span></td><td>2025</td><td>Smi*</td></tr>
+      <tr><td>PT Bill</td><td><span class="tag tag-medical">Medical</span></td><td>2025</td><td>Lun*</td></tr>
+    </tbody>
+  </table>
+</div>
 
-const TYPE_COLORS = {
-  'receipt': '#3fb950',
-  'tax': '#d29922',
-  'financial': '#58a6ff',
-  'medical': '#f85149',
-  'dental': '#ff6eb4',
-  'vision': '#da70d6',
-  'legal': '#bc8cff',
-  'property': '#79c0ff',
-  'education': '#56d364',
-  'vehicle': '#e3b341',
-  'vet': '#8b6914',
-  'archive': '#8b949e'
-};
+<div class="status-bar" style="margin-top: 32px;">
+  <span>Built by JAMES ⚡ • Powered by ScanSnap + Google Drive + ChromaDB + ARIA</span>
+  <span>v2.0 — Feb 11, 2026</span>
+</div>
 
-function getTypeColor(type) {
-  for (const [key, color] of Object.entries(TYPE_COLORS)) {
-    if (type.startsWith(key)) return color;
-  }
-  return '#8b949e';
-}
-
-function getTypeBadgeClass(type) {
-  if (type.startsWith('tax')) return 'tax';
-  if (type.startsWith('receipt')) return 'receipt';
-  if (type.startsWith('financial')) return 'financial';
-  if (type.startsWith('dental')) return 'dental';
-  if (type.startsWith('vision')) return 'vision';
-  if (type.startsWith('medical')) return 'medical';
-  if (type.startsWith('legal')) return 'legal';
-  if (type.startsWith('vet')) return 'vet';
-  return 'other';
-}
-
-function timeAgo(dateStr) {
-  const now = new Date();
-  const then = new Date(dateStr);
-  const mins = Math.floor((now - then) / 60000);
-  if (mins < 1) return 'just now';
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
-}
-
-function renderBarChart(containerId, data, maxVal) {
-  const container = document.getElementById(containerId);
-  if (!data || Object.keys(data).length === 0) {
-    container.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:8px">No data yet</div>';
-    return;
-  }
-  const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  const max = maxVal || Math.max(...sorted.map(([, v]) => v));
-  
-  container.innerHTML = sorted.map(([label, count]) => {
-    const pct = Math.max(5, (count / max) * 100);
-    const color = getTypeColor(label);
-    return `
-      <div class="bar-row">
-        <div class="bar-label">${label}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${pct}%;background:${color}">${count}</div>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-async function loadStats() {
-  try {
-    const resp = await fetch(STATS_URL + '?t=' + Date.now());
-    if (!resp.ok) throw new Error('No stats');
-    const stats = await resp.json();
-    
-    // Top stats
-    document.getElementById('totalProcessed').textContent = stats.totalProcessed || 0;
-    document.getElementById('taxCount').textContent = stats.taxDocCount || 0;
-    
-    if (stats.lastProcessed) {
-      document.getElementById('lastProcessed').textContent = 'Last: ' + timeAgo(stats.lastProcessed);
-    }
-    
-    // Today
-    const today = new Date().toISOString().slice(0, 10);
-    const todayCount = (stats.byDay && stats.byDay[today]) || 0;
-    document.getElementById('todayCount').textContent = todayCount;
-    document.getElementById('todayDate').textContent = today;
-    
-    // Last scan
-    if (stats.lastScanRun) {
-      document.getElementById('lastScan').textContent = 'Last scan: ' + timeAgo(stats.lastScanRun) + ' (' + new Date(stats.lastScanRun).toLocaleString() + ')';
-    }
-    
-    // HSA
-    document.getElementById('hsaCount').textContent = stats.hsaReimbursable || 0;
-    
-    // Top entity
-    if (stats.byEntity) {
-      const sorted = Object.entries(stats.byEntity).sort((a, b) => b[1] - a[1]);
-      if (sorted.length > 0) {
-        document.getElementById('topEntity').textContent = sorted[0][0];
-        document.getElementById('topEntityCount').textContent = `${sorted[0][1]} documents`;
-      }
-    }
-    
-    // Charts
-    renderBarChart('typeChart', stats.byType);
-    renderBarChart('propertyChart', stats.byProperty);
-    
-    // Daily chart
-    if (stats.byDay) {
-      const last14 = Object.entries(stats.byDay)
-        .sort((a, b) => b[0].localeCompare(a[0]))
-        .slice(0, 14)
-        .reverse();
-      const dailyData = {};
-      last14.forEach(([date, count]) => {
-        dailyData[date] = count;
-      });
-      renderBarChart('dailyChart', dailyData);
-    }
-    
-    // Recent docs
-    if (stats.recentDocs && stats.recentDocs.length > 0) {
-      const tbody = document.getElementById('recentDocs');
-      tbody.innerHTML = stats.recentDocs.slice(0, 20).map(doc => `
-        <tr>
-          <td>${doc.name || '—'}</td>
-          <td><span class="badge ${getTypeBadgeClass(doc.type)}">${doc.type}</span>
-              ${doc.taxRelevant ? ' <span class="badge tax">TAX</span>' : ''}</td>
-          <td>${doc.entity || '—'}</td>
-          <td>${doc.summary || '—'}</td>
-          <td>${doc.processedAt ? timeAgo(doc.processedAt) : '—'}</td>
-        </tr>
-      `).join('');
-    }
-    
-  } catch (e) {
-    console.log('Stats not available yet:', e);
-    document.getElementById('totalProcessed').textContent = '0';
-    document.getElementById('todayCount').textContent = '0';
-    document.getElementById('taxCount').textContent = '0';
-    document.getElementById('topEntity').textContent = '—';
-  }
-  
-  document.getElementById('refreshTime').textContent = 'Updated: ' + new Date().toLocaleTimeString();
-}
-
-loadStats();
-setInterval(loadStats, 60000);
-</script>
 </body>
 </html>
