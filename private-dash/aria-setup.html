@@ -1,5 +1,42 @@
 <!DOCTYPE html>
 <html><head>
+<script>
+(function() {
+    'use strict';
+    const SECRET_KEY = 'watermelontrinidad';
+    const urlParams = new URLSearchParams(window.location.search);
+    const providedKey = urlParams.get('key');
+    
+    if (providedKey !== SECRET_KEY) {
+        window.location.replace('/');
+        throw new Error('Access denied');
+    }
+    
+    console.log('🔓 Access granted to private dashboard');
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a[href*="private-dash"], a[href^="./"], a[href^="../"], a[href^="/private-dash"]');
+        
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href.includes('http') \&\& !href.includes(window.location.hostname)) return;
+            if (href.includes('key=')) return;
+            
+            const separator = href.includes('?') ? '&' : '?';
+            link.href = href + separator + 'key=' + SECRET_KEY;
+        });
+        
+        const relativeLinks = document.querySelectorAll('a[href$=".html"]:not([href*="http"])');
+        relativeLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href.includes('key=')) {
+                const separator = href.includes('?') ? '&' : '?';
+                link.href = href + separator + 'key=' + SECRET_KEY;
+            }
+        });
+    });
+})();
+</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARIA Setup Guide</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
