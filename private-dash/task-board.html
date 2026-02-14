@@ -1,44 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-(function() {
-    'use strict';
-    const SECRET_KEY = 'watermelontrinidad';
-    const urlParams = new URLSearchParams(window.location.search);
-    const providedKey = urlParams.get('key');
-    
-    if (providedKey !== SECRET_KEY) {
-        window.location.replace('/');
-        throw new Error('Access denied');
-    }
-    
-    console.log('🔓 Access granted to private dashboard');
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        const links = document.querySelectorAll('a[href*="private-dash"], a[href^="./"], a[href^="../"], a[href^="/private-dash"]');
-        
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href.includes('http') \&\& !href.includes(window.location.hostname)) return;
-            if (href.includes('key=')) return;
-            
-            const separator = href.includes('?') ? '&' : '?';
-            link.href = href + separator + 'key=' + SECRET_KEY;
-        });
-        
-        const relativeLinks = document.querySelectorAll('a[href$=".html"]:not([href*="http"])');
-        relativeLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (!href.includes('key=')) {
-                const separator = href.includes('?') ? '&' : '?';
-                link.href = href + separator + 'key=' + SECRET_KEY;
-            }
-        });
-    });
-})();
-</script>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
